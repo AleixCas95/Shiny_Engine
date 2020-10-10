@@ -134,3 +134,14 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.add(mod);
 }
+
+
+float Application::GetMS()
+{
+	return last_ms;
+}
+
+float Application::GetFPS()
+{
+	return last_FPS;
+}
