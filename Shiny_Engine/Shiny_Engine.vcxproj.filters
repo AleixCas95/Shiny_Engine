@@ -114,6 +114,9 @@
     <ClInclude Include="Glew\include\glew.h">
       <Filter>Sources\Libraries\Glew</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Sources\Modules\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="ImGui\imgui_impl_sdl_gl3.cpp">
       <Filter>Sources\Libraries\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
