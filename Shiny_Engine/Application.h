@@ -20,12 +20,13 @@ public:
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModuleSceneIntro* scene_intro;
+//	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
-	ModulePlayer* player;
-	//ModuleGui* gui;
+	//ModulePlayer* player;
+	ModuleGUI* gui;
+	
 
 private:
 
