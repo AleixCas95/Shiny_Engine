@@ -96,6 +96,9 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

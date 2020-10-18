@@ -68,12 +68,20 @@ update_status ModuleGUI::Update(float dt)
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-
+			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("Help"))
 		{
+			if (ImGui::MenuItem("About", "Ctrl+A"))
+			{
+				
 
+			
+
+			
+			}
+			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}

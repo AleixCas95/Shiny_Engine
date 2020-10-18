@@ -28,6 +28,9 @@
     <Filter Include="Sources\Libraries\Glew">
       <UniqueIdentifier>{766eae8b-0954-4170-8a6e-0054d2fa5902}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\pcg">
+      <UniqueIdentifier>{2888d25e-bac0-49e9-86be-e362bcb18984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -95,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="ModuleScene.h">
       <Filter>Sources\Modules\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp">
+      <Filter>Sources\Libraries\pcg</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp">
+      <Filter>Sources\Libraries\pcg</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp">
+      <Filter>Sources\Libraries\pcg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
