@@ -40,6 +40,9 @@
     <Filter Include="Sources\Libraries\mmgr">
       <UniqueIdentifier>{cff46793-b223-4f4d-a0ea-423675dfc067}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\MathGeoLib">
+      <UniqueIdentifier>{3abf8dee-7ecb-4254-83d6-ddf533e288fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -128,6 +131,15 @@
     </ClInclude>
     <ClInclude Include="ModuleGeometry.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\MathBuildConfig.h">
+      <Filter>Sources\Libraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\MathGeoLib.h">
+      <Filter>Sources\Libraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\MathGeoLibFwd.h">
+      <Filter>Sources\Libraries\MathGeoLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
