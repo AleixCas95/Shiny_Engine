@@ -11,6 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModulePlayer.h"
 #include "ModuleGUI.h"
+#include "ModuleGeometry.h"
 #include <list>
 
 class Application
@@ -23,7 +24,8 @@ public:
 	ModuleCamera3D* camera;
 	//ModulePlayer* player;
 	ModuleGUI* gui;
-	
+	ModuleGeometry* geometry;
+
 	char* app_name;
 	char* organization;
 
