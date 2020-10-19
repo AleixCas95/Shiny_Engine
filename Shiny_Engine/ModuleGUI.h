@@ -6,6 +6,8 @@
 #include "SDL/include/SDL.h"
 #include <vector>
 
+#define GRAPH_ARRAY_SIZE 70
+
 class UiMainMenu;
 
 class ModuleGUI: public Module
@@ -30,6 +32,10 @@ public:
 	int memory_usage = 0;
 	int dedicated_memory = 0;
 	int available_memory = 0;
+
+	float			fps_array[GRAPH_ARRAY_SIZE];
+	float			ms_array[GRAPH_ARRAY_SIZE];
+	float			mem_array[GRAPH_ARRAY_SIZE];
 
 	bool custom = false;
 	bool normal = true;

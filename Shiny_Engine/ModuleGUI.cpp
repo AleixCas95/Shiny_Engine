@@ -3,7 +3,11 @@
 #include "ModuleGUI.h"
 #include "ImGui\imgui.h"
 #include "ImGui\imgui_impl_sdl_gl3.h"
+#include "mmgr\mmgr.h"
 #include "Glew\include\glew.h"
+
+
+#define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
 #pragma comment( lib, "Glew/libx86/glew32.lib" )
 
@@ -92,29 +96,41 @@ update_status ModuleGUI::Update(float dt)
 			ImGui::InputText("App name", "Shine Engine", 50);
 			ImGui::InputText("Organization", "Developed by Students at CITM", 50);
 
-			if (vector_fps.size() != 100)
+			//FPS Graph
+			for (uint i = 0; i < GRAPH_ARRAY_SIZE; i++)
 			{
-				vector_fps.push_back(App->GetFPS());
-				vector_ms.push_back(App->GetMS());
+				fps_array[i] = fps_array[i + 1];
 			}
+			fps_array[GRAPH_ARRAY_SIZE - 1] = ImGui::GetIO().Framerate;
+			char fps_title[25];
+			sprintf_s(fps_title, 25, "Framerate %.1f", fps_array[GRAPH_ARRAY_SIZE - 1]);
+			ImGui::PlotHistogram("", fps_array, IM_ARRAYSIZE(fps_array), 30, fps_title, 0.0f, 130.0f, ImVec2(0, 80));
 
-			else
+			//MS Graph
+			for (uint i = 0; i < GRAPH_ARRAY_SIZE; i++)
 			{
-				vector_fps.erase(vector_fps.begin());
-				vector_fps.push_back(App->GetFPS());
-
-				vector_ms.erase(vector_ms.begin());
-				vector_ms.push_back(App->GetMS());
+				ms_array[i] = ms_array[i + 1];
 			}
+			ms_array[GRAPH_ARRAY_SIZE - 1] = 1000.0f / ImGui::GetIO().Framerate;
+			char ms_title[25];
+			sprintf_s(ms_title, 25, "Milliseconds %.1f", ms_array[GRAPH_ARRAY_SIZE - 1]);
+			ImGui::PlotHistogram("", ms_array, IM_ARRAYSIZE(ms_array), 30, ms_title, 0.0f, 130.0f, ImVec2(0, 80));
 
-			char title[25];
+			//sM Stats
+			sMStats smstats = m_getMemoryStatistics();
 
-			sprintf_s(title, 25, "Framerate %.1f", vector_fps[vector_fps.size() - 1]);
-			ImGui::PlotHistogram("##framerate", &vector_fps[0], vector_fps.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			//Memory Graph
+			for (uint i = 0; i < GRAPH_ARRAY_SIZE; i++)
+			{
+				mem_array[i] = mem_array[i + 1];
+			}
+			mem_array[GRAPH_ARRAY_SIZE - 1] = smstats.totalActualMemory;
+			char mem_title[25] = "Memory Consumption";
+			ImGui::PlotHistogram("", mem_array, IM_ARRAYSIZE(mem_title), 30, mem_title, 0.0f, 1000000.0f, ImVec2(0, 80));
 
-			sprintf_s(title, 25, "Milliseconds %.1f", vector_ms[vector_ms.size() - 1]);
-			ImGui::PlotHistogram("##milliseconds", &vector_ms[0], vector_ms.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+	
 		}
+		
 
 		if (ImGui::CollapsingHeader("Options"))
 		{

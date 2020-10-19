@@ -34,6 +34,12 @@
     <Filter Include="Sources\Libraries\parson">
       <UniqueIdentifier>{4fa7a661-c49f-49fb-a620-f7a648f1480b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\UI">
+      <UniqueIdentifier>{9d5a090e-9e90-4d2e-a0de-d1e8e8206bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Libraries\mmgr">
+      <UniqueIdentifier>{cff46793-b223-4f4d-a0ea-423675dfc067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -71,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleGUI.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imconfig.h">
       <Filter>Sources\Libraries\Imgui</Filter>
@@ -114,6 +117,15 @@
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Libraries\parson</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleGUI.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="mmgr\mmgr.h">
+      <Filter>Sources\Libraries\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="mmgr\nommgr.h">
+      <Filter>Sources\Libraries\mmgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -152,9 +164,6 @@
     <ClCompile Include="Light.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleGUI.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">
       <Filter>Sources\Libraries\Imgui</Filter>
     </ClCompile>
@@ -172,6 +181,12 @@
     </ClCompile>
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\Libraries\parson</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUI.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mmgr\mmgr.cpp">
+      <Filter>Sources\Libraries\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
