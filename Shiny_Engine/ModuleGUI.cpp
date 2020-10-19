@@ -214,6 +214,24 @@ update_status ModuleGUI::Update(float dt)
 			ImGui::Text("VRAM Available: "); ImGui::SameLine(); ImGui::TextColored(yellow_color, "%.1f Mb", (available_memory * 0.001));
 			ImGui::Text("VRAM Reserved: "); ImGui::SameLine(); ImGui::TextColored(yellow_color, "%.1f Mb", (dedicated_memory * 0.001));
 		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			ImGui::Text("Mouse Position: ");
+			ImGui::SameLine();
+			ImGui::TextColored({ 1.0f, 1.0f, 0.0f, 1.0f }, "X: %i ", App->input->GetMouseX());
+			ImGui::SameLine();
+			ImGui::TextColored({ 1.0f, 1.0f, 0.0f, 1.0f }, "Y: %i", App->input->GetMouseY());
+
+			ImGui::Text("Mouse Motion: ");
+			ImGui::SameLine();
+			ImGui::TextColored({ 1.0f, 1.0f, 0.0f, 1.0f }, "X: %i ", App->input->GetMouseXMotion());
+			ImGui::SameLine();
+			ImGui::TextColored({ 1.0f, 1.0f, 0.0f, 1.0f }, "Y: %i", App->input->GetMouseYMotion());
+
+			ImGui::Text("Mouse Wheel: ");
+			ImGui::SameLine();
+			ImGui::TextColored({ 1.0f, 1.0f, 0.0f, 1.0f }, "%i ", App->input->GetMouseZ());
+		}
 	}
 	ImGui::End();
 	ImGui::Render();
