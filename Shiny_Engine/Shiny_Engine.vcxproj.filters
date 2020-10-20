@@ -120,9 +120,6 @@
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Libraries\parson</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleGUI.h">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="mmgr\mmgr.h">
       <Filter>Sources\Libraries\mmgr</Filter>
     </ClInclude>
@@ -140,6 +137,18 @@
     </ClInclude>
     <ClInclude Include="MathGeoLib\MathGeoLibFwd.h">
       <Filter>Sources\Libraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelGUI.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel_Configuration.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGUI.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHardware.h">
+      <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -197,14 +206,23 @@
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\Libraries\parson</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleGUI.cpp">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Libraries\mmgr</Filter>
     </ClCompile>
     <ClCompile Include="ModuleGeometry.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelGUI.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel_Configuration.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUI.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHardware.cpp">
+      <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
