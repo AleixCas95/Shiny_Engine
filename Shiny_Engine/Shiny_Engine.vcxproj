@@ -105,6 +105,7 @@
     <ClInclude Include="Panel_About.h" />
     <ClInclude Include="Panel_Configuration.h" />
     <ClInclude Include="ModuleHardware.h" />
+    <ClInclude Include="Panel_Console.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Panel_About.cpp" />
     <ClCompile Include="Panel_Configuration.cpp" />
     <ClCompile Include="ModuleHardware.cpp" />
+    <ClCompile Include="Panel_Console.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Timer.cpp" />

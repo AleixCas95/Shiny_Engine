@@ -8,6 +8,7 @@
 class Panel;
 class PanelConfig;
 class PanelAbout;
+class PanelConsole;
 
 
 class ModuleGUI : public Module
@@ -28,6 +29,7 @@ private:
 public:
 	PanelConfig* config = nullptr;
 	PanelAbout* about = nullptr;
+	PanelConsole* console = nullptr;
 };
 
 #endif // !MODULEUI_H

@@ -2,6 +2,7 @@
 #include "PanelGUI.h"
 #include "Panel_Configuration.h"
 #include "Panel_About.h"
+#include "Panel_Console.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
@@ -11,7 +12,8 @@ ModuleGUI::ModuleGUI(Application* app, bool start_enabled) : Module(app, start_e
 {
 	panels.push_back(config = new PanelConfig());
 	panels.push_back(about = new PanelAbout());
-	
+	panels.push_back(console = new PanelConsole());
+
 }
 
 ModuleGUI::~ModuleGUI()
@@ -92,6 +94,11 @@ update_status ModuleGUI::Update(float dt)
 		}
 
 		ImGui::EndMainMenuBar();
+	}
+
+	// Console
+	if (console->active == true) {
+		console->Draw();
 	}
 	
 
