@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "PanelGUI.h"
 #include "Panel_Configuration.h"
+#include "Panel_About.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
@@ -9,6 +10,7 @@
 ModuleGUI::ModuleGUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	panels.push_back(config = new PanelConfig());
+	panels.push_back(about = new PanelAbout());
 	
 }
 
@@ -44,10 +46,7 @@ update_status ModuleGUI::Update(float dt)
 	if (configActive == true) {
 		ImGui::Begin("");
 		ImGui::SetWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
-		if (ImGui::SmallButton("Inspector")) {
-			config->active = false;
-			//inspector->active = true;
-		}
+		
 		ImGui::SameLine();
 		if (ImGui::SmallButton("Configuration")) {
 			config->active = true;
@@ -84,6 +83,11 @@ update_status ModuleGUI::Update(float dt)
 					show_test_window = true;
 			}
 			ImGui::Checkbox("Inspector/Config", &configActive);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("About"))
+		{
+			about->Draw();
 			ImGui::EndMenu();
 		}
 

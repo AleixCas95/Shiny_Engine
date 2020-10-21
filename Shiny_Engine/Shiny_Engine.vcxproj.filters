@@ -150,6 +150,9 @@
     <ClInclude Include="ModuleHardware.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Panel_About.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -222,6 +225,9 @@
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModuleHardware.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel_About.cpp">
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
