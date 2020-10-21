@@ -8,6 +8,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleGUI(this);
+	fbx = new ModuleFBX(this);
 	//geometry = new ModuleGeometry(this);
 
 	// The order of calls is very important!
@@ -22,7 +23,7 @@ Application::Application()
 	
 	// Scenes
 	AddModule(scene);
-
+	AddModule(fbx);
 	//AddModule(player);
 	// Renderer last!
 	AddModule(renderer3D);
