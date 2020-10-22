@@ -6,7 +6,7 @@
 #include <vector>
 
 class Panel;
-class PanelConfig;
+//class Module_Configuration;
 class PanelAbout;
 class PanelConsole;
 
@@ -27,7 +27,7 @@ private:
 	std::vector<Panel*> panels;
 
 public:
-	PanelConfig* config = nullptr;
+	//Module_Configuration* config = nullptr;
 	PanelAbout* about = nullptr;
 	PanelConsole* console = nullptr;
 };

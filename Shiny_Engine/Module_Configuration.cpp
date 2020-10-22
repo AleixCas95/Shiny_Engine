@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Globals.h"
 #include "Module.h"
-#include "Panel_Configuration.h"
+#include "Module_Configuration.h"
 #include "ModuleHardware.h"
 #include "ModuleCamera3D.h"
 #include "Light.h"
@@ -11,33 +11,43 @@
 #include "MathGeoLib\MathGeoLib.h"
 #include "mmgr\mmgr.h"
 
-
-
 #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
-class Application* App;
 
-PanelConfig::PanelConfig() : Panel("Config")
+Module_Configuration::Module_Configuration(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	memset(InputBuf, 0, sizeof(InputBuf));
 	HistoryPos = -1;
-	active = true;
+}
+Module_Configuration::~Module_Configuration()
+{}
 
+bool Module_Configuration::Start()
+{
+	active = true;
+	return true;
+}
+update_status Module_Configuration::Update(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+bool Module_Configuration::CleanUp()
+{
+	return true;
 }
 
-PanelConfig::~PanelConfig() {}
 
-int PanelConfig::GetFPS() {
+int Module_Configuration::GetFPS() {
 	return fpsCap;
 }
 
 
-void PanelConfig::Draw()
+void Module_Configuration::Draw(const char* title)
 {
 	ImGui::Text("Configuration Menu");
 	ImGui::Separator();
 	ImGui::Separator();
-
+	
 	
 	if (ImGui::CollapsingHeader("Application")) {
 		ImGui::TextWrapped("App Name: Shiny Engine");

@@ -107,7 +107,7 @@
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Panel_About.h" />
-    <ClInclude Include="Panel_Configuration.h" />
+    <ClInclude Include="Module_Configuration.h" />
     <ClInclude Include="ModuleHardware.h" />
     <ClInclude Include="Panel_Console.h" />
     <ClInclude Include="parson\parson.h" />
@@ -139,7 +139,7 @@
     <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Panel_About.cpp" />
-    <ClCompile Include="Panel_Configuration.cpp" />
+    <ClCompile Include="Module_Configuration.cpp" />
     <ClCompile Include="ModuleHardware.cpp" />
     <ClCompile Include="Panel_Console.cpp" />
     <ClCompile Include="parson\parson.c" />

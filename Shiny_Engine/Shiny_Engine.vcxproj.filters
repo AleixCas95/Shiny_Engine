@@ -141,9 +141,6 @@
     <ClInclude Include="PanelGUI.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Panel_Configuration.h">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleGUI.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
@@ -158,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="ModuleFBX.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Module_Configuration.h">
+      <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,9 +224,6 @@
     <ClCompile Include="PanelGUI.cpp">
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Panel_Configuration.cpp">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleGUI.cpp">
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
@@ -241,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFBX.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Module_Configuration.cpp">
+      <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

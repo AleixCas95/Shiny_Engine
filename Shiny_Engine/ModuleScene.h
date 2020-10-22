@@ -28,5 +28,6 @@ public:
 	uint* indices = nullptr;
 	float* vertex = nullptr;
 
+
 };
 #pragma once

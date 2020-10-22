@@ -9,6 +9,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleGUI(this);
 	fbx = new ModuleFBX(this);
+	config = new Module_Configuration(this);
 	//geometry = new ModuleGeometry(this);
 
 	// The order of calls is very important!
@@ -21,6 +22,9 @@ Application::Application()
 	AddModule(input);
 	//AddModule(geometry);
 	
+	//UI
+	AddModule(config);
+
 	// Scenes
 	AddModule(scene);
 	AddModule(fbx);
