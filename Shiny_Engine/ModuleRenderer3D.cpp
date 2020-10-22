@@ -8,10 +8,11 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
+
+
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
-
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
 {}
@@ -120,13 +121,19 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+update_status ModuleRenderer3D::Update(float dt)
+{
+	for (std::vector<ModelConfig>::iterator item = meshes.begin(); item != meshes.end(); ++item)
+		App->renderer3D->DrawMeshes(*item);
+
+	return UPDATE_CONTINUE;
+}
+
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
 	
-
-
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -139,6 +146,66 @@ bool ModuleRenderer3D::CleanUp()
 	SDL_GL_DeleteContext(context);
 
 	return true;
+}
+bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
+{
+	bool ret = true;
+	// Wireframe mode
+	if (wireframe)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	// --- Texture ---
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	if (wireframe == false)
+	{
+
+		if (App->fbx->last_texture_id == 0)
+		{
+			// Alpha
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, tex_alpha);
+			// -- end alpha
+			glBindTexture(GL_TEXTURE_2D, mesh.texture_id);
+		}
+
+		else
+		{
+			// Alpha
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, tex_alpha);
+			// -- end alpha
+			glBindTexture(GL_TEXTURE_2D, App->fbx->last_texture_id);
+		}
+
+	}
+	// --- End texture ---
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
+	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_ALPHA_TEST);
+
+	// Wireframe mode
+	if (wireframe)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
+	return ret;
 }
 
 

@@ -11,6 +11,7 @@ class aiMaterial;
 
 struct ModelConfig
 {
+	//Geometry
 	uint id_vertices = 0;
 	uint num_indices = 0;
 	uint* indices = nullptr;
@@ -19,10 +20,23 @@ struct ModelConfig
 	uint num_vertices = 0;
 	uint* vertices = nullptr;
 
+	//Texture
+	uint id_normals = 0;
+	uint num_normals = 0;
+	float* normals = nullptr;
+
+	uint id_uvs = 0;
+	uint num_uvs = 0;
+	float* uvs = nullptr;
+
+	uint texture_id = 0;
+
+	//Transformation
 	vec3 position;
 	vec3 rotation;
 	vec3 scale;
 };
+
 
 class ModuleFBX : public Module
 {
@@ -44,6 +58,9 @@ public:
 	
 
 	std::vector<ModelConfig> meshes;
+
+public:
+	uint last_texture_id = 0;
 
 
 };
