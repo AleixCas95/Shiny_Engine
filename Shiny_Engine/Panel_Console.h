@@ -3,6 +3,7 @@
 
 #include "PanelGUI.h"
 #include "Globals.h"
+#include "Application.h"
 #include "imGUI\imgui.h"
 
 class PanelConsole : public Panel
