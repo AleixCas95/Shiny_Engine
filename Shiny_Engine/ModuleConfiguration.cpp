@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "Globals.h"
-#include "Module_Configuration.h"
+#include "ModuleConfiguration.h"
 #include "ModuleHardware.h"
 #include "ModuleCamera3D.h"
 #include "Light.h"
@@ -10,33 +10,33 @@
 
 #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
-Module_Configuration::Module_Configuration(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleConfiguration::ModuleConfiguration(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
 }
-Module_Configuration::~Module_Configuration()
+ModuleConfiguration::~ModuleConfiguration()
 {}
 
-bool Module_Configuration::Start()
+bool ModuleConfiguration::Start()
 {
 	active = true;
 	return true;
 }
-update_status Module_Configuration::Update(float dt)
+update_status ModuleConfiguration::Update(float dt)
 {
 	return UPDATE_CONTINUE;
 }
-bool Module_Configuration::CleanUp()
+bool ModuleConfiguration::CleanUp()
 {
 	return true;
 }
 
-int Module_Configuration::GetFPS() {
+int ModuleConfiguration::GetFPS() {
 	return fpsCap;
 }
 
 
-void Module_Configuration::Draw(const char* title)
+void ModuleConfiguration::Draw(const char* title)
 {
 	ImGui::Text("Configuration Menu");
 	ImGui::Separator();

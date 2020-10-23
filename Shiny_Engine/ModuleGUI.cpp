@@ -1,5 +1,6 @@
 #include "Application.h"
-#include "Module_Configuration.h"
+#include "ModuleConsole.h"
+#include "ModuleConfiguration.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
@@ -28,6 +29,11 @@ update_status ModuleGUI::Update(float dt)
 {
 
 	static bool show_test_window = false;
+
+	// Console
+	if (App->console->active == true) {
+		App->console->Draw("Console");
+	}
 
 	if (show_test_window)
 	{
@@ -86,8 +92,11 @@ update_status ModuleGUI::Update(float dt)
 		ImGui::EndMainMenuBar();
 	}
 
+	
 	ImGui::Render();
 	return UPDATE_CONTINUE;
+
+
 }
 
 update_status ModuleGUI::PreUpdate(float dt)

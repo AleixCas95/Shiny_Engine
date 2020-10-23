@@ -147,7 +147,10 @@
     <ClInclude Include="ModuleFBX.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Module_Configuration.h">
+    <ClInclude Include="ModuleConfiguration.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleConsole.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,7 +224,10 @@
     <ClCompile Include="ModuleFBX.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Module_Configuration.cpp">
+    <ClCompile Include="ModuleConfiguration.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleConsole.cpp">
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>

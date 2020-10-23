@@ -1,16 +1,16 @@
-#ifndef __Module_Configuration_H__
-#define __Module_Configuration_H__
+#ifndef __ModuleConfiguration_H__
+#define __ModuleConfiguration_H__
 
 #include "Application.h"
 #include "imGUI\imgui.h"
 
 #define GRAPH_ARRAY_SIZE 70
 
-class Module_Configuration : public Module
+class ModuleConfiguration : public Module
 {
 public:
-	Module_Configuration(Application* app, bool start_enabled = true);
-	~Module_Configuration();
+	ModuleConfiguration(Application* app, bool start_enabled = true);
+	~ModuleConfiguration();
 
 	bool Start();
 	update_status Update(float dt);

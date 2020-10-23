@@ -2,16 +2,16 @@
 #include "Globals.h"
 #include "Panel_About.h"
 
-PanelAbout::PanelAbout() : Panel("About")
+ModuleAbout::ModuleAbout() :(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	active = false;
 }
 
-PanelAbout::~PanelAbout()
+ModuleAbout::~ModuleAbout()
 {}
 
 
-void PanelAbout::Draw()
+void ModuleAbout::Draw()
 {
 	ImGui::TextColored(ImVec4(1, 1, 0, 100), "=== Shiny Engine ===");
 	ImGui::Text("Shiny Engine is a educational project made at CITM Terrassa.\n Hope you like it.");
