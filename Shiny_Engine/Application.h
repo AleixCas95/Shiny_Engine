@@ -12,6 +12,7 @@
 #include "ModulePlayer.h"
 #include "ModuleGUI.h"
 #include "ModuleFBX.h"
+#include "ModuleHardware.h"
 #include "Module_Configuration.h"
 //#include "ModuleGeometry.h"
 #include <list>
@@ -28,6 +29,7 @@ public:
 	ModuleGUI* gui;
 	ModuleFBX* fbx;
 	Module_Configuration* config;
+	ModuleHardware* hardware;
 	//ModuleGeometry* geometry;
 
 	char* app_name;

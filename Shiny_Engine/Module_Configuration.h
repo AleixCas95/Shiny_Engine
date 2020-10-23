@@ -3,15 +3,13 @@
 
 #include "Application.h"
 #include "imGUI\imgui.h"
-//#include "PanelGUI.h"
 
-#define GRAPH_ARRAY_SIZE 100
+#define GRAPH_ARRAY_SIZE 70
 
 class Module_Configuration : public Module
 {
 public:
 	Module_Configuration(Application* app, bool start_enabled = true);
-
 	~Module_Configuration();
 
 	bool Start();
@@ -22,25 +20,21 @@ public:
 	int GetFPS();
 
 	void Draw(const char* title);
-	
+
 	bool active = false;
 private:
 
 	int rand = 0;
 	int width = 1280;
 	int height = 1024;
-	
 	float brightness = 1.0;
 	int fpsCap = 0;
-
+	float lightColour[4];
+	float lightPos[3];
+	bool lightOn = true;
 	float			fps_array[GRAPH_ARRAY_SIZE];
 	float			ms_array[GRAPH_ARRAY_SIZE];
 	float			mem_array[GRAPH_ARRAY_SIZE];
-	char                  InputBuf[256];
-	ImVector<char*>       Items;
-	bool                  ScrollToBottom;
-	ImVector<char*>       History;
-	int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
 	
 
 	static int   Stricmp(const char* str1, const char* str2) { int d; while ((d = toupper(*str2) - toupper(*str1)) == 0 && *str1) { str1++; str2++; } return d; }

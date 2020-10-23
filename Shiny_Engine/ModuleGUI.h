@@ -1,15 +1,6 @@
-#ifndef MODULEUI_H
-#define MODULEUI_H
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
-#include <vector>
-
-class Panel;
-//class Module_Configuration;
-class PanelAbout;
-class PanelConsole;
-
 
 class ModuleGUI : public Module
 {
@@ -24,12 +15,4 @@ public:
 
 private:
 	bool configActive = true;
-	std::vector<Panel*> panels;
-
-public:
-	//Module_Configuration* config = nullptr;
-	PanelAbout* about = nullptr;
-	PanelConsole* console = nullptr;
 };
-
-#endif // !MODULEUI_H

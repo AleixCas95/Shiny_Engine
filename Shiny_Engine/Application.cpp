@@ -10,6 +10,7 @@ Application::Application()
 	gui = new ModuleGUI(this);
 	fbx = new ModuleFBX(this);
 	config = new Module_Configuration(this);
+	hardware = new ModuleHardware(this);
 	//geometry = new ModuleGeometry(this);
 
 	// The order of calls is very important!
@@ -23,6 +24,7 @@ Application::Application()
 	//AddModule(geometry);
 	
 	//UI
+	AddModule(hardware);
 	AddModule(config);
 
 	// Scenes
