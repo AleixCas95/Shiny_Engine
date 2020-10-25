@@ -12,6 +12,14 @@ enum KEY_STATE
 	KEY_UP
 };
 
+enum FILE_TYPE
+{
+	GEOMETRY_MODEL = 0,
+	TEXTURE,
+	UNKNOWN,
+	DIR_NULLPTR
+};
+
 class ModuleInput : public Module
 {
 public:
@@ -67,4 +75,6 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
+
+	const FILE_TYPE ModuleInput::GetFileType(const char* dir) const;
 };

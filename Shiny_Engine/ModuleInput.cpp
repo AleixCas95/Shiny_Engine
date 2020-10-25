@@ -127,3 +127,33 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
+const FILE_TYPE ModuleInput::GetFileType(const char* dir) const
+{
+	if (dir != nullptr)
+	{
+		std::string type;
+		//From const char* to std::string
+		std::string path(dir);
+
+		//Find extension
+		type = path.substr(path.find_last_of("."));
+		if (type == ".png" || type == ".jpg" || type == ".bmp" || type == ".dds" ||
+			type == ".PNG" || type == ".JPG" || type == ".BMP" || type == ".DDS")
+		{
+			return TEXTURE;
+		}
+		else if (type == ".fbx" || type == ".obj" ||
+			type == ".FBX" || type == ".OBJ")
+		{
+			return GEOMETRY_MODEL;
+		}
+		else
+		{
+			return UNKNOWN;
+		}
+	}
+
+	LOG("File directory ERROR. Is nullptr.");
+	return DIR_NULLPTR;
+}
