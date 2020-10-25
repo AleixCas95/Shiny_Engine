@@ -12,7 +12,8 @@ Application::Application()
 	config = new ModuleConfiguration(this);
 	hardware = new ModuleHardware(this);
 	console = new ModuleConsole(this);
-	//geometry = new ModuleGeometry(this);
+	about = new ModuleAbout(this);
+	
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -22,18 +23,17 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	//AddModule(geometry);
-	
+
 	//UI
 	AddModule(console);
 	AddModule(hardware);
 	AddModule(config);
+	AddModule(about);
 
 	// Scenes
 	AddModule(scene);
 	AddModule(fbx);
-	//AddModule(player);
-	// Renderer last!
+
 	AddModule(renderer3D);
 	AddModule(gui);
 }

@@ -53,6 +53,7 @@ void ModuleConfiguration::Draw(const char* title)
 		{
 			fps_array[i] = fps_array[i + 1];
 		}
+
 		fps_array[GRAPH_ARRAY_SIZE - 1] = ImGui::GetIO().Framerate;
 		char fps_title[25];
 		sprintf_s(fps_title, 25, "Framerate %.1f", fps_array[GRAPH_ARRAY_SIZE - 1]);

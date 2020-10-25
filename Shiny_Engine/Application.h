@@ -15,6 +15,7 @@
 #include "ModuleHardware.h"
 #include "ModuleConfiguration.h"
 #include "ModuleConsole.h"
+#include "ModuleAbout.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -32,10 +33,10 @@ public:
 	ModuleConfiguration* config;
 	ModuleHardware* hardware;
 	ModuleConsole* console;
+	ModuleAbout* about;
 	//ModuleGeometry* geometry;
 
-	char* app_name;
-	char* organization;
+
 
 private:
 

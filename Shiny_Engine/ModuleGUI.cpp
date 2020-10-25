@@ -42,7 +42,7 @@ update_status ModuleGUI::Update(float dt)
 
 	if (configActive == true) {
 		ImGui::Begin("");
-		ImGui::SetWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
+		ImGui::SetWindowSize(ImVec2(320, 689), ImGuiCond_FirstUseEver);
 		ImGui::SetWindowPos(ImVec2(App->window->width - App->window->width, App->window->height - App->window->height + 20));
 		if (ImGui::SmallButton("Test")) {
 			App->config->active = false;
@@ -86,9 +86,9 @@ update_status ModuleGUI::Update(float dt)
 		}
 		if (ImGui::BeginMenu("About"))
 		{
+			App->about->Draw();
 			ImGui::EndMenu();
 		}
-
 		ImGui::EndMainMenuBar();
 	}
 
