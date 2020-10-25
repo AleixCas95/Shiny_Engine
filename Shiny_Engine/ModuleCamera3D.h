@@ -1,7 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
+#include "MathGeoLib/MathGeoLib.h"
+
 
 class ModuleCamera3D : public Module
 {
@@ -13,20 +14,27 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
+
+	void Look(const math::float3& Position, const math::float3& Reference, bool RotateAroundReference = false);
+	void LookAt(const math::float3& Spot);
+	void Move(const math::float3& Movement);
+	void Orbit(math::float3 target, float deltaX, float deltaY);
 	float* GetViewMatrix();
+
 
 private:
 
 	void CalculateViewMatrix();
 
 public:
-	
-	vec3 X, Y, Z, Position, Reference;
+
+	math::float3 X, Y, Z, Position, Reference;
+
+	float camera_mov_speed = 3.0f;
+	float mouse_wheel_speed = 0.5f;
+	float mouse_sensitivity = 0.25f;
 
 private:
 
-	mat4x4 ViewMatrix, ViewMatrixInverse;
+	math::float4x4 ViewMatrix, ViewMatrixInverse;
 };
