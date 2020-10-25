@@ -51,7 +51,7 @@ void ModuleConsole::ClearLog()
 void ModuleConsole::Draw(const char* title)
 {
 
-	/*::Begin(title);
+	ImGui::Begin(title);
 
 	ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
 	
@@ -72,7 +72,27 @@ void ModuleConsole::Draw(const char* title)
 		ImGui::EndPopup();
 	}
 
+	// Write in console
+	for (int i = 0; i < items.Size; i++) {
+		const char* currentItem = items[i];
+		ImVec4 colour = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		if (strstr(currentItem, "[error]")) {
+			colour = ImColor(1.0f, 0.4f, 0.4f, 1.0f);
+		}
+		else if (strncmp(currentItem, "# ", 2) == 0) {
+			colour = ImColor(1.0f, 0.78f, 0.58f, 1.0f);
+		}
+		ImGui::PushStyleColor(ImGuiCol_Text, colour);
+		ImGui::TextUnformatted(currentItem);
+		ImGui::PopStyleColor();
+	}
+	if (scrollToBottom == true) {
+		ImGui::SetScrollHere();
+	}
+	scrollToBottom = false;
+
+
 	ImGui::EndChild();
 
-	ImGui::End();*/
+	ImGui::End();
 }
