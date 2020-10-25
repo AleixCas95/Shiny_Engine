@@ -10,7 +10,10 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Primitive_Arrow,
+	Primitive_Axis,
+	Primitive_Ray
 };
 
 class Primitive
@@ -31,6 +34,12 @@ public:
 	Color color;
 	mat4x4 transform;
 	bool axis,wire;
+	uint my_id = 0;
+	uint my_indices = 0;
+	uint my_normals = 0;
+	float* vertices = nullptr;
+	uint* indices = nullptr;
+	float* normals = nullptr;
 
 protected:
 	PrimitiveTypes type;
@@ -43,8 +52,12 @@ public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
+	void CreateBuffers();
 public:
 	vec3 size;
+	float sx = 0;
+	float sy = 0;
+	float sz = 0;
 };
 
 // ============================================
