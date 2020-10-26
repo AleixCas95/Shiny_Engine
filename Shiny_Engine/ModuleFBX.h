@@ -1,14 +1,12 @@
 #ifndef MODULEFBX_H
 #define MODULEFBX_H
 
+
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
 #include <vector>
 #include "Glew\include\glew.h"
-#include <string>
 #include "MathGeoLib\Geometry\AABB.h"
-
 
 class aiScene;
 class aiNode;
@@ -42,11 +40,9 @@ struct ModelConfig
 	vec3 scale;
 };
 
-
 class ModuleFBX : public Module
 {
 public:
-	
 	ModuleFBX(Application* app, bool start_enabled = true);
 	~ModuleFBX();
 
@@ -60,25 +56,25 @@ public:
 	uint CreateTextureID(const char* texture_path);
 	void ApplyTexture(const char* path);
 	void ClearMeshes();
-	void DrawMeshes();
 
 	// Read only
-	uint const GetIndices();
-	uint const GetVertices();
-	vec3 const GetPosition();
-	vec3 const GetRotation();
-	vec3 const GetScale();
-	float const GetNormals();
-	float const GetUvs();
-	uint const GetTextureId();
-	void const CentrateObjectView();
-	math::AABB const GetAABB();
-	uint const MeshesSize();
-
-	std::vector<ModelConfig> meshes;
+	uint GetIndicesQuantity() const;
+	uint GetVerticesQuantity() const;
+	vec3 GetPosition() const;
+	vec3 GetRotation() const;
+	vec3 GetScale() const;
+	float GetNormalsQuanity() const;
+	float GetUvsQuantity() const;
+	uint GetTextureId() const;
+	void CentrateObjectView() const;
+	math::AABB GetAABB() const;
+	uint MeshesSize() const;
 
 public:
 	std::string path;
+	std::string texture_path;
+	int textureWidth = 0;
+	int textureHeight = 0;
 	std::string file_name;
 	uint last_texture_id = 0;
 
@@ -88,6 +84,5 @@ private:
 	ModelConfig data;
 	ModelConfig mesh;
 };
-
 
 #endif // !MODULEFBX_H

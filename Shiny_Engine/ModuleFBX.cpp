@@ -1,17 +1,17 @@
 #include "Application.h"
 #include "ModuleFBX.h"
-#include "Assimp/include/cimport.h"
-#include "Assimp/include/scene.h"
-#include "Assimp/include/postprocess.h"
-#include "Devil/include/il.h"
-#include "Devil/include/ilut.h"
+#include "ModuleRenderer3D.h"
+#include "Assimp\include\cimport.h"
+#include "Assimp\include\scene.h"
+#include "Assimp\include\postprocess.h"
+#include "Devil\include\il.h"
+#include "Devil\include\ilut.h"
 #include "MathGeoLib\Geometry\AABB.h"
-#include <math.h>
 
-#pragma comment (lib, "Assimp/libx86/assimp.lib")
-#pragma comment (lib, "Devil/libx86/DevIL.lib")
-#pragma comment ( lib, "Devil/libx86/ILU.lib" )
-#pragma comment ( lib, "Devil/libx86/ILUT.lib" )
+#pragma comment (lib, "Assimp\\libx86\\assimp.lib")
+#pragma comment (lib, "Devil\\libx86\\DevIL.lib")
+#pragma comment ( lib, "Devil\\libx86\\ILU.lib" )
+#pragma comment ( lib, "Devil\\libx86\\ILUT.lib" )
 
 using namespace std;
 
@@ -34,53 +34,44 @@ bool ModuleFBX::Start()
 	ilutRenderer(ILUT_OPENGL);
 
 	struct aiLogStream stream = aiLogStream();
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	stream.callback = myCallback;
 	aiAttachLogStream(&stream);
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 
 	return ret;
-	
 }
 
 void ModuleFBX::ClearMeshes()
 {
-	for (int i = meshes.size() - 1; meshes.size() != 0; i--)
+	for (int i = App->renderer3D->meshes.size() - 1; App->renderer3D->meshes.size() != 0; i--)
 	{
-		delete[] meshes[i].indices;
-		delete[] meshes[i].vertices;
-		delete[] meshes[i].uvs;
-		delete[] meshes[i].normals;
-		meshes.pop_back();
+		delete[] App->renderer3D->meshes[i].indices;
+		delete[] App->renderer3D->meshes[i].vertices;
+		delete[] App->renderer3D->meshes[i].uvs;
+		delete[] App->renderer3D->meshes[i].normals;
+		App->renderer3D->meshes.pop_back();
 	}
 
 	//Geometry
 	delete data.indices;
 	delete data.vertices;
 
-
 	//Texture
 	delete data.uvs;
 	delete data.normals;
-}
-
-
-void ModuleFBX::DrawMeshes()
-{
-	for (std::vector<ModelConfig>::iterator item = App->fbx->meshes.begin(); item != App->fbx->meshes.end(); ++item)
-		App->renderer3D->DrawMeshes(*item);
 }
 
 bool ModuleFBX::CleanUp()
 {
 	aiDetachAllLogStreams();
 	ClearMeshes();
-	return true;
-
+	path.clear();
+	texture_path.clear();
 	return true;
 }
 
 bool ModuleFBX::LoadFBX(const char* path)
 {
-	
 	LOG("Loading FBX...");
 	file_name.clear();
 	this->path = path;
@@ -109,7 +100,6 @@ bool ModuleFBX::LoadFBX(const char* path)
 
 void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 {
-
 	if (node->mNumMeshes <= 0)
 	{
 		LOG("Unable to load the mesh with path: %s. The number of meshes is below or equal to 0.", path);
@@ -126,7 +116,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 			memcpy(mesh.vertices, new_mesh->mVertices, sizeof(float) * mesh.num_vertices * 3);
 
 			// ---- Generate buffers ----
-			glGenBuffers(1, (GLuint*) & (mesh.id_vertices));
+			glGenBuffers(1, (GLuint*)&(mesh.id_vertices));
 			glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.num_vertices, mesh.vertices, GL_STATIC_DRAW);
 
@@ -143,7 +133,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 					}
 				}
 
-				glGenBuffers(1, (GLuint*) & (mesh.id_indices));
+				glGenBuffers(1, (GLuint*)&(mesh.id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
 			}
@@ -165,7 +155,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 					memcpy(&mesh.uvs[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
 				}
 
-				glGenBuffers(1, (GLuint*) & (mesh.id_uvs));
+				glGenBuffers(1, (GLuint*)&(mesh.id_uvs));
 				glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh.num_uvs, mesh.uvs, GL_STATIC_DRAW);
 			}
@@ -174,7 +164,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 				LOG("Texture coords couldn´t be found for the specified mesh.");
 			}
 
-			//  Texture ID 
+			// ---- Texture ID ----
 			aiMaterial* material = scene->mMaterials[new_mesh->mMaterialIndex];
 			if (material)
 			{
@@ -183,27 +173,28 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 
 				if (path.length > 0)
 				{
-					//  Find the texture on textures folder
-					std::string texture_folder = "Textures/";
+					// ---- Find the texture on textures folder ----
+					std::string texture_folder = "Textures\\";
 					std::string final_path = path.data;
 					final_path.erase(0, final_path.find_last_of("\\") + 1);
-					texture_folder += final_path;
+					texture_path = texture_folder + final_path;
 
-					mesh.texture_id = CreateTextureID(texture_folder.c_str());
-					LOG("Texture with path %s has been loaded.", texture_folder.c_str());
+					mesh.texture_id = CreateTextureID(texture_path.c_str());
+					ApplyTexture(texture_path.c_str());
+					LOG("Texture with path %s has been loaded.", texture_path.c_str());
 					final_path.clear();
 					texture_folder.clear();
 				}
 			}
 
-			// Normals
+			// ---- Normals ----
 			if (new_mesh->HasNormals())
 			{
 				mesh.num_normals = new_mesh->mNumVertices;
 				mesh.normals = new float[mesh.num_normals * 3];
 				memcpy(mesh.normals, new_mesh->mNormals, sizeof(float) * mesh.num_normals * 3);
 
-				glGenBuffers(1, (GLuint*) & (mesh.id_normals));
+				glGenBuffers(1, (GLuint*)&(mesh.id_normals));
 				glBindBuffer(GL_ARRAY_BUFFER, mesh.id_normals);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.num_normals, mesh.normals, GL_STATIC_DRAW);
 			}
@@ -212,16 +203,37 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 				LOG("Mesh has no normals.");
 			}
 
-			//  Push the mesh 
-			meshes.push_back(mesh);
+			// ---- Push the mesh ----
+			App->renderer3D->meshes.push_back(mesh);
 			LOG("Loaded mesh with %i vertices.", mesh.num_vertices);
 			LOG("Loaded mesh with %i indices.", mesh.num_indices);
 			LOG("Loaded mesh with %i triangles.", mesh.num_vertices / 3);
 			LOG("Loaded mesh with %i normals.", mesh.num_normals);
 			LOG("Loaded mesh with %i uvs.", mesh.num_uvs);
-
 		}
 	}
+
+	for (int i = 0; i < node->mNumChildren; i++)
+	{
+		LoadModel(scene, node->mChildren[i], path);
+	}
+
+	// ---- Default transformation values ----
+
+	aiVector3D translation;
+	aiVector3D scaling;
+	aiQuaternion rotation;
+	node->mTransformation.Decompose(scaling, rotation, translation);
+	aiMatrix3x3 rotMat = rotation.GetMatrix();
+	aiVector3D rotationEuler = rotMat.GetEuler();
+
+	mesh.position = (translation.x, translation.y, translation.z);
+	mesh.rotation = (rotationEuler.x, rotationEuler.y, rotationEuler.z);
+	mesh.scale = (scaling.x, scaling.y, scaling.z);
+
+	LOG("Mesh position: (%f, %f, %f)", mesh.position.x, mesh.position.y, mesh.position.z);
+	LOG("Mesh rotation: (%f, %f, %f)", mesh.rotation.x, mesh.rotation.y, mesh.rotation.z);
+	LOG("Mesh scale: (%f, %f, %f)", mesh.scale.x, mesh.scale.y, mesh.scale.z);
 }
 
 uint ModuleFBX::CreateTextureID(const char* texture_path)
@@ -234,23 +246,26 @@ uint ModuleFBX::CreateTextureID(const char* texture_path)
 
 	texture_id = ilutGLBindTexImage();
 
-
 	return texture_id;
 }
 
 void ModuleFBX::ApplyTexture(const char* path)
 {
-
 	ILuint id;
 	ilGenImages(1, &id);
 	ilBindImage(id);
 	ilLoadImage(path);
+	textureWidth = ilGetInteger(IL_IMAGE_WIDTH);
+	textureHeight = ilGetInteger(IL_IMAGE_HEIGHT);
 
 	last_texture_id = ilutGLBindTexImage();
+
+	texture_path = path;
+
 	LOG("Loaded and applied new texture correctly from path %s.", path);
 }
 
-void const ModuleFBX::CentrateObjectView()
+void ModuleFBX::CentrateObjectView()const
 {
 	math::AABB box(float3(0, 0, 0), float3(0, 0, 0));
 	box.Enclose((float3*)App->fbx->mesh.vertices, App->fbx->mesh.num_vertices);
@@ -266,7 +281,7 @@ void const ModuleFBX::CentrateObjectView()
 	App->camera->LookAt(App->camera->Reference);
 }
 
-math::AABB const ModuleFBX::GetAABB()
+math::AABB ModuleFBX::GetAABB()const
 {
 	math::AABB box(float3(0, 0, 0), float3(0, 0, 0));
 	box.Enclose((float3*)App->fbx->mesh.vertices, App->fbx->mesh.num_vertices);
@@ -274,47 +289,47 @@ math::AABB const ModuleFBX::GetAABB()
 	return box;
 }
 
-uint const ModuleFBX::MeshesSize()
+uint ModuleFBX::MeshesSize()const
 {
-	return meshes.size();
+	return App->renderer3D->meshes.size();
 }
 
-uint const ModuleFBX::GetIndices()
+uint ModuleFBX::GetIndicesQuantity()const
 {
 	return(mesh.num_indices);
 }
 
-uint const ModuleFBX::GetVertices()
+uint ModuleFBX::GetVerticesQuantity()const
 {
 	return(mesh.num_vertices);
 }
 
-vec3 const ModuleFBX::GetPosition()
+vec3 ModuleFBX::GetPosition()const
 {
 	return(mesh.position);
 }
 
-vec3 const ModuleFBX::GetRotation()
+vec3 ModuleFBX::GetRotation()const
 {
 	return(mesh.rotation);
 }
 
-vec3 const ModuleFBX::GetScale()
+vec3 ModuleFBX::GetScale()const
 {
 	return(mesh.scale);
 }
 
-float const ModuleFBX::GetNormals()
+float ModuleFBX::GetNormalsQuanity()const
 {
 	return(mesh.num_normals);
 }
 
-float const ModuleFBX::GetUvs()
+float ModuleFBX::GetUvsQuantity()const
 {
 	return(mesh.num_uvs);
 }
 
-uint const ModuleFBX::GetTextureId()
+uint ModuleFBX::GetTextureId()const
 {
 	return(mesh.texture_id);
 }
