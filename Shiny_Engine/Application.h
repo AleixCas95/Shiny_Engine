@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
+#include "parson\parson.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleScene.h"
@@ -58,6 +59,9 @@ public:
 
 	float GetMS();
 	float GetFPS();
+
+	JSON_Value* JSONconfig = nullptr;
+	JSON_Object* JSONconfig_obj = nullptr;
 
 private:
 
