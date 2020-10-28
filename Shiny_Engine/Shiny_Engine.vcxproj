@@ -167,6 +167,7 @@
     <ClInclude Include="ModuleConfiguration.h" />
     <ClInclude Include="ModuleHardware.h" />
     <ClInclude Include="ModuleConsole.h" />
+    <ClInclude Include="ParShapes\par_shapes.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />

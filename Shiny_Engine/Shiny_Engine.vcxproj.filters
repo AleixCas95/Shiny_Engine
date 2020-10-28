@@ -43,6 +43,9 @@
     <Filter Include="Sources\Libraries\MathGeoLib">
       <UniqueIdentifier>{3abf8dee-7ecb-4254-83d6-ddf533e288fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\ParShapes">
+      <UniqueIdentifier>{a535e53a-2d49-4e08-9abd-13145f2e733e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -326,6 +329,9 @@
     </ClInclude>
     <ClInclude Include="ModuleAbout.h">
       <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ParShapes\par_shapes.h">
+      <Filter>Sources\Libraries\ParShapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
