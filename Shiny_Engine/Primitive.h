@@ -13,7 +13,8 @@ enum PrimitiveTypes
 	Primitive_Cylinder,
 	Primitive_Arrow,
 	Primitive_Axis,
-	Primitive_Ray
+	Primitive_Ray,
+	P_Mesh
 };
 
 class Primitive
@@ -34,9 +35,9 @@ public:
 	Color color;
 	mat4x4 transform;
 	bool axis,wire;
-	uint my_id = 0;
-	uint my_indices = 0;
-	uint my_normals = 0;
+	//uint my_id = 0;
+	//uint my_indices = 0;
+	//uint my_normals = 0;
 	float* vertices = nullptr;
 	uint* indices = nullptr;
 	float* normals = nullptr;
@@ -105,4 +106,31 @@ public:
 public:
 	vec3 normal;
 	float constant;
+};
+
+
+template <typename T>
+struct buffer
+{
+
+	uint id = 0u;
+	uint size = 0u;
+	T* data = nullptr;
+};
+
+class Mesh : public Primitive
+{
+public:
+	Mesh(GameObject* parent);
+	void InnerRender() const;
+public:
+	int id = -1;
+	buffer<uint> index;
+	buffer<float> vertex;
+	buffer<float> normals;
+	buffer<float> uvs;
+
+	bool hasNormals = false;
+
+	GameObject* parent = nullptr;
 };

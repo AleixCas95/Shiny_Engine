@@ -275,3 +275,10 @@ void PlaneGrid::InnerRender() const
 
 	glEnd();
 }
+
+// MESH ============================================
+Mesh::Mesh(GameObject* parent) : Primitive()
+{
+	type = PrimitiveTypes::P_Mesh;
+	this->parent = parent;
+}
