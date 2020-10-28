@@ -539,6 +539,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Sources\Modules\Game\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="par_shapes.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

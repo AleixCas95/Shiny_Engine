@@ -240,6 +240,7 @@
     <ClCompile Include="ModuleHardware.cpp" />
     <ClCompile Include="ModuleConsole.cpp" />
     <ClCompile Include="parson\parson.c" />
+    <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
