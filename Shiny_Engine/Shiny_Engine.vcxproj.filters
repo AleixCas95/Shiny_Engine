@@ -46,6 +46,12 @@
     <Filter Include="Sources\Libraries\ParShapes">
       <UniqueIdentifier>{a535e53a-2d49-4e08-9abd-13145f2e733e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Game\GameObject">
+      <UniqueIdentifier>{b46e38a2-e3a2-4cd3-a91c-6f4a9d8f8f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Game\GameObject\Components">
+      <UniqueIdentifier>{1721209a-f263-4887-84b2-bc099a751b5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -333,6 +339,18 @@
     <ClInclude Include="ParShapes\par_shapes.h">
       <Filter>Sources\Libraries\ParShapes</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTexture.h">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Modules\Game\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -508,6 +526,18 @@
     </ClCompile>
     <ClCompile Include="ModuleAbout.cpp">
       <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTexture.cpp">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Modules\Game\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\Modules\Game\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
