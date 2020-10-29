@@ -10,6 +10,7 @@
 
 #define MAX_LIGHTS 8
 class Application;
+class Mesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -33,6 +34,9 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	std::vector<ModelConfig> meshes;
+
+
+	std::vector<Mesh*> mesh_list;
 
 	bool wireframe = false;
 	float tex_alpha = 0.0f;

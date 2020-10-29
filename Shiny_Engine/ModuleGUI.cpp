@@ -1,10 +1,12 @@
 #include "Application.h"
 #include "ModuleConsole.h"
 #include "ModuleConfiguration.h"
+#include "ModuleShapes.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
 #include "ModuleGUI.h"
+#include "ParShapes/par_shapes.h"
 
 ModuleGUI::ModuleGUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -58,7 +60,7 @@ update_status ModuleGUI::Update(float dt)
 		ImGui::End();
 	}
 
-	
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -80,8 +82,9 @@ update_status ModuleGUI::Update(float dt)
 				else
 					show_test_window = true;
 			}
+
 			ImGui::Checkbox("ShowConfig", &configActive);
-			
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("About"))
@@ -89,10 +92,15 @@ update_status ModuleGUI::Update(float dt)
 			App->about->Draw();
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Shapes"))
+		{
+			App->shape->Draw();
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 
-	
+
 	ImGui::Render();
 	return UPDATE_CONTINUE;
 

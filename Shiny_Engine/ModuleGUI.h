@@ -12,7 +12,10 @@ public:
 	update_status Update(float dt);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
+	bool showShapes = false;
+	bool showHierarchy = false;
 
 private:
 	bool configActive = true;
+
 };
