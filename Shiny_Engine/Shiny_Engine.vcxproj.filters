@@ -357,6 +357,9 @@
     <ClInclude Include="ModuleWindow.h">
       <Filter>Sources\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleShapes.h">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -550,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Sources\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleShapes.cpp">
+      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

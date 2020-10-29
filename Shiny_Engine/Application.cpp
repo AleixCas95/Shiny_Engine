@@ -13,6 +13,7 @@ Application::Application()
 	hardware = new ModuleHardware(this);
 	console = new ModuleConsole(this);
 	about = new ModuleAbout(this);
+	shape = new ModuleShapes(this);
 	gobject = new ModuleGameObject(this);
 	
 
@@ -25,6 +26,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(gobject);
+	AddModule(shape);
 
 	//UI
 	AddModule(console);

@@ -17,6 +17,7 @@
 #include "ModuleConfiguration.h"
 #include "ModuleConsole.h"
 #include "ModuleAbout.h"
+#include "ModuleShapes.h"
 #include "ModuleGameObject.h"
 #include "GameObject.h"
 //#include "ModuleGeometry.h"
@@ -37,6 +38,7 @@ public:
 	ModuleHardware* hardware;
 	ModuleConsole* console;
 	ModuleAbout* about;
+	ModuleShapes* shape;
 	ModuleGameObject* gobject;
 	//ModuleGeometry* geometry;
 
