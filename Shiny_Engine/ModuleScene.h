@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "ImGui/imgui.h"
+#include "GameObject.h"
 
 
 #define MAX_SNAKE 2
@@ -28,6 +29,6 @@ public:
 	uint* indices = nullptr;
 	float* vertex = nullptr;
 
-
+	GameObject* current_object = nullptr;
 };
 #pragma once

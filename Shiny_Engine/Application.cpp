@@ -15,6 +15,7 @@ Application::Application()
 	about = new ModuleAbout(this);
 	shape = new ModuleShapes(this);
 	gobject = new ModuleGameObject(this);
+	inspector = new ModuleInspector(this);
 	
 
 	// The order of calls is very important!
@@ -33,6 +34,7 @@ Application::Application()
 	AddModule(hardware);
 	AddModule(config);
 	AddModule(about);
+	AddModule(inspector);
 
 	// Scenes
 	AddModule(scene);

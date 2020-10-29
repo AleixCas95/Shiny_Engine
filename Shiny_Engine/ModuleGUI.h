@@ -14,6 +14,7 @@ public:
 	bool CleanUp();
 	bool showShapes = false;
 	bool showHierarchy = false;
+	bool showInspector = false;
 
 private:
 	bool configActive = true;

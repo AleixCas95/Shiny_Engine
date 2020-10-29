@@ -20,6 +20,7 @@
 #include "ModuleShapes.h"
 #include "ModuleGameObject.h"
 #include "GameObject.h"
+#include "ModuleInspector.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -38,6 +39,7 @@ public:
 	ModuleHardware* hardware;
 	ModuleConsole* console;
 	ModuleAbout* about;
+	ModuleInspector* inspector;
 	ModuleShapes* shape;
 	ModuleGameObject* gobject;
 	//ModuleGeometry* geometry;
