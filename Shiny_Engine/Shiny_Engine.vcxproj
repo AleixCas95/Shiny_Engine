@@ -162,6 +162,7 @@
     <ClInclude Include="ModuleAbout.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFBX.h" />
+    <ClInclude Include="ModuleGameObject.h" />
     <ClInclude Include="ModuleGUI.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleScene.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="ModuleAbout.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleFBX.cpp" />
+    <ClCompile Include="ModuleGameObject.cpp" />
     <ClCompile Include="ModuleGUI.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />

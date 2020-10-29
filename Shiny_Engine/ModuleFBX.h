@@ -4,9 +4,13 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "GameObject.h"
 #include <vector>
 #include "Glew\include\glew.h"
 #include "MathGeoLib\Geometry\AABB.h"
+#include "ParShapes/par_shapes.h"
+
+class Mesh;
 
 class aiScene;
 class aiNode;
@@ -50,12 +54,14 @@ public:
 
 	bool Start();
 	bool CleanUp();
+	Mesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
 
 	bool LoadFBX(const char* path);
 	void LoadModel(const aiScene* scene, aiNode* node, const char* path);
 	uint CreateTextureID(const char* texture_path);
 	void ApplyTexture(const char* path);
 	void ClearMeshes();
+
 
 	// Read only
 	uint GetIndicesQuantity() const;
@@ -70,6 +76,8 @@ public:
 	math::AABB GetAABB() const;
 	uint MeshesSize() const;
 
+
+
 public:
 	std::string path;
 	std::string texture_path;
@@ -79,6 +87,10 @@ public:
 	uint last_texture_id = 0;
 
 	GLfloat fbx_position[3] = { 0.0f, 0.0f, 0.0f };
+
+	uint checkerImageID = 0u;
+
+
 
 private:
 	ModelConfig data;

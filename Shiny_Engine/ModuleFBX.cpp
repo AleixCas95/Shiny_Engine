@@ -7,6 +7,9 @@
 #include "Devil\include\il.h"
 #include "Devil\include\ilut.h"
 #include "MathGeoLib\Geometry\AABB.h"
+#include "ParShapes/par_shapes.h"
+#include "ComponentMesh.h"
+#include "ComponentTexture.h"
 
 #pragma comment (lib, "Assimp\\libx86\\assimp.lib")
 #pragma comment (lib, "Devil\\libx86\\DevIL.lib")
@@ -332,4 +335,40 @@ float ModuleFBX::GetUvsQuantity()const
 uint ModuleFBX::GetTextureId()const
 {
 	return(mesh.texture_id);
+}
+
+Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
+{
+	GameObject* go = new GameObject(App->gobject->root, name);
+
+	Mesh* m = new Mesh(go);
+
+	m->vertex.size = mesh->npoints;
+	m->vertex.data = new float[m->vertex.size * 3];
+	memcpy(m->vertex.data, mesh->points, sizeof(float) * mesh->npoints * 3);
+
+	m->index.size = mesh->ntriangles * 3;
+	m->index.data = new uint[m->index.size];
+
+	for (int i = 0; i < m->index.size; i++)
+	{
+		m->index.data[i] = (uint)mesh->triangles[i];
+	}
+
+	glGenBuffers(1, (GLuint*)&(m->vertex.id));
+	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*)&(m->index.id));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+
+	ComponentMesh* newMesh = new ComponentMesh(go);
+	newMesh->mesh = m;
+
+	App->renderer3D->mesh_list.push_back(m);
+
+	LOG("Par_Shapes Mesh loaded");
+
+	return m;
 }

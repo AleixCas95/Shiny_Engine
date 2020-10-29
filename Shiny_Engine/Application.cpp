@@ -13,6 +13,7 @@ Application::Application()
 	hardware = new ModuleHardware(this);
 	console = new ModuleConsole(this);
 	about = new ModuleAbout(this);
+	gobject = new ModuleGameObject(this);
 	
 
 	// The order of calls is very important!
@@ -23,6 +24,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(gobject);
 
 	//UI
 	AddModule(console);
