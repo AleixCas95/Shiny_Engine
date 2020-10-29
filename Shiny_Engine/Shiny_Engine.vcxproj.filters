@@ -360,7 +360,7 @@
     <ClInclude Include="ModuleShapes.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleInspector.h">
+   <ClInclude Include="ModuleInspector.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
