@@ -10,6 +10,7 @@
 #include "ParShapes/par_shapes.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
+#include "ModuleConsole.h"
 
 #pragma comment (lib, "Assimp\\libx86\\assimp.lib")
 #pragma comment (lib, "Devil\\libx86\\DevIL.lib")
@@ -75,7 +76,7 @@ bool ModuleFBX::CleanUp()
 
 bool ModuleFBX::LoadFBX(const char* path)
 {
-	LOG("Loading FBX...");
+	App->console->AddLog("Loading FBX...");
 	file_name.clear();
 	this->path = path;
 	//Substract the name of the file
@@ -93,11 +94,11 @@ bool ModuleFBX::LoadFBX(const char* path)
 
 		// ---- Release resources ----
 		aiReleaseImport(scene);
-		LOG("---- FBX LOADED WITH SUCCESS ----");
+		App->console->AddLog("---- FBX LOADED WITH SUCCESS ----");
 		return true;
 	}
 	else
-		LOG("---- ERROR, COULDN'T LOAD FBX ----");
+		App->console->AddLog("---- ERROR, COULDN'T LOAD FBX ----");
 	return false;
 }
 
@@ -105,11 +106,11 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 {
 	if (node->mNumMeshes <= 0)
 	{
-		LOG("Unable to load the mesh with path: %s. The number of meshes is below or equal to 0.", path);
+		App->console->AddLog("Unable to load the mesh with path: %s. The number of meshes is below or equal to 0.", path);
 	}
 	else
 	{
-		LOG("Loading mesh from path %s", path);
+		App->console->AddLog("Loading mesh from path %s", path);
 		for (int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* new_mesh = scene->mMeshes[node->mMeshes[i]];
@@ -142,7 +143,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 			}
 			else
 			{
-				LOG("Mesh with %i faces can not be loaded.", new_mesh->mNumFaces);
+				App->console->AddLog("Mesh with %i faces can not be loaded.", new_mesh->mNumFaces);
 			}
 
 			// ---- Texture ----
@@ -164,7 +165,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 			}
 			else
 			{
-				LOG("Texture coords couldn´t be found for the specified mesh.");
+				App->console->AddLog("Texture coords couldn´t be found for the specified mesh.");
 			}
 
 			// ---- Texture ID ----
@@ -184,7 +185,7 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 
 					mesh.texture_id = CreateTextureID(texture_path.c_str());
 					ApplyTexture(texture_path.c_str());
-					LOG("Texture with path %s has been loaded.", texture_path.c_str());
+					App->console->AddLog("Texture with path %s has been loaded.", texture_path.c_str());
 					final_path.clear();
 					texture_folder.clear();
 				}
@@ -203,16 +204,16 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 			}
 			else
 			{
-				LOG("Mesh has no normals.");
+				App->console->AddLog("Mesh has no normals.");
 			}
 
 			// ---- Push the mesh ----
 			App->renderer3D->meshes.push_back(mesh);
-			LOG("Loaded mesh with %i vertices.", mesh.num_vertices);
-			LOG("Loaded mesh with %i indices.", mesh.num_indices);
-			LOG("Loaded mesh with %i triangles.", mesh.num_vertices / 3);
-			LOG("Loaded mesh with %i normals.", mesh.num_normals);
-			LOG("Loaded mesh with %i uvs.", mesh.num_uvs);
+			App->console->AddLog("Loaded mesh with %i vertices.", mesh.num_vertices);
+			App->console->AddLog("Loaded mesh with %i indices.", mesh.num_indices);
+			App->console->AddLog("Loaded mesh with %i triangles.", mesh.num_vertices / 3);
+			App->console->AddLog("Loaded mesh with %i normals.", mesh.num_normals);
+			App->console->AddLog("Loaded mesh with %i uvs.", mesh.num_uvs);
 		}
 	}
 
@@ -234,9 +235,9 @@ void ModuleFBX::LoadModel(const aiScene* scene, aiNode* node, const char* path)
 	mesh.rotation = (rotationEuler.x, rotationEuler.y, rotationEuler.z);
 	mesh.scale = (scaling.x, scaling.y, scaling.z);
 
-	LOG("Mesh position: (%f, %f, %f)", mesh.position.x, mesh.position.y, mesh.position.z);
-	LOG("Mesh rotation: (%f, %f, %f)", mesh.rotation.x, mesh.rotation.y, mesh.rotation.z);
-	LOG("Mesh scale: (%f, %f, %f)", mesh.scale.x, mesh.scale.y, mesh.scale.z);
+	App->console->AddLog("Mesh position: (%f, %f, %f)", mesh.position.x, mesh.position.y, mesh.position.z);
+	App->console->AddLog("Mesh rotation: (%f, %f, %f)", mesh.rotation.x, mesh.rotation.y, mesh.rotation.z);
+	App->console->AddLog("Mesh scale: (%f, %f, %f)", mesh.scale.x, mesh.scale.y, mesh.scale.z);
 }
 
 uint ModuleFBX::CreateTextureID(const char* texture_path)
@@ -265,7 +266,7 @@ void ModuleFBX::ApplyTexture(const char* path)
 
 	texture_path = path;
 
-	LOG("Loaded and applied new texture correctly from path %s.", path);
+	App->console->AddLog("Loaded and applied new texture correctly from path %s.", path);
 }
 
 void ModuleFBX::CentrateObjectView()const
@@ -368,7 +369,7 @@ Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 
 	App->renderer3D->mesh_list.push_back(m);
 
-	LOG("Par_Shapes Mesh loaded");
+	App->console->AddLog("Par_Shapes Mesh loaded");
 
 	return m;
 }

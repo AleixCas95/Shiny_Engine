@@ -20,7 +20,7 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
-	LOG("Loading Intro assets");
+	App->console->AddLog("Loading Intro assets");
 	bool ret = true;
 	glewInit();
 
@@ -37,7 +37,7 @@ update_status ModuleScene::PreUpdate(float dt)
 // Load assets
 bool ModuleScene::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	App->console->AddLog("Unloading Intro scene");
 	return true;
 }
 
@@ -87,6 +87,6 @@ update_status ModuleScene::Update(float dt)
 
 void ModuleScene::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	LOG("Hit!");
+	App->console->AddLog("Hit!");
 }
 

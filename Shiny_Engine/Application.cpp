@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ModuleConsole.h"
 
 Application::Application()
 {
@@ -71,7 +72,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	console->AddLog("-------------- Application Start --------------");
 	item = list_modules.begin();
 
 	while (item != list_modules.end() && ret == true)
