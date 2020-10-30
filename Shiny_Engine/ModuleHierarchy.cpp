@@ -29,11 +29,39 @@ void ModuleHierarchy::Draw()
 {
 	if (ImGui::Begin("Hierarchy", &App->gui->showHierarchy, ImGuiWindowFlags_HorizontalScrollbar))
 	{
+		if (App->gobject->root)
+		{
+			DrawGameObjects(App->gobject->root);
+		}
 	}
 	ImGui::End();
 }
 
 void ModuleHierarchy::DrawGameObjects(GameObject* current)
 {
+	uint flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
 
+	if (current->childs.size() == 0)
+		flags |= ImGuiTreeNodeFlags_Leaf;
+
+	if (current == App->scene->current_object)
+		flags |= ImGuiTreeNodeFlags_Selected;
+
+	char name[256];
+
+	sprintf_s(name, 256, "%s##%u", current->name.c_str(), current->uuid);
+
+	if (ImGui::TreeNodeEx(name, flags))
+	{
+		if (ImGui::IsItemClicked(0))
+		{
+			App->scene->current_object = current;
+		}
+
+		for (std::list<GameObject*>::iterator childs = current->childs.begin(); childs != current->childs.end(); ++childs)
+		{
+			DrawGameObjects(*childs);
+		}
+		ImGui::TreePop();
+	}
 }
