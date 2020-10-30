@@ -42,6 +42,9 @@ bool ModuleFBX::Start()
 	aiAttachLogStream(&stream);
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 
+
+	LoadFBX("Game\\Assets\\Models\\BakerHouse.fbx");
+	//ImportTexture("Game\\Assets\\Textures\\Baker_House.png");
 	return ret;
 }
 
@@ -149,7 +152,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 				textPath = textPath.substr(textPath.find_last_of("\\") + 1);
 
-				textPath = "Assets\\Textures\\" + textPath;
+				textPath = "Game\\Assets\\Textures\\" + textPath;
 
 				ImportTexture(textPath.c_str(), go);
 			}
