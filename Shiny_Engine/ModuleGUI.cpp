@@ -18,7 +18,7 @@ ModuleGUI::~ModuleGUI()
 
 bool ModuleGUI::Start()
 {
-	LOG("Loading ImGui");
+	App->console->AddLog("Loading ImGui");
 
 	glewInit();
 	ImGui_ImplSdlGL3_Init(App->window->window);
@@ -118,7 +118,7 @@ update_status ModuleGUI::PreUpdate(float dt)
 
 bool ModuleGUI::CleanUp()
 {
-	LOG("Unloading ImGui");
+	App->console->AddLog("Unloading ImGui");
 	ImGui_ImplSdlGL3_Shutdown();
 	return true;
 }
