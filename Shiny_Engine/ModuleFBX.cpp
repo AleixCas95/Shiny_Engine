@@ -42,6 +42,8 @@ bool ModuleFBX::Start()
 	aiAttachLogStream(&stream);
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 
+	LoadFBX("Game\\Assets\\Models\\BakerHouse.fbx");
+
 	return ret;
 }
 
