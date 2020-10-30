@@ -52,6 +52,20 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+	
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+	{
+		if (App->scene->current_object)
+		{
+			float3 posCam = App->scene->current_object->transform->GetGlobalPos();
+			vec3 vec = { posCam.x, posCam.y, posCam.z };
+
+			Position.x = vec.x + 10;
+			Position.y = vec.y + 10;
+			Position.z = vec.z + 10;
+			LookAt(math::float3(&vec));
+		}
+	}
 
 	
 	if (App->input->GetMouseZ() != 0)
