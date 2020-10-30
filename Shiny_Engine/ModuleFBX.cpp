@@ -42,9 +42,8 @@ bool ModuleFBX::Start()
 	aiAttachLogStream(&stream);
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 
-
 	LoadFBX("Game\\Assets\\Models\\BakerHouse.fbx");
-	//ImportTexture("Game\\Assets\\Textures\\Baker_House.png");
+
 	return ret;
 }
 
