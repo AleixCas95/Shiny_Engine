@@ -113,24 +113,24 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 		case SDL_DROPFILE:
-			fbx_path = e.drop.file;
-			file_type = GetFileType(fbx_path.c_str());
-			if (file_type == GEOMETRY_MODEL)
-			{
-				if (App->fbx->MeshesSize() == 0)
-					App->fbx->LoadFBX(fbx_path.c_str());
-				else
-				{
-					App->fbx->ClearMeshes();
-					App->fbx->LoadFBX(fbx_path.c_str());
-				}
-				App->fbx->CentrateObjectView();
-			}
-			else if (file_type == TEXTURE)
-			{
-				App->fbx->ApplyTexture(fbx_path.c_str());
-			}
+		{
+			char* dropped_filedir;
+			dropped_filedir = e.drop.file;
+			// Shows directory of dropped file
+			std::string extension;
+			std::string path(dropped_filedir);
+			extension = path.substr(path.find_last_of(".") + 1);
 
+			if (!extension.compare("fbx") || !extension.compare("obj") || !extension.compare("FBX"))
+				App->fbx->LoadFBX(dropped_filedir);
+
+
+			else if (!extension.compare("png") || !extension.compare("dds") || !extension.compare("jpg") || !extension.compare("jpeg") || !extension.compare("tga"))
+				App->fbx->ImportTexture(dropped_filedir);
+
+
+			SDL_free(dropped_filedir);
+		}
 		case SDL_WINDOWEVENT:
 		{
 			if (e.window.event == SDL_WINDOWEVENT_RESIZED)

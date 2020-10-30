@@ -57,9 +57,9 @@ public:
 	Mesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
 
 	bool LoadFBX(const char* path);
-	void LoadModel(const aiScene* scene, aiNode* node, const char* path);
-	uint CreateTextureID(const char* texture_path);
-	void ApplyTexture(const char* path);
+	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent);
+	void ImportTexture(const char* path);
+	void ImportTexture(const char* path, GameObject* go);
 	void ClearMeshes();
 
 
