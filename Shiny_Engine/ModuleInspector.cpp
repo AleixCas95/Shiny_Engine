@@ -29,7 +29,7 @@ void ModuleInspector::Draw()
 		{
 			char buf[64];
 			strcpy_s(buf, 64, App->scene->current_object->name.c_str());
-			if (ImGui::InputText("##Name", buf, 60))
+			if (ImGui::InputText("##Name", buf, (int)(sizeof(buf) / sizeof(*buf))))
 			{
 				App->scene->current_object->name = buf;
 			}

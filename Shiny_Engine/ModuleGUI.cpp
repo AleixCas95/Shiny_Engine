@@ -46,14 +46,14 @@ update_status ModuleGUI::Update(float dt)
 		ImGui::Begin("");
 		ImGui::SetWindowSize(ImVec2(320, 689), ImGuiCond_FirstUseEver);
 		ImGui::SetWindowPos(ImVec2(App->window->width - App->window->width, App->window->height - App->window->height + 20));
-		if (ImGui::SmallButton("Inspector")) {
+		if (ImGui::SmallButton("test")) {
 			App->config->active = false;
-			App->gui->showInspector = true;
+		
 		}
 		ImGui::SameLine();
 		if (ImGui::SmallButton("Configuration")) {
 			App->config->active = true;
-			App->gui->showInspector = false;
+		
 		}
 		ImGui::Separator();
 		if (App->config->active == true) {
@@ -99,7 +99,8 @@ update_status ModuleGUI::Update(float dt)
 			App->shape->Draw();
 			ImGui::EndMenu();
 		}
-		
+		App->inspector->Draw();
+		App->hierarchy->Draw();
 		ImGui::EndMainMenuBar();
 	}
 

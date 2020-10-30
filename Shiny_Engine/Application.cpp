@@ -16,6 +16,7 @@ Application::Application()
 	shape = new ModuleShapes(this);
 	gobject = new ModuleGameObject(this);
 	inspector = new ModuleInspector(this);
+	hierarchy = new ModuleHierarchy(this);
 	
 
 	// The order of calls is very important!
@@ -35,6 +36,7 @@ Application::Application()
 	AddModule(config);
 	AddModule(about);
 	AddModule(inspector);
+	AddModule(hierarchy);
 
 	// Scenes
 	AddModule(scene);

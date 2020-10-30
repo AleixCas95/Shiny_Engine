@@ -21,6 +21,7 @@
 #include "ModuleGameObject.h"
 #include "GameObject.h"
 #include "ModuleInspector.h"
+#include "ModuleHierarchy.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -42,6 +43,7 @@ public:
 	ModuleInspector* inspector;
 	ModuleShapes* shape;
 	ModuleGameObject* gobject;
+	ModuleHierarchy* hierarchy;
 	//ModuleGeometry* geometry;
 
 

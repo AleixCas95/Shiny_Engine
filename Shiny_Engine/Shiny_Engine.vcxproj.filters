@@ -360,7 +360,11 @@
     <ClInclude Include="ModuleShapes.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
-   <ClInclude Include="ModuleInspector.h">
+    <ClInclude Include="ModuleInspector.h">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Inspector.h" />
+    <ClInclude Include="ModuleHierarchy.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -561,6 +565,10 @@
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModuleInspector.cpp">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Inspector.cpp" />
+    <ClCompile Include="ModuleHierarchy.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
