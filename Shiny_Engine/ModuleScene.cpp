@@ -24,8 +24,8 @@ bool ModuleScene::Start()
 	bool ret = true;
 	glewInit();
 
-	App->camera->Move(float3(1,1,0));
-	App->camera->LookAt(math::float3::zero);
+	App->camera->Move(vec3(1,1,0));
+	App->camera->LookAt(vec3(0,0,0));
 
 	return ret;
 }
