@@ -39,6 +39,8 @@ int ModuleConfiguration::GetFPS() {
 void ModuleConfiguration::Draw(const char* title)
 {
 	ImGui::Text("Configuration Menu");
+	ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH * 0, SCREEN_HEIGHT * 0 + 20));
+	ImGui::SetWindowSize(ImVec2(SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.75 - 20));
 	ImGui::Separator();
 	ImGui::Separator();
 

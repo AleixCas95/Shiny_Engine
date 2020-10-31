@@ -28,7 +28,10 @@ bool ModuleHierarchy::CleanUp()
 void ModuleHierarchy::Draw()
 {
 	if (ImGui::Begin("Hierarchy", &App->gui->showHierarchy, ImGuiWindowFlags_HorizontalScrollbar))
+	ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH * 0.75, SCREEN_HEIGHT * 0 + 20));
+	ImGui::SetWindowSize(ImVec2(SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.50 - 20));
 	{
+
 		if (App->gobject->root)
 		{
 			DrawGameObjects(App->gobject->root);
