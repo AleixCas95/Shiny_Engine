@@ -124,11 +124,6 @@ update_status ModuleCamera3D::Update(float dt)
 		Position += newPos;
 		Reference += newPos;
 	}
-	// Look to object
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	{
-		App->fbx->CentrateObjectView();
-	}
 
 	// Rotate camera with static position
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT &&
@@ -167,18 +162,29 @@ update_status ModuleCamera3D::Update(float dt)
 	{
 		LOG("FPS-like camera disabled.");
 	}
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed * dt;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed * dt;
+
+	Position += newPos;
+	Reference += newPos;
+	
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed * dt;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed * dt;
+		if (App->scene->current_object)
+		{
+			float3 posCam = App->scene->current_object->transform->GetGlobalPos();
+			vec3 vec = { posCam.x, posCam.y, posCam.z };
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed * dt;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed * dt;
-
-		Position += newPos;
-		Reference += newPos;
+			Position.x = vec.x + 10;
+			Position.y = vec.y + 10;
+			Position.z = vec.z + 10;
+			LookAt(vec);
+		}
 	}
-
 	// Camera speed
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN)
 		speed *= 2;

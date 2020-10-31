@@ -152,6 +152,26 @@ void ModuleConfiguration::Draw()
 			App->hardware->Draw("Hardware");
 		}
 
+		if (ImGui::CollapsingHeader("Render"))
+		{
+
+			bool wireframeMode = false;
+			GLint polygonMode[2];
+			glGetIntegerv(GL_POLYGON_MODE, polygonMode);
+
+			if (polygonMode[0] == GL_LINE && polygonMode[1] == GL_LINE)
+				wireframeMode = true;
+			if (ImGui::Checkbox("Wireframe", &wireframeMode))
+			{
+				if (wireframeMode)
+				{
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				}
+				else
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+			
+		}
 
 		if (ImGui::CollapsingHeader("Light")) {
 
