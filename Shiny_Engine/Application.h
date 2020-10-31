@@ -30,21 +30,22 @@ class Application
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleScene* scene;
+	
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	//ModulePlayer* player;
 	ModuleGUI* gui;
-	ModuleFBX* fbx;
 	ModuleConfiguration* config;
 	ModuleHardware* hardware;
 	ModuleConsole* console;
 	ModuleAbout* about;
 	ModuleInspector* inspector;
-	ModuleShapes* shape;
-	ModuleGameObject* gobject;
 	ModuleHierarchy* hierarchy;
-	//ModuleGeometry* geometry;
+	ModuleShapes* shape;
+	ModuleFBX* fbx;
+	ModuleGameObject* gobject;
+	ModuleScene* scene;
+
+	
 
 
 

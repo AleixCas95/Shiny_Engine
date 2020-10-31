@@ -154,11 +154,7 @@ bool ModuleRenderer3D::CleanUp()
 bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 {
 	bool ret = true;
-	// Wireframe mode
-	if (wireframe)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
+
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -170,28 +166,28 @@ bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 	// --- Texture ---
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	if (wireframe == false)
+	
+	
+
+	if (App->fbx->last_texture_id == 0)
 	{
-
-		if (App->fbx->last_texture_id == 0)
-		{
-			// Alpha
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, tex_alpha);
-			// -- end alpha
-			glBindTexture(GL_TEXTURE_2D, mesh.texture_id);
-		}
-
-		else
-		{
-			// Alpha
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, tex_alpha);
-			// -- end alpha
-			glBindTexture(GL_TEXTURE_2D, App->fbx->last_texture_id);
-		}
-
+		// Alpha
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, tex_alpha);
+		// -- end alpha
+		glBindTexture(GL_TEXTURE_2D, mesh.texture_id);
 	}
+
+	else
+	{
+		// Alpha
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, tex_alpha);
+		// -- end alpha
+		glBindTexture(GL_TEXTURE_2D, App->fbx->last_texture_id);
+	}
+
+	
 	// --- End texture ---
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
@@ -202,12 +198,6 @@ bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_ALPHA_TEST);
-
-	// Wireframe mode
-	if (wireframe)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
 
 	return ret;
 }

@@ -38,7 +38,7 @@ public:
 
 	std::vector<Mesh*> mesh_list;
 
-	bool wireframe = false;
+	
 	float tex_alpha = 0.0f;
 };
 

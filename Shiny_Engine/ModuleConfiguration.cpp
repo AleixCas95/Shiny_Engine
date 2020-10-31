@@ -154,20 +154,18 @@ void ModuleConfiguration::Draw()
 
 		if (ImGui::CollapsingHeader("Render"))
 		{
-
 			bool wireframeMode = false;
 			GLint polygonMode[2];
 			glGetIntegerv(GL_POLYGON_MODE, polygonMode);
-
 			if (polygonMode[0] == GL_LINE && polygonMode[1] == GL_LINE)
 				wireframeMode = true;
 			if (ImGui::Checkbox("Wireframe", &wireframeMode))
 			{
-				if (wireframeMode)
+				if (wireframeMode == true)
 				{
 					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				}
-				else
+				if (wireframeMode == false)
 					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			}
 			
