@@ -42,27 +42,6 @@ update_status ModuleGUI::Update(float dt)
 		ImGui::ShowTestWindow();
 	}
 
-	if (configActive == true) {
-		ImGui::Begin("");
-		ImGui::SetWindowSize(ImVec2(320, 689), ImGuiCond_FirstUseEver);
-		ImGui::SetWindowPos(ImVec2(App->window->width - App->window->width, App->window->height - App->window->height + 20));
-		if (ImGui::SmallButton("test")) {
-			App->config->active = false;
-		
-		}
-		ImGui::SameLine();
-		if (ImGui::SmallButton("Configuration")) {
-			App->config->active = true;
-		
-		}
-		ImGui::Separator();
-		if (App->config->active == true) {
-			App->config->Draw("test");
-		}
-		ImGui::End();
-	}
-
-
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -101,6 +80,12 @@ update_status ModuleGUI::Update(float dt)
 		}
 		App->inspector->Draw();
 		App->hierarchy->Draw();
+
+		if (configActive == true)
+		{
+			App->config->Draw();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 

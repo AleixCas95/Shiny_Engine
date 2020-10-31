@@ -19,7 +19,7 @@ public:
 	void AddLog(const char*, ...) IM_FMTARGS(2);
 	int GetFPS();
 
-	void Draw(const char* title);
+	void Draw();
 
 	bool active = false;
 private:
