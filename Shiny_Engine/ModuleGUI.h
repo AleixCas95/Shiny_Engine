@@ -13,11 +13,14 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 	bool showShapes = false;
-	bool showHierarchy = false;
-	bool showInspector = false;
+	bool showHierarchy = true;
+	bool showInspector = true;
+	bool showConsole = true;
 
 private:
 	bool configActive = true;
-	
+	//bool hirearchyActive = true;
+	//bool inspectorActive = true;
+	//bool configActive = true;
 
 };

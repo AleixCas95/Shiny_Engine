@@ -32,12 +32,8 @@ update_status ModuleGUI::Update(float dt)
 
 	static bool show_test_window = false;
 
-	// Console
-	if (App->console->active == true) {
-		App->console->Draw("Console");
-	}
-
-	if (show_test_window)
+	
+	if (show_test_window == true)
 	{
 		ImGui::ShowTestWindow();
 	}
@@ -54,18 +50,11 @@ update_status ModuleGUI::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Window"))
 		{
-			if (ImGui::MenuItem("Show test window"))
-			{
-				if (show_test_window)
-				{
-					show_test_window = false;
-				}
-				else
-					show_test_window = true;
-			}
-
 			ImGui::Checkbox("ShowConfig", &configActive);
-
+			ImGui::Checkbox("ShowInspector", &showInspector);
+			ImGui::Checkbox("ShowHirearchy", &showHierarchy);
+			ImGui::Checkbox("ShowConsole", &showConsole);
+			ImGui::Checkbox("show_text_window", &show_test_window);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("About"))
@@ -78,12 +67,24 @@ update_status ModuleGUI::Update(float dt)
 			App->shape->Draw();
 			ImGui::EndMenu();
 		}
-		App->inspector->Draw();
-		App->hierarchy->Draw();
-
+	
 		if (configActive == true)
 		{
 			App->config->Draw();
+		}
+		if (showInspector == true)
+		{
+			App->inspector->Draw();
+		}
+
+		if (showConsole == true)
+		{
+			App->console->Draw("Console");
+		}
+
+		if (showHierarchy == true)
+		{
+			App->hierarchy->Draw();
 		}
 
 		ImGui::EndMainMenuBar();
