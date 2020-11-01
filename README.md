@@ -3,22 +3,9 @@ You can import your model (.fbx and .obj), load geometry and change or apply one
 
 In order tho work with it you have to drag and drop the files on the window.
 
- 
-# CAMERA CONTROLS 
+## Link To Repository
 
-- Mouse right click: Move Camera with static position
-- Mouse right click + arrow keys: Navigate arround the scene
-- Mouse left + Alt-left: Move Camera arround model pivot
-- Mouse wheel: Move Camera forward and backward
-- Mouse middle: Panning
-- F: Center the Camera on an object
-
-# FEATURES
-
-- Configuration options (Application, window, scene, render, hardware, volume, camera, light and input).
-- Inspector shows transform propierties, mesh information and texture information.
-- Console with LOG control.
-- Load and visualization of geometry and textures.
+https://github.com/AleixCas95/Shiny_Engine
 
 # ASSIGNMENT 1
 
@@ -33,7 +20,7 @@ In order tho work with it you have to drag and drop the files on the window.
 
 # FEATURES
 
-- Configuration options (Application, window, scene, render, hardware, volume, camera, light and input).
+- Configuration options (Application, window, scene, render, hardware,light and input).
 - Inspector shows transform propierties, mesh information and texture information.
 - Console with LOG control.
 - Load and visualization of geometry and textures.
@@ -44,7 +31,9 @@ In order tho work with it you have to drag and drop the files on the window.
 - Wireframe mode
 - Texture alpha tolerance
 - Light control
-- Code polished
+- Can freely transform selected objects in hierarchy.
+- Parshapes meshes menu in topbar.
+- Checkbox for show/hide each window in UI.
 
 ### Shiny_Engine is under the MIT license
 
