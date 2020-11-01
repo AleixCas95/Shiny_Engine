@@ -29,6 +29,7 @@ bool ModuleGUI::Start()
 
 update_status ModuleGUI::Update(float dt)
 {
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
 
 	static bool show_test_window = false;
 
@@ -89,17 +90,27 @@ update_status ModuleGUI::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
-
-
+	
+	if (App->config->wireframeMode == true) 
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+		
 	ImGui::Render();
+
+	if (App->config->wireframeMode == true)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	
 	return UPDATE_CONTINUE;
 
 
 }
 
-update_status ModuleGUI::PreUpdate(float dt)
+update_status ModuleGUI::PostUpdate(float dt)
 {
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	
 	return(UPDATE_CONTINUE);
 }
 

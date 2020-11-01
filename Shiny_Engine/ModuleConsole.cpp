@@ -15,6 +15,9 @@ ModuleConsole::~ModuleConsole()
 
 bool ModuleConsole::Start()
 {
+
+	
+
 	active = true;
 	return true;
 }
@@ -52,8 +55,8 @@ void ModuleConsole::Draw(const char* title)
 {
 
 	ImGui::Begin(title);
-	ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH * 0, SCREEN_HEIGHT * 0.75));
-	ImGui::SetWindowSize(ImVec2(SCREEN_WIDTH * 0.75, SCREEN_HEIGHT * 0.25));
+	ImGui::SetWindowPos(ImVec2(App->config->width * 0, App->config->height * 0.75));
+	ImGui::SetWindowSize(ImVec2(App->config->width * 0.75, App->config->height * 0.25));
 	
 	if (ImGui::SmallButton("Clear")) {
 		ClearLog();

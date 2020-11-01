@@ -21,12 +21,15 @@ public:
 
 	void Draw();
 
+	int width = 1280;
+	int height = 1024;
+
 	bool active = false;
+	bool wireframeMode = false;
 private:
 
 	int rand = 0;
-	int width = 1280;
-	int height = 1024;
+
 	float brightness = 1.0;
 	int fpsCap = 0;
 	float lightColour[4];

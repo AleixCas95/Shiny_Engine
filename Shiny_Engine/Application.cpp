@@ -28,23 +28,30 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(gobject);
-	AddModule(shape);
 
 	//UI
-	AddModule(console);
+	
+	/*AddModule(console);
 	AddModule(hardware);
 	AddModule(config);
 	AddModule(about);
 	AddModule(inspector);
-	AddModule(hierarchy);
-
+	AddModule(hierarchy);*/
+	
+	
 	// Scenes
+
 	AddModule(scene);
 	AddModule(fbx);
+	AddModule(gobject);
 
 	AddModule(renderer3D);
 	AddModule(gui);
+
+
+
+	
+
 }
 
 Application::~Application()

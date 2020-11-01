@@ -126,6 +126,10 @@ update_status ModuleRenderer3D::Update(float dt)
 {
 	for (std::vector<ModelConfig>::iterator item = meshes.begin(); item != meshes.end(); ++item)
 		App->renderer3D->DrawMeshes(*item);
+	for (std::vector<Mesh*>::iterator it = mesh_list.begin(); it != mesh_list.end(); ++it)
+	{
+		(*it)->InnerRender();
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -133,12 +137,10 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	for (std::vector<Mesh*>::iterator it = mesh_list.begin(); it != mesh_list.end(); ++it)
-	{
-		(*it)->InnerRender();
-	}
+
 
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -154,7 +156,6 @@ bool ModuleRenderer3D::CleanUp()
 bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 {
 	bool ret = true;
-
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

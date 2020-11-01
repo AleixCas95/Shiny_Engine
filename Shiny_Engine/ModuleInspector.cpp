@@ -24,8 +24,8 @@ bool ModuleInspector::CleanUp()
 void ModuleInspector::Draw()
 {
 	if (ImGui::Begin("Inspector", &App->gui->showInspector,ImGuiWindowFlags_HorizontalScrollbar))
-		ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH * 0.75, SCREEN_HEIGHT * 0.30));
-        ImGui::SetWindowSize(ImVec2(SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.70));
+		ImGui::SetWindowPos(ImVec2(App->config->width * 0.75, App->config->height * 0.30));
+        ImGui::SetWindowSize(ImVec2(App->config->width * 0.25, App->config->height * 0.70));
 	{
 		if (App->scene->current_object)
 		{

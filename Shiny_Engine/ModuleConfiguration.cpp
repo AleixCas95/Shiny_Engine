@@ -19,6 +19,9 @@ ModuleConfiguration::~ModuleConfiguration()
 
 bool ModuleConfiguration::Start()
 {
+	width = SCREEN_WIDTH;
+	height = SCREEN_HEIGHT;
+
 	active = true;
 	return true;
 }
@@ -38,9 +41,10 @@ int ModuleConfiguration::GetFPS() {
 
 void ModuleConfiguration::Draw()
 {
+
 	if (ImGui::Begin("Configuration", &App->config->active, ImGuiWindowFlags_HorizontalScrollbar))
-		ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH * 0, SCREEN_HEIGHT * 0 + 20));
-	ImGui::SetWindowSize(ImVec2(SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.75 - 20));
+	ImGui::SetWindowPos(ImVec2(width * 0, height * 0 + 20));
+	ImGui::SetWindowSize(ImVec2(width * 0.25, height * 0.75 - 20));
 	{
 		ImGui::Text("Configuration Menu");
 		ImGui::Separator();
@@ -154,7 +158,7 @@ void ModuleConfiguration::Draw()
 
 		if (ImGui::CollapsingHeader("Render"))
 		{
-			bool wireframeMode = false;
+
 			GLint polygonMode[2];
 			glGetIntegerv(GL_POLYGON_MODE, polygonMode);
 			if (polygonMode[0] == GL_LINE && polygonMode[1] == GL_LINE)
