@@ -367,6 +367,9 @@
     <ClInclude Include="ModuleHierarchy.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFiles.h">
+      <Filter>Sources\Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -570,6 +573,9 @@
     <ClCompile Include="Inspector.cpp" />
     <ClCompile Include="ModuleHierarchy.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFiles.cpp">
+      <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

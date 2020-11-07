@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -163,6 +163,7 @@
     <ClInclude Include="ModuleAbout.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFBX.h" />
+    <ClInclude Include="ModuleFiles.h" />
     <ClInclude Include="ModuleGameObject.h" />
     <ClInclude Include="ModuleGUI.h" />
     <ClInclude Include="ModuleHierarchy.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="ModuleAbout.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleFBX.cpp" />
+    <ClCompile Include="ModuleFiles.cpp" />
     <ClCompile Include="ModuleGameObject.cpp" />
     <ClCompile Include="ModuleGUI.cpp" />
     <ClCompile Include="ModuleHierarchy.cpp" />

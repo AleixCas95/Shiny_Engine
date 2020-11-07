@@ -59,7 +59,7 @@ public:
 	bool LoadFBX(const char* path);
 	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent);
 	void ImportTexture(const char* path);
-	void ImportTexture(const char* path, GameObject* go);
+	void ImportTextureGo(const char* path, GameObject* go);
 	void ClearMeshes();
 
 

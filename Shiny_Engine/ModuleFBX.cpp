@@ -153,7 +153,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 				textPath = "Game\\Assets\\Textures\\" + textPath;
 
-				ImportTexture(textPath.c_str(), go);
+				ImportTextureGo(textPath.c_str(), go);
 			}
 		}
 
@@ -230,13 +230,15 @@ void ModuleFBX::ImportTexture(const char* path)
 	}
 }
 
-void ModuleFBX::ImportTexture(const char* path, GameObject* go)
+void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 {
 	ilInit();
 	iluInit();
 	ilutInit();
 	if (ilLoadImage(path))
 	{
+
+
 		uint texture_id = 0;
 
 		uint id = 0;
@@ -293,6 +295,43 @@ void ModuleFBX::CentrateObjectView()const
 	App->camera->LookAt(App->camera->Reference);
 }
 
+
+Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
+{
+	GameObject* go = new GameObject(App->gobject->root, name);
+
+	Mesh* m = new Mesh(go);
+
+	m->vertex.size = mesh->npoints;
+	m->vertex.data = new float[m->vertex.size * 3];
+	memcpy(m->vertex.data, mesh->points, sizeof(float) * mesh->npoints * 3);
+
+	m->index.size = mesh->ntriangles * 3;
+	m->index.data = new uint[m->index.size];
+
+	for (int i = 0; i < m->index.size; i++)
+	{
+		m->index.data[i] = (uint)mesh->triangles[i];
+	}
+
+	glGenBuffers(1, (GLuint*)&(m->vertex.id));
+	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*)&(m->index.id));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+
+	ComponentMesh* newMesh = new ComponentMesh(go);
+	newMesh->mesh = m;
+
+	App->renderer3D->mesh_list.push_back(m);
+
+	App->console->AddLog("Par_Shapes Mesh loaded");
+
+	return m;
+}
+
 math::AABB ModuleFBX::GetAABB()const
 {
 	math::AABB box(float3(0, 0, 0), float3(0, 0, 0));
@@ -344,40 +383,4 @@ float ModuleFBX::GetUvsQuantity()const
 uint ModuleFBX::GetTextureId()const
 {
 	return(mesh.texture_id);
-}
-
-Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
-{
-	GameObject* go = new GameObject(App->gobject->root, name);
-
-	Mesh* m = new Mesh(go);
-
-	m->vertex.size = mesh->npoints;
-	m->vertex.data = new float[m->vertex.size * 3];
-	memcpy(m->vertex.data, mesh->points, sizeof(float) * mesh->npoints * 3);
-
-	m->index.size = mesh->ntriangles * 3;
-	m->index.data = new uint[m->index.size];
-
-	for (int i = 0; i < m->index.size; i++)
-	{
-		m->index.data[i] = (uint)mesh->triangles[i];
-	}
-
-	glGenBuffers(1, (GLuint*)&(m->vertex.id));
-	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*)&(m->index.id));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
-
-	ComponentMesh* newMesh = new ComponentMesh(go);
-	newMesh->mesh = m;
-
-	App->renderer3D->mesh_list.push_back(m);
-
-	App->console->AddLog("Par_Shapes Mesh loaded");
-
-	return m;
 }
