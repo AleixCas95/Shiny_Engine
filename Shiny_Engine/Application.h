@@ -22,6 +22,7 @@
 #include "GameObject.h"
 #include "ModuleInspector.h"
 #include "ModuleHierarchy.h"
+#include "ModuleFiles.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -44,7 +45,7 @@ public:
 	ModuleFBX* fbx;
 	ModuleGameObject* gobject;
 	ModuleScene* scene;
-
+	ModuleFiles* files;
 	
 
 

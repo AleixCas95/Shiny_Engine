@@ -18,7 +18,7 @@ Application::Application()
 	gobject = new ModuleGameObject(this);
 	inspector = new ModuleInspector(this);
 	hierarchy = new ModuleHierarchy(this);
-	
+	files = new ModuleFiles(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -40,7 +40,7 @@ Application::Application()
 	
 	
 	// Scenes
-
+	AddModule(files);
 	AddModule(scene);
 	AddModule(fbx);
 	AddModule(gobject);
