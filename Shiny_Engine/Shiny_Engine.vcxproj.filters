@@ -577,6 +577,9 @@
     <ClCompile Include="ModuleFiles.cpp">
       <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
