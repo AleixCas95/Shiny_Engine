@@ -370,6 +370,9 @@
     <ClInclude Include="ModuleFiles.h">
       <Filter>Sources\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -579,6 +582,9 @@
     </ClCompile>
     <ClCompile Include="Globals.cpp">
       <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
