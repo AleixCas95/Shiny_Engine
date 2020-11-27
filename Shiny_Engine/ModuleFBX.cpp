@@ -92,7 +92,7 @@ bool ModuleFBX::LoadFBX(const char* path)
 
 GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent)
 {
-	GameObject* go = new GameObject(parent, node->mName.C_Str());
+	GameObject* go = new GameObject(App,parent, node->mName.C_Str());
 
 	if (node->mNumMeshes > 0)
 	{
@@ -171,7 +171,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 		glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
-		ComponentMesh* newMesh = new ComponentMesh(go);
+		ComponentMesh* newMesh = new ComponentMesh(App,go);
 		newMesh->mesh = m;
 
 		App->renderer3D->mesh_list.push_back(m);
@@ -217,7 +217,7 @@ void ModuleFBX::ImportTexture(const char* path)
 		}
 		else
 		{
-			ComponentTexture* texture = new ComponentTexture(App->scene->current_object);
+			ComponentTexture* texture = new ComponentTexture(App,App->scene->current_object);
 			texture->tex_id = texture_id;
 			std::string tex_path(path);
 			texture->path = tex_path;
@@ -266,7 +266,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 		}
 		else
 		{
-			ComponentTexture* texture = new ComponentTexture(go);
+			ComponentTexture* texture = new ComponentTexture(App,go);
 			texture->tex_id = texture_id;
 			std::string tex_path(path);
 			texture->path = tex_path;
@@ -298,7 +298,7 @@ void ModuleFBX::CentrateObjectView()const
 
 Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 {
-	GameObject* go = new GameObject(App->gobject->root, name);
+	GameObject* go = new GameObject(App,App->gobject->root, name);
 
 	Mesh* m = new Mesh(go);
 
@@ -322,7 +322,7 @@ Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
-	ComponentMesh* newMesh = new ComponentMesh(go);
+	ComponentMesh* newMesh = new ComponentMesh(App,go);
 	newMesh->mesh = m;
 
 	App->renderer3D->mesh_list.push_back(m);

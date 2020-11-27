@@ -363,7 +363,6 @@
     <ClInclude Include="ModuleInspector.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Inspector.h" />
     <ClInclude Include="ModuleHierarchy.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
@@ -372,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="ComponentCamera.h">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inspector.h">
+      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -573,7 +575,6 @@
     <ClCompile Include="ModuleInspector.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Inspector.cpp" />
     <ClCompile Include="ModuleHierarchy.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
@@ -585,6 +586,9 @@
     </ClCompile>
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Inspector.cpp">
+      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

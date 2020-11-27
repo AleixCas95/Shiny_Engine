@@ -10,7 +10,7 @@ class ComponentTexture :
 	public Component
 {
 public:
-	ComponentTexture(GameObject* parent);
+	ComponentTexture(Application* papaito, GameObject* parent);
 	~ComponentTexture();
 
 	void Inspector();

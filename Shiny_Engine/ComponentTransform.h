@@ -6,7 +6,7 @@
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform(GameObject* parent);
+	ComponentTransform(Application* papaito, GameObject* parent);
 	~ComponentTransform();
 
 	void Inspector();

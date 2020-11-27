@@ -7,7 +7,7 @@ class ComponentMesh :
 	public Component
 {
 public:
-	ComponentMesh(GameObject* parent);
+	ComponentMesh(Application* papaito, GameObject* parent);
 	~ComponentMesh();
 
 	void Inspector();

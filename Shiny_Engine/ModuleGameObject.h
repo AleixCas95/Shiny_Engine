@@ -10,5 +10,11 @@ public:
 
 public:
 	GameObject* root = nullptr;
+
+	std::list<GameObject*> gameObjects;
+
+	std::list<GameObject*> gameObjectsToDelete;
+
+	std::list<Component*> componentsToDelete;
 };
 

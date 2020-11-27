@@ -2,6 +2,7 @@
 #include "ModuleConsole.h"
 #include "ModuleConfiguration.h"
 #include "ModuleShapes.h"
+#include "ComponentCamera.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
@@ -86,7 +87,9 @@ update_status ModuleGUI::Update(float dt)
 		if (showHierarchy == true)
 		{
 			App->hierarchy->Draw();
+		
 		}
+		//App->camera->compCamera->Inspector();
 
 		ImGui::EndMainMenuBar();
 	}

@@ -1,17 +1,19 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "Globals.h"
 
 #include <string>
 #include <list>
+class Application;
 
 class GameObject
 {
 public:
-	GameObject(GameObject* parent, const char* name = nullptr);
+	Application* App;
+	GameObject(Application* papaito,GameObject* parent, const char* name = nullptr);
 	~GameObject();
 
 	bool HasComponent(Object_Type type);

@@ -1,20 +1,22 @@
 #include "GameObject.h"
 #include "pcg/pcg_basic.h"
-//#include "pcg-cpp-0.98/include/pcg_random.hpp"
+#include "Application.h"
+
 
 
 using namespace std;
 
 
-GameObject::GameObject(GameObject* parent, const char* name)
+GameObject::GameObject(Application* papaito,GameObject* parent, const char* name)
 {
+	App = papaito;
 	this->parent = parent;
 	if (parent)
 		parent->childs.push_back(this);
 	if (name)
 		this->name = name;
 
-	transform = new ComponentTransform(this);
+	transform = new ComponentTransform(App,this);
 
 	//uuid = pcg32_random();
 

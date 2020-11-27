@@ -1,9 +1,9 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
+#include "Application.h"
 
 
-
-ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent, CompMesh)
+ComponentMesh::ComponentMesh(Application* papaito, GameObject* parent) : Component(papaito, parent, CompMesh)
 {
 	parent->components.push_back(this);
 }

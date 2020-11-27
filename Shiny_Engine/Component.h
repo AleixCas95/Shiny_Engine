@@ -1,4 +1,7 @@
 #pragma once
+#include "Globals.h"
+
+class Application;
 class GameObject;
 
 enum Object_Type
@@ -12,10 +15,13 @@ enum Object_Type
 	CompLight
 };
 
-class Component
+class Component 
 {
 public:
-	Component(GameObject* parent, Object_Type type) : gameObject(parent), type(type) {}
+
+	Application* App;
+
+	Component(Application* papaito ,GameObject* parent, Object_Type type) : App(papaito),gameObject(parent), type(type) {}
 	~Component() {}
 
 	virtual void Inspector() {}

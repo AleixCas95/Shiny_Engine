@@ -23,6 +23,8 @@
 #include "ModuleInspector.h"
 #include "ModuleHierarchy.h"
 #include "ModuleFiles.h"
+#include "Component.h"
+#include "ComponentCamera.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -46,6 +48,7 @@ public:
 	ModuleGameObject* gobject;
 	ModuleScene* scene;
 	ModuleFiles* files;
+
 	
 
 
@@ -80,5 +83,3 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
-
-extern Application* App;

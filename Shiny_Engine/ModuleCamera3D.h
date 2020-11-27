@@ -33,6 +33,8 @@ public:
 	float speed = 3.0f;
 	float wheelSpeed = 3.0f;
 
+	ComponentCamera* compCamera = nullptr;
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;

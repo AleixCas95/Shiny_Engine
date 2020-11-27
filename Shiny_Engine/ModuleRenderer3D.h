@@ -7,6 +7,7 @@
 #include "glmath.h"
 #include "Light.h"
 #include "ModuleFBX.h"
+#include "ComponentCamera.h"
 
 #define MAX_LIGHTS 8
 class Application;
@@ -40,6 +41,11 @@ public:
 
 	
 	float tex_alpha = 0.0f;
+
+	//Camera
+
+	ComponentCamera* current_cam = nullptr;
+	ComponentCamera* play_cam = nullptr;
 };
 
 #endif // !MODULERENDERER3D_H
