@@ -72,6 +72,19 @@ float4x4 ComponentCamera::GetProjectionMatrix()
 	return matrix;
 }
 
+void ComponentCamera::UpdateFrustum()
+{
+	if (gameObject != nullptr && gameObject->transform != nullptr)
+	{
+		frustum.pos = gameObject->transform->GetPos();
+		frustum.front = gameObject->transform->GetRotation() * float3::unitZ;
+		frustum.up = gameObject->transform->GetRotation() * float3::unitY;
+	}
+	else
+	{
+		frustum.pos = float3::zero;
+		frustum.front = float3::unitZ;
+		frustum.up = float3::unitY;
+	}
 
-
-
+}

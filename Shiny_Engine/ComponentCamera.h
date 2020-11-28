@@ -14,6 +14,7 @@ public:
 	float4x4 GetViewMatrix();
 	float4x4 GetProjectionMatrix();
 
+	void UpdateFrustum();
 public:
 
 	Frustum frustum;
