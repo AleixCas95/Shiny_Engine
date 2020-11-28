@@ -375,6 +375,9 @@
     <ClInclude Include="Inspector.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleTime.h">
+      <Filter>Sources\Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -589,6 +592,9 @@
     </ClCompile>
     <ClCompile Include="Inspector.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTime.cpp">
+      <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
