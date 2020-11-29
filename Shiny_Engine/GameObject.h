@@ -28,6 +28,8 @@ public:
 	GameObject* parent = nullptr;
 	std::list<GameObject*> childs;
 
+	AABB boundingBox;
+
 	unsigned int uuid = 0u;
 };
 
