@@ -378,6 +378,9 @@
     <ClInclude Include="ModuleTime.h">
       <Filter>Sources\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleMousePicking.h">
+      <Filter>Sources\Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -594,6 +597,9 @@
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTime.cpp">
+      <Filter>Sources\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleMousePicking.cpp">
       <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
   </ItemGroup>

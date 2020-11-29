@@ -24,7 +24,7 @@
 #include "ModuleHierarchy.h"
 #include "ModuleFiles.h"
 #include "Component.h"
-#include "ComponentCamera.h"
+#include "ModuleMousePicking.h"
 #include "ModuleTime.h"
 //#include "ModuleGeometry.h"
 #include <list>
@@ -49,6 +49,7 @@ public:
 	ModuleGameObject* gobject;
 	ModuleScene* scene;
 	ModuleFiles* files;
+	ModuleMousePicking* mouse;
 	Time* module_time;
 
 	

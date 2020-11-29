@@ -19,6 +19,7 @@ Application::Application()
 	inspector = new ModuleInspector(this);
 	hierarchy = new ModuleHierarchy(this);
 	files = new ModuleFiles(this);
+	mouse = new ModuleMousePicking(this);
 	module_time = new Time(this);
 
 	// The order of calls is very important!
@@ -39,7 +40,7 @@ Application::Application()
 	AddModule(inspector);
 	AddModule(hierarchy);*/
 	AddModule(module_time);
-	
+	AddModule(mouse);
 	
 	// Scenes
 	AddModule(files);

@@ -170,6 +170,7 @@
     <ClInclude Include="ModuleGUI.h" />
     <ClInclude Include="ModuleHierarchy.h" />
     <ClInclude Include="ModuleInspector.h" />
+    <ClInclude Include="ModuleMousePicking.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="Module.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="ModuleHierarchy.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleInspector.cpp" />
+    <ClCompile Include="ModuleMousePicking.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleShapes.cpp" />
