@@ -92,7 +92,7 @@ bool ModuleFBX::LoadFBX(const char* path)
 
 GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent)
 {
-	GameObject* go = new GameObject(App,parent, node->mName.C_Str());
+	GameObject* go = new GameObject(App, parent, node->mName.C_Str());
 
 	if (node->mNumMeshes > 0)
 	{
@@ -171,7 +171,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 		glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
-		ComponentMesh* newMesh = new ComponentMesh(App,go);
+		ComponentMesh* newMesh = new ComponentMesh(App, go);
 		newMesh->mesh = m;
 
 		App->renderer3D->mesh_list.push_back(m);
@@ -217,7 +217,7 @@ void ModuleFBX::ImportTexture(const char* path)
 		}
 		else
 		{
-			ComponentTexture* texture = new ComponentTexture(App,App->scene->current_object);
+			ComponentTexture* texture = new ComponentTexture(App, App->scene->current_object);
 			texture->tex_id = texture_id;
 			std::string tex_path(path);
 			texture->path = tex_path;
@@ -266,7 +266,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 		}
 		else
 		{
-			ComponentTexture* texture = new ComponentTexture(App,go);
+			ComponentTexture* texture = new ComponentTexture(App, go);
 			texture->tex_id = texture_id;
 			std::string tex_path(path);
 			texture->path = tex_path;
@@ -279,26 +279,10 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 	}
 }
 
-void ModuleFBX::CentrateObjectView()const
-{
-	math::AABB box(float3(0, 0, 0), float3(0, 0, 0));
-	box.Enclose((float3*)App->fbx->mesh.vertices, App->fbx->mesh.num_vertices);
-
-	App->camera->Reference.x = box.CenterPoint().x;
-	App->camera->Reference.y = box.CenterPoint().y;
-	App->camera->Reference.z = box.CenterPoint().z;
-
-	App->camera->Position.x = box.maxPoint.x * 2; // Increase the distance view
-	App->camera->Position.y = box.maxPoint.y * 2;
-	App->camera->Position.z = box.maxPoint.z * 2;
-
-	App->camera->LookAt(App->camera->Reference);
-}
-
 
 Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 {
-	GameObject* go = new GameObject(App,App->gobject->root, name);
+	GameObject* go = new GameObject(App, App->gobject->root, name);
 
 	Mesh* m = new Mesh(go);
 
@@ -314,15 +298,15 @@ Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 		m->index.data[i] = (uint)mesh->triangles[i];
 	}
 
-	glGenBuffers(1, (GLuint*)&(m->vertex.id));
+	glGenBuffers(1, (GLuint*) & (m->vertex.id));
 	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
 
-	glGenBuffers(1, (GLuint*)&(m->index.id));
+	glGenBuffers(1, (GLuint*) & (m->index.id));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
-	ComponentMesh* newMesh = new ComponentMesh(App,go);
+	ComponentMesh* newMesh = new ComponentMesh(App, go);
 	newMesh->mesh = m;
 
 	App->renderer3D->mesh_list.push_back(m);
