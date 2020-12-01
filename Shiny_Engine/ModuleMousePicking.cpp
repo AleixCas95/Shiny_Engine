@@ -35,7 +35,15 @@ update_status ModuleMousePicking::Update()
 
 				for (std::list<GameObject*>::iterator it = App->gobject->gameObjects.begin(); it != App->gobject->gameObjects.end(); ++it)
 				{
-					
+					if ((*it)->active && (*it)->HasComponent(Object_Type::CompMesh))
+					{
+						LineSegment ray(picking);
+
+						if (ray.Intersects((*it)->boundingBox))
+						{
+							candidates.push_back(*it);
+						}
+					}
 				}
 
 				for (std::list<GameObject*>::iterator it = candidates.begin(); it != candidates.end(); ++it)
