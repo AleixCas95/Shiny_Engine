@@ -39,7 +39,7 @@ public:
 
 	std::vector<Mesh*> mesh_list;
 
-	
+
 	float tex_alpha = 0.0f;
 
 	//Camera

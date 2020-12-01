@@ -111,10 +111,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	//glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -167,8 +167,8 @@ bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 	// --- Texture ---
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	
-	
+
+
 
 	if (App->fbx->last_texture_id == 0)
 	{
@@ -188,7 +188,7 @@ bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 		glBindTexture(GL_TEXTURE_2D, App->fbx->last_texture_id);
 	}
 
-	
+
 	// --- End texture ---
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
