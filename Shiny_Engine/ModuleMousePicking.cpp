@@ -33,6 +33,20 @@ update_status ModuleMousePicking::Update()
 
 				std::list<GameObject*> candidates;
 
+				for (std::list<GameObject*>::iterator it = App->gobject->gameObjects.begin(); it != App->gobject->gameObjects.end(); ++it)
+				{
+					
+				}
+
+				for (std::list<GameObject*>::iterator it = candidates.begin(); it != candidates.end(); ++it)
+				{
+					LineSegment ray(picking);
+					ray.Transform((*it)->transform->GetMatrix().Inverted());
+
+					ComponentMesh* mesh = (ComponentMesh*)(*it)->GetComponent(Object_Type::CompMesh);
+				}
+				App->scene->current_object = closestObject;
+
 			}
 		}
 	}
