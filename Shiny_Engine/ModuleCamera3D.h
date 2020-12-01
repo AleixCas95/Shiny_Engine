@@ -1,11 +1,8 @@
-#ifndef MODULECAMERA3D_H
-#define MODULECAMERA3D_H
-
-
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "ComponentCamera.h"
 
 class ModuleCamera3D : public Module
 {
@@ -14,30 +11,16 @@ public:
 	~ModuleCamera3D();
 
 	bool Start();
-	update_status Update(float dt);
+	update_status Update();
 	bool CleanUp();
 
-	void Look(const vec3& Position, const vec3& Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3& Spot);
-	void Move(const vec3& Movement);
-	float* GetViewMatrix();
-
-private:
-
-	void CalculateViewMatrix();
+	void LookAt(const float3& Spot);
 
 public:
 
-	vec3 X, Y, Z, Position, Reference;
-
-	float speed = 3.0f;
-	float wheelSpeed = 3.0f;
-
 	ComponentCamera* compCamera = nullptr;
+	GameObject* cameraGO = nullptr;
 
 private:
-
-	mat4x4 ViewMatrix, ViewMatrixInverse;
+	int cameraSpeed = 3;
 };
-
-#endif // !MODULECAMERA3D_H
