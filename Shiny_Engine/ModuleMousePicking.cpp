@@ -62,6 +62,15 @@ update_status ModuleMousePicking::Update()
 							triangle.a.y = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3] * 3 + 1];
 							triangle.a.z = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3] * 3 + 2];
 
+							triangle.b.x = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 1] * 3];
+							triangle.b.y = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 1] * 3 + 1];
+							triangle.b.z = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 1] * 3 + 2];
+
+							triangle.c.x = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 2] * 3];
+							triangle.c.y = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 2] * 3 + 1];
+							triangle.c.z = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3 + 2] * 3 + 2];
+
+
 							float distance;
 							float3 position;
 
