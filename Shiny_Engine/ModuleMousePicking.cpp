@@ -52,6 +52,29 @@ update_status ModuleMousePicking::Update()
 					ray.Transform((*it)->transform->GetMatrix().Inverted());
 
 					ComponentMesh* mesh = (ComponentMesh*)(*it)->GetComponent(Object_Type::CompMesh);
+
+					if (mesh)
+					{
+						Triangle triangle;
+						for (int i = 0; i < mesh->mesh->index.size / 3; ++i)
+						{
+							triangle.a.x = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3] * 3];
+							triangle.a.y = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3] * 3 + 1];
+							triangle.a.z = mesh->mesh->vertex.data[mesh->mesh->index.data[i * 3] * 3 + 2];
+
+							float distance;
+							float3 position;
+
+							if (ray.Intersects(triangle, &distance, &position))
+							{
+								if (distance < smallerDist || smallerDist == -1.0f)
+								{
+									smallerDist = distance;
+									closestObject = (*it);
+								}
+							}
+						}
+					}
 				}
 				App->scene->current_object = closestObject;
 
