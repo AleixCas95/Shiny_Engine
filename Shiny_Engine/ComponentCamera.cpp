@@ -73,7 +73,8 @@ float4x4 ComponentCamera::GetProjectionMatrix()
 }
 void ComponentCamera::Save(JSON_Object* parent)
 {
-
+	json_object_set_number(parent, "Type", type);
+	json_object_set_number(parent, "UUID", uuid);
 }
 
 void ComponentCamera::Load(JSON_Object* parent)

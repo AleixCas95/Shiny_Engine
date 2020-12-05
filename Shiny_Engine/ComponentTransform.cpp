@@ -161,7 +161,8 @@ float4x4 ComponentTransform::GetLocalMatrix() const
 
 void ComponentTransform::Save(JSON_Object* parent)
 {
-
+	json_object_set_number(parent, "Type", type);
+	json_object_set_number(parent, "UUID", uuid);
 }
 
 void ComponentTransform::Load(JSON_Object* parent)

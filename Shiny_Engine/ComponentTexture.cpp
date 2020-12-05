@@ -25,7 +25,8 @@ void ComponentTexture::Inspector()
 
 void ComponentTexture::Save(JSON_Object* parent)
 {
-
+	json_object_set_number(parent, "Type", type);
+	json_object_set_number(parent, "UUID", uuid);
 }
 
 void ComponentTexture::Load(JSON_Object* parent)

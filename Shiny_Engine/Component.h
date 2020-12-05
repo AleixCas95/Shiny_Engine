@@ -1,6 +1,8 @@
 #pragma once
 #include "Globals.h"
 #include "parson/parson.h"
+#include "pcg/pcg_basic.h"
+
 class Application;
 class GameObject;
 
@@ -21,7 +23,7 @@ public:
 
 	Application* App;
 
-	Component(Application* papaito ,GameObject* parent, Object_Type type) : App(papaito),gameObject(parent), type(type) {}
+	Component(Application* papaito ,GameObject* parent, Object_Type type) : App(papaito),gameObject(parent), type(type) { uuid = pcg32_random(); }
 	~Component() {}
 
 	virtual void Save(JSON_Object* parent) {}
@@ -31,4 +33,6 @@ public:
 	bool active = true;
 	GameObject* gameObject = nullptr;
 	Object_Type type;
+
+	unsigned int uuid = 0u;
 };
