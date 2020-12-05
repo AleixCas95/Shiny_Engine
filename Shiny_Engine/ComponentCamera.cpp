@@ -84,6 +84,11 @@ void ComponentCamera::Save(JSON_Object* parent)
 	json_object_set_number(positionObj, "X", frustum.pos.x);
 	json_object_set_number(positionObj, "Y", frustum.pos.y);
 	json_object_set_number(positionObj, "Z", frustum.pos.z);
+
+	json_object_set_number(parent, "nearPlaneDistance", frustum.nearPlaneDistance);
+	json_object_set_number(parent, "farPlaneDistance", frustum.farPlaneDistance);
+	json_object_set_number(parent, "verticalFov", frustum.verticalFov);
+	json_object_set_number(parent, "horizontalFov", frustum.horizontalFov);
 }
 
 void ComponentCamera::Load(JSON_Object* parent)
