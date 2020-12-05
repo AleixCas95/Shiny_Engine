@@ -3,6 +3,8 @@
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
 #include "Primitive.h"
+#include "ModuleCamera3D.h"
+#include "ModuleScene.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -111,11 +113,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	//glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(current_cam->GetProjectionMatrix().ptr());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(current_cam->GetViewMatrix().ptr());
 
 	// light 0 on cam pos
-	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-
+	lights[0].SetPos(current_cam->frustum.pos.x, current_cam->frustum.pos.y, current_cam->frustum.pos.z);
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
