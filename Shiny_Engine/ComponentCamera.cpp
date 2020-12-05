@@ -75,6 +75,15 @@ void ComponentCamera::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
+
+	JSON_Value* pos = json_value_init_object();
+	JSON_Object* positionObj = json_value_get_object(pos);
+
+	json_object_set_value(parent, "Position", pos);
+
+	json_object_set_number(positionObj, "X", frustum.pos.x);
+	json_object_set_number(positionObj, "Y", frustum.pos.y);
+	json_object_set_number(positionObj, "Z", frustum.pos.z);
 }
 
 void ComponentCamera::Load(JSON_Object* parent)
