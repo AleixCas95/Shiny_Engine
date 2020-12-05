@@ -157,3 +157,15 @@ float4x4 ComponentTransform::GetLocalMatrix() const
 {
 	return float4x4::FromTRS(position, rotation, scale);
 }
+
+
+void ComponentTransform::Save(JSON_Object* parent)
+{
+
+}
+
+void ComponentTransform::Load(JSON_Object* parent)
+{
+
+}
+

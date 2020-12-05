@@ -71,15 +71,15 @@ float4x4 ComponentCamera::GetProjectionMatrix()
 	matrix.Transpose();
 	return matrix;
 }
-//void ComponentCamera::Save(JSON_Object* parent)
-//{
-//
-//}
-//
-//void ComponentCamera::Load(JSON_Object* parent)
-//{
-//
-//}
+void ComponentCamera::Save(JSON_Object* parent)
+{
+
+}
+
+void ComponentCamera::Load(JSON_Object* parent)
+{
+
+}
 
 void ComponentCamera::UpdateFrustum()
 {

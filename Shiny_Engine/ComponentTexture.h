@@ -17,6 +17,11 @@ public:
 
 	inline unsigned int GetID() { return checkers == false ? tex_id : 0u; }
 
+
+	void Save(JSON_Object* parent);
+
+	void Load(JSON_Object* parent);
+
 public:
 	unsigned int tex_id = 0u;
 

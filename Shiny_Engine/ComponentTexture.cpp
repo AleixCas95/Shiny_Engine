@@ -22,3 +22,13 @@ void ComponentTexture::Inspector()
 		ImGui::Checkbox("Checkers", &checkers);
 	}
 }
+
+void ComponentTexture::Save(JSON_Object* parent)
+{
+
+}
+
+void ComponentTexture::Load(JSON_Object* parent)
+{
+
+}
