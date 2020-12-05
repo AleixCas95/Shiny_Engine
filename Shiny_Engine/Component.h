@@ -1,6 +1,6 @@
 #pragma once
 #include "Globals.h"
-
+#include "parson/parson.h"
 class Application;
 class GameObject;
 
@@ -23,6 +23,8 @@ public:
 
 	Component(Application* papaito ,GameObject* parent, Object_Type type) : App(papaito),gameObject(parent), type(type) {}
 	~Component() {}
+
+	virtual void Save(JSON_Object* parent) {}
 
 	virtual void Inspector() {}
 public:

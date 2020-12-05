@@ -13,6 +13,10 @@ public:
 	void Inspector();
 
 
+	void Save(JSON_Object* parent);
+
+	void Load(JSON_Object* parent);
+	
 
 public:
 	Mesh* mesh;

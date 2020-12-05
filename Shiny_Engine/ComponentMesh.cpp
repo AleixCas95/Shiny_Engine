@@ -1,7 +1,7 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "Application.h"
-
+#include "parson/parson.h"
 
 ComponentMesh::ComponentMesh(Application* papaito, GameObject* parent) : Component(papaito, parent, CompMesh)
 {
@@ -22,4 +22,14 @@ void ComponentMesh::Inspector()
 
 		ImGui::Checkbox("Vertex normals", &printVertexNormals);
 	}
+}
+
+void ComponentMesh::Save(JSON_Object* parent)
+{
+
+}
+
+void ComponentMesh::Load(JSON_Object* parent)
+{
+	
 }
