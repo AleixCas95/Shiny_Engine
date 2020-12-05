@@ -31,6 +31,15 @@ void ModuleHierarchy::Draw()
 	ImGui::SetWindowPos(ImVec2(App->config->width * 0.75, App->config->height * 0 + 20));
 	ImGui::SetWindowSize(ImVec2(App->config->width * 0.25, App->config->height * 0.30 - 20));
 	{
+		if (ImGui::BeginMenu("Options"))
+		{
+			if (ImGui::MenuItem("New Game Object"))
+			{
+				GameObject* newGO = new GameObject(App,App->gobject->root);
+			}
+			ImGui::MenuItem("Cancel");
+			ImGui::EndMenu();
+		}
 
 		if (App->gobject->root)
 		{
