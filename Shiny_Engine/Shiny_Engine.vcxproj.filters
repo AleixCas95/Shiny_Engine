@@ -105,15 +105,6 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>Sources\Engine\Game</Filter>
     </ClInclude>
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp">
-      <Filter>Sources\Engine\Libraries\pcg</Filter>
-    </ClInclude>
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp">
-      <Filter>Sources\Engine\Libraries\pcg</Filter>
-    </ClInclude>
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp">
-      <Filter>Sources\Engine\Libraries\pcg</Filter>
-    </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Engine\Libraries\parson</Filter>
     </ClInclude>
@@ -381,6 +372,9 @@
     <ClInclude Include="ModuleMousePicking.h">
       <Filter>Sources\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="pcg\pcg_basic.h">
+      <Filter>Sources\Engine\Libraries\pcg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -601,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="ModuleMousePicking.cpp">
       <Filter>Sources\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="pcg\pcg_basic.c">
+      <Filter>Sources\Engine\Libraries\pcg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

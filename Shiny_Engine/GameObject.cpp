@@ -18,7 +18,7 @@ GameObject::GameObject(Application* papaito,GameObject* parent, const char* name
 
 	transform = new ComponentTransform(App,this);
 
-	//uuid = pcg32_random();
+	uuid = pcg32_random();
 
 	//components.push_back((Component*)transform);
 }
