@@ -99,6 +99,11 @@ void ComponentCamera::Load(JSON_Object* parent)
 	frustum.pos.x = json_object_get_number(pos, "X");
 	frustum.pos.y = json_object_get_number(pos, "Y");
 	frustum.pos.z = json_object_get_number(pos, "Z");
+
+	frustum.nearPlaneDistance = json_object_get_number(parent, "nearPlaneDistance");
+	frustum.farPlaneDistance = json_object_get_number(parent, "farPlaneDistance");
+	frustum.verticalFov = json_object_get_number(parent, "verticalFov");
+	frustum.horizontalFov = json_object_get_number(parent, "horizontalFov");
 }
 
 void ComponentCamera::UpdateFrustum()
