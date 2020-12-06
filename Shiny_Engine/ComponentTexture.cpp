@@ -31,5 +31,7 @@ void ComponentTexture::Save(JSON_Object* parent)
 
 void ComponentTexture::Load(JSON_Object* parent)
 {
+	uuid = json_object_get_number(parent, "UUID");
 
+	path = json_object_get_string(parent, "Path");
 }
