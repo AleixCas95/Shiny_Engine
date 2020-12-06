@@ -163,10 +163,54 @@ void ComponentTransform::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
+
+	JSON_Value* pos = json_value_init_object();
+	JSON_Object* positionObj = json_value_get_object(pos);
+
+	json_object_set_value(parent, "Position", pos);
+
+	json_object_set_number(positionObj, "X", position.x);
+	json_object_set_number(positionObj, "Y", position.y);
+	json_object_set_number(positionObj, "Z", position.z);
+
+	JSON_Value* rot = json_value_init_object();
+	JSON_Object* rotationObj = json_value_get_object(rot);
+
+	json_object_set_value(parent, "Rotation", rot);
+
+	json_object_set_number(rotationObj, "X", rotation.x);
+	json_object_set_number(rotationObj, "Y", rotation.y);
+	json_object_set_number(rotationObj, "Z", rotation.z);
+	json_object_set_number(rotationObj, "W", rotation.w);
+
+	JSON_Value* scal = json_value_init_object();
+	JSON_Object* scaleObj = json_value_get_object(scal);
+
+	json_object_set_value(parent, "Scale", scal);
+
+	json_object_set_number(scaleObj, "X", scale.x);
+	json_object_set_number(scaleObj, "Y", scale.y);
+	json_object_set_number(scaleObj, "Z", scale.z);
+
 }
 
 void ComponentTransform::Load(JSON_Object* parent)
 {
+	uuid = json_object_get_number(parent, "UUID");
 
+	JSON_Object* pos = json_object_get_object(parent, "Position");
+	position.x = json_object_get_number(pos, "X");
+	position.y = json_object_get_number(pos, "Y");
+	position.z = json_object_get_number(pos, "Z");
+
+	JSON_Object* scal = json_object_get_object(parent, "Scale");
+	scale.x = json_object_get_number(scal, "X");
+	scale.y = json_object_get_number(scal, "Y");
+	scale.z = json_object_get_number(scal, "Z");
+
+	JSON_Object* rot = json_object_get_object(parent, "Rotation");
+	rotation.x = json_object_get_number(rot, "X");
+	rotation.y = json_object_get_number(rot, "Y");
+	rotation.z = json_object_get_number(rot, "Z");
+	rotation.w = json_object_get_number(rot, "W");
 }
-
