@@ -28,10 +28,15 @@ void ComponentMesh::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
-	
+
+
 }
 
 void ComponentMesh::Load(JSON_Object* parent)
 {
+	uuid = json_object_get_number(parent, "UUID");
+
+	std::string name = json_object_get_string(parent, "Name");
+
 	
 }
