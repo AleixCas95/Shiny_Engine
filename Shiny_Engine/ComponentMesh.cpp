@@ -1,6 +1,10 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "Application.h"
+#include "ComponentTexture.h"
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ModuleScene.h"
 #include "parson/parson.h"
 
 ComponentMesh::ComponentMesh(Application* papaito, GameObject* parent) : Component(papaito, parent, CompMesh)

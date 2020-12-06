@@ -20,6 +20,11 @@ public:
 
 	Component* GetComponent(Object_Type type);
 
+	void Save(JSON_Object* parent);
+
+	void Load(JSON_Object* info);
+
+	bool SetParent(GameObject* parent);
 public:
 	bool active = true;
 	std::string name = "gameObject";
@@ -28,9 +33,15 @@ public:
 	GameObject* parent = nullptr;
 	std::list<GameObject*> childs;
 
+	AABB originalBoundingBox;
 	AABB boundingBox;
 
+
+	bool isStatic = false;
+
 	unsigned int uuid = 0u;
+
+	unsigned int parentUUID = 0u;
 };
 
 #endif // !GAMEOBJECT_H
