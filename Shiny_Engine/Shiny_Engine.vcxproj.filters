@@ -55,6 +55,9 @@
     <Filter Include="Sources\Engine\Modules\GameObject\Components">
       <UniqueIdentifier>{1721209a-f263-4887-84b2-bc099a751b5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Engine\Libraries\Imguizmo">
+      <UniqueIdentifier>{9254403e-ba17-4228-8e3b-813575baaa7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glmath.h">
@@ -375,6 +378,9 @@
     <ClInclude Include="pcg\pcg_basic.h">
       <Filter>Sources\Engine\Libraries\pcg</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuizmo\ImGuizmo.h">
+      <Filter>Sources\Engine\Libraries\Imguizmo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -598,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="pcg\pcg_basic.c">
       <Filter>Sources\Engine\Libraries\pcg</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo\ImGuizmo.cpp">
+      <Filter>Sources\Engine\Libraries\Imguizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
