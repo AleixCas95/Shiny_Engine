@@ -1,5 +1,6 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
+#include "ImGuizmo/ImGuizmo.h"
 #include "Application.h"
 
 
@@ -38,6 +39,11 @@ void ComponentTransform::Inspector()
 			scale = float3::one;
 		}
 	}
+}
+
+void ComponentTransform::GuizmoSetup()
+{
+
 }
 
 void ComponentTransform::SetPos(float x, float y, float z)

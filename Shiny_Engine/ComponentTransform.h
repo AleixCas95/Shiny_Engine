@@ -47,6 +47,8 @@ public:
 
 	float4x4 GetLocalMatrix() const;
 
+	void GuizmoSetup();
+
 public:
 	GameObject* parent = nullptr;
 	AABB bounding_box;
