@@ -126,9 +126,6 @@
     <ClInclude Include="MathGeoLib\MathGeoLibFwd.h">
       <Filter>Sources\Engine\Libraries\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleGUI.h">
-      <Filter>Sources\Engine\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleHardware.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
@@ -381,6 +378,9 @@
     <ClInclude Include="ImGuizmo\ImGuizmo.h">
       <Filter>Sources\Engine\Libraries\Imguizmo</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleGUI.h">
+      <Filter>Sources\Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -427,9 +427,6 @@
     </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Engine\Libraries\mmgr</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleGUI.cpp">
-      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModuleHardware.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
@@ -607,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="ImGuizmo\ImGuizmo.cpp">
       <Filter>Sources\Engine\Libraries\Imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUI.cpp">
+      <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

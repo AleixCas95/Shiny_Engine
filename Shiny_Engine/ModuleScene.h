@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "ImGui/imgui.h"
 #include "GameObject.h"
+#include "ImGuizmo/ImGuizmo.h"
 
 
 #define MAX_SNAKE 2
@@ -30,5 +31,9 @@ public:
 	float* vertex = nullptr;
 
 	GameObject* current_object = nullptr;
+
+	ImGuizmo::OPERATION guiz_operation = ImGuizmo::BOUNDS;
+
+	ImGuizmo::MODE guiz_mode = ImGuizmo::WORLD;
 };
 #pragma once
