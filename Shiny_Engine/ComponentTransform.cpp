@@ -53,6 +53,11 @@ void ComponentTransform::UpdateBoundingBox()
 	obb.Transform(GetMatrix());
 
 	gameObject->boundingBox = obb.MinimalEnclosingAABB();
+
+	for (std::list<GameObject*>::iterator it = gameObject->childs.begin(); it != gameObject->childs.end(); ++it)
+	{
+		(*it)->transform->UpdateBoundingBox();
+	}
 }
 
 void ComponentTransform::Save(JSON_Object* parent)
