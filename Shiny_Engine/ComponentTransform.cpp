@@ -4,7 +4,7 @@
 #include "Application.h"
 
 
-ComponentTransform::ComponentTransform(Application* papaito, GameObject* parent) : Component(papaito, parent, CompTransform)
+ComponentTransform::ComponentTransform(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompTransform)
 {
 
 }

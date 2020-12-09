@@ -2,7 +2,7 @@
 #include "Application.h"
 
 
-ComponentTexture::ComponentTexture(Application* papaito, GameObject* parent) : Component(papaito, parent, CompTexture)
+ComponentTexture::ComponentTexture(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompTexture)
 {
 	parent->components.push_back(this);
 }

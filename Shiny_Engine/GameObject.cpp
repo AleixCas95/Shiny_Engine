@@ -7,9 +7,9 @@
 using namespace std;
 
 
-GameObject::GameObject(Application* papaito,GameObject* parent, const char* name)
+GameObject::GameObject(Application* app_parent,GameObject* parent, const char* name)
 {
-	App = papaito;
+	App = app_parent;
 	this->parent = parent;
 	if (parent)
 		parent->childs.push_back(this);

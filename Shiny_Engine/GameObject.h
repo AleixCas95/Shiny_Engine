@@ -13,7 +13,7 @@ class GameObject
 {
 public:
 	Application* App;
-	GameObject(Application* papaito,GameObject* parent, const char* name = nullptr);
+	GameObject(Application* app_parent,GameObject* parent, const char* name = nullptr);
 	~GameObject();
 
 	bool HasComponent(Object_Type type);

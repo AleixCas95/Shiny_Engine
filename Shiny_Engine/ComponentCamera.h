@@ -6,7 +6,7 @@ class ComponentCamera :
 	public Component 
 {
 public:
-	ComponentCamera(Application* papaito , GameObject* parent);
+	ComponentCamera(Application* app_parent, GameObject* parent);
 	~ComponentCamera();
 
 	void Inspector();

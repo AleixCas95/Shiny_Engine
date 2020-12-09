@@ -1,7 +1,7 @@
 #include "ComponentCamera.h"
 #include "Application.h"
 	
-ComponentCamera::ComponentCamera(Application* papaito,GameObject* parent) : Component(papaito,parent, CompCamera) 
+ComponentCamera::ComponentCamera(Application* app_parent,GameObject* parent) : Component(app_parent,parent, CompCamera)
 {
 	parent->components.push_back(this);
 

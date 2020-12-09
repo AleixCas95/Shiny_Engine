@@ -7,7 +7,7 @@
 #include "ModuleScene.h"
 #include "parson/parson.h"
 
-ComponentMesh::ComponentMesh(Application* papaito, GameObject* parent) : Component(papaito, parent, CompMesh)
+ComponentMesh::ComponentMesh(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompMesh)
 {
 	parent->components.push_back(this);
 }

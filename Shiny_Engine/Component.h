@@ -23,7 +23,7 @@ public:
 
 	Application* App;
 
-	Component(Application* papaito ,GameObject* parent, Object_Type type) : App(papaito),gameObject(parent), type(type) { uuid = pcg32_random(); }
+	Component(Application* app_parent,GameObject* parent, Object_Type type) : App(app_parent),gameObject(parent), type(type) { uuid = pcg32_random(); }
 	~Component() {}
 
 	virtual void Save(JSON_Object* parent) {}
