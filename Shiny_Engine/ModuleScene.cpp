@@ -20,6 +20,7 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
+	ImGuizmo::Enable(true);
 	App->console->AddLog("Loading Intro assets");
 	bool ret = true;
 	glewInit();
@@ -44,6 +45,20 @@ bool ModuleScene::CleanUp()
 // Update
 update_status ModuleScene::Update(float dt)
 {
+	if (current_object)
+	{
+		float4x4 transformGlobal = current_object->transform->GetMatrix();
+		transformGlobal.Transpose();
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGuizmo::SetRect(0.f, 0.f, io.DisplaySize.x, io.DisplaySize.y);
+
+		ImGuizmo::Manipulate(App->renderer3D->current_cam->GetViewMatrix().ptr(), App->renderer3D->current_cam->GetProjectionMatrix().ptr(), guiz_operation, guiz_mode, transformGlobal.ptr(), nullptr, nullptr);
+
+	}
+
+
 	PlaneGrid p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
