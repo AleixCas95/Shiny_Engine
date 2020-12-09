@@ -20,11 +20,11 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
-	ImGuizmo::Enable(true);
+
 	App->console->AddLog("Loading Intro assets");
 	bool ret = true;
 	glewInit();
-
+	ImGuizmo::Enable(true);
 	//App->camera->Move(vec3(1,1,0));
 	App->camera->LookAt(math::float3(0,0,0));
 
@@ -45,6 +45,23 @@ bool ModuleScene::CleanUp()
 // Update
 update_status ModuleScene::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		guiz_operation = ImGuizmo::BOUNDS;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		guiz_operation = ImGuizmo::TRANSLATE;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		guiz_operation = ImGuizmo::SCALE;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		guiz_operation = ImGuizmo::ROTATE;
+	}
+
 	if (current_object)
 	{
 		float4x4 transformGlobal = current_object->transform->GetMatrix();
