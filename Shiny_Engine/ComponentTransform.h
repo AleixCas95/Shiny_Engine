@@ -48,6 +48,7 @@ public:
 	float4x4 GetLocalMatrix() const;
 
 	void GuizmoSetup();
+	void UpdateBoundingBox();
 
 public:
 	GameObject* parent = nullptr;

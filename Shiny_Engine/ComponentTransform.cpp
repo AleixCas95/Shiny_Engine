@@ -46,6 +46,15 @@ void ComponentTransform::GuizmoSetup()
 
 }
 
+void ComponentTransform::UpdateBoundingBox()
+{
+	OBB obb;
+	obb = gameObject->originalBoundingBox.ToOBB();
+	obb.Transform(GetMatrix());
+
+	gameObject->boundingBox = obb.MinimalEnclosingAABB();
+}
+
 void ComponentTransform::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
