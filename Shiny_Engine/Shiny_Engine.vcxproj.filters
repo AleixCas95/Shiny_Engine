@@ -387,6 +387,12 @@
     <ClInclude Include="Resources.h">
       <Filter>Sources\Engine\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ResourcesMesh.h">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcesTexture.h">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -615,6 +621,12 @@
       <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcesMesh.cpp">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcesTexture.cpp">
       <Filter>Sources\Engine\Resources</Filter>
     </ClCompile>
   </ItemGroup>
