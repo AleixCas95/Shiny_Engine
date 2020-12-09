@@ -19,25 +19,33 @@ void ComponentTransform::Inspector()
 	{
 		if (ImGui::DragFloat3("Position", &position[0], 0.1f, 0.0f, 0.0f, "%.2f"))
 		{
-
+			UpdateBoundingBox();
+		}
+		if (ImGui::DragFloat3("Scale", &scale[0], 0.1f, 0.0f, 0.0f, "%.2f"))
+		{
+			UpdateBoundingBox();
 		}
 		float3 degRotation = rotation.ToEulerXYZ();
 		degRotation = RadToDeg(degRotation);
 		if (ImGui::DragFloat3("Rotation", &degRotation[0], 0.1f, 0.0f, 0.0f, "%.2f"))
 		{
 			SetRotation(DegToRad(degRotation));
+			UpdateBoundingBox();
 		}
-		if (ImGui::DragFloat3("Scale", &scale[0], 0.1f, 0.0f, 0.0f, "%.2f"))
-		{
-
-		}
-
 		if (ImGui::Button("Reset"))
 		{
 			position = float3::zero;
 			rotation = Quat::identity;
 			scale = float3::one;
+			UpdateBoundingBox();
 		}
+
+		ImGui::Separator();
+
+		ImGui::Checkbox("Static", &gameObject->isStatic);
+
+		ImGui::Separator();
+
 	}
 }
 
