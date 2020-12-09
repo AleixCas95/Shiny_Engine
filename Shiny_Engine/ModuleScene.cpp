@@ -56,6 +56,19 @@ update_status ModuleScene::Update(float dt)
 
 		ImGuizmo::Manipulate(App->renderer3D->current_cam->GetViewMatrix().ptr(), App->renderer3D->current_cam->GetProjectionMatrix().ptr(), guiz_operation, guiz_mode, transformGlobal.ptr(), nullptr, nullptr);
 
+		if (ImGuizmo::IsUsing() && Time::gameState == GameState::EDITOR)
+		{
+			transformGlobal.Transpose();
+			if (current_object->parent)
+			{
+				float4x4 matrix = current_object->parent->transform->GetMatrix();
+				matrix.Inverse();
+				transformGlobal = matrix.Mul(transformGlobal);
+			}
+			float3 pos, scale;
+			Quat rot;
+			transformGlobal.Decompose(pos, rot, scale);
+		}
 	}
 
 
