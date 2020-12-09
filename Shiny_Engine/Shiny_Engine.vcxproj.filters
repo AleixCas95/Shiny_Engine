@@ -58,6 +58,9 @@
     <Filter Include="Sources\Engine\Libraries\Imguizmo">
       <UniqueIdentifier>{9254403e-ba17-4228-8e3b-813575baaa7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Engine\Resources">
+      <UniqueIdentifier>{6e8060eb-c6e1-414b-ab12-ceb30a6b9323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glmath.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="ModuleGUI.h">
       <Filter>Sources\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -607,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="ModuleGUI.cpp">
       <Filter>Sources\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Sources\Engine\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
