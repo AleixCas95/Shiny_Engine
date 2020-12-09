@@ -68,6 +68,20 @@ update_status ModuleScene::Update(float dt)
 			float3 pos, scale;
 			Quat rot;
 			transformGlobal.Decompose(pos, rot, scale);
+			switch (guiz_operation)
+			{
+			case ImGuizmo::TRANSLATE:
+				current_object->transform->SetPos(pos);
+				break;
+			case ImGuizmo::ROTATE:
+				current_object->transform->SetRotation(rot);
+				break;
+			case ImGuizmo::SCALE:
+				current_object->transform->SetScale(scale);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
