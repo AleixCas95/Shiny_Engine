@@ -38,7 +38,26 @@ void ModuleResources::SaveFile(uint size, char* output_file, ResourceType type, 
 
 char* ModuleResources::LoadFile(const char* path, ResourceType type, uint uuid)
 {
-	
+	string direction = GetDirection(type, uuid, path);
+
+	ifstream loadFile(direction.c_str(), ios::out | ios::binary);
+
+	char* ret = nullptr;
+
+	if (loadFile.is_open())
+	{
+		loadFile.seekg(0, loadFile.end);
+		uint size = loadFile.tellg();
+
+		ret = new char[size];
+
+		loadFile.seekg(0, loadFile.beg);
+
+		loadFile.read(ret, size);
+
+		loadFile.close();
+	}
+	return ret;
 }
 
 string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* path)
