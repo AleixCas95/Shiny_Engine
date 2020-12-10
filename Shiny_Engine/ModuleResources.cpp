@@ -63,6 +63,37 @@ char* ModuleResources::LoadFile(const char* path, ResourceType type, uint uuid)
 string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* path)
 {
 	string filePath = "Library/";
+	switch (type)
+	{
+	case ResourceType::Mesh:
+	{
+		filePath += "Models/";
+		filePath += to_string(uuid);
+		filePath += ".dmnd";
+	}
+	break;
+	case ResourceType::Texture:
+	{
+		filePath += "Textures/";
+		string name(path);
+		uint initialPos = name.find_last_of("\\") + 1;
+		uint finalPos = name.find_last_of(".") + 1;
+		filePath += name.substr(initialPos, (finalPos - initialPos)) + "dds";
+	}
+	break;
+
+	case ResourceType::Scene:
+	{
+		filePath = "Assets/Scenes/";
+		string name(path);
+		uint initialPos = name.find_last_of("\\") + 1;
+		uint finalPos = name.find_last_of(".");
+		filePath += name.substr(initialPos, (finalPos - initialPos)) + ".json";
+	}
+	break;
+	default:
+		break;
+	}
 
 	return filePath;
 }
