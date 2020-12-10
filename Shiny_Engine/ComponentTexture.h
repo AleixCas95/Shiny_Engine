@@ -23,7 +23,6 @@ public:
 	void Load(JSON_Object* parent);
 
 public:
-	unsigned int tex_id = 0u;
 
 	ResourceTexture* RTexture;
 

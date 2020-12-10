@@ -37,6 +37,8 @@ void ComponentTexture::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
+
+	json_object_set_string(parent, "Path", path.c_str());
 }
 
 void ComponentTexture::Load(JSON_Object* parent)
@@ -44,6 +46,11 @@ void ComponentTexture::Load(JSON_Object* parent)
 	uuid = json_object_get_number(parent, "UUID");
 
 	path = json_object_get_string(parent, "Path");
+	
+	RTexture = new ResourceTexture(path.c_str());
 
+	App->fbx->RealLoadTexture(path.c_str(), RTexture->id);
+
+	App->resources->AddResource(RTexture);
 	
 }
