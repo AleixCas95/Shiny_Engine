@@ -58,6 +58,9 @@ public:
 
 	bool LoadFBX(const char* path);
 	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent);
+	void SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path = nullptr);
+	void LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff); 
+
 	void ImportTexture(const char* path);
 	void ImportTextureGo(const char* path, GameObject* go);
 	void ClearMeshes();

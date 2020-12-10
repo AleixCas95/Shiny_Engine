@@ -47,6 +47,27 @@ bool ModuleFBX::Start()
 	return ret;
 }
 
+
+void ModuleFBX::SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path)
+{
+	
+}
+
+void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
+{
+	uint ranges[4];
+
+	char* cursor = buff;
+
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	m->index.size = ranges[0];
+	m->vertex.size = ranges[1];
+	m->normals.size = ranges[2];
+	m->uvs.size = ranges[3];
+}
+
 void ModuleFBX::ClearMeshes()
 {
 	for (int i = App->renderer3D->meshes.size() - 1; App->renderer3D->meshes.size() != 0; i--)

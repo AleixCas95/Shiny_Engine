@@ -68,5 +68,11 @@ void ComponentMesh::Load(JSON_Object* parent)
 
 	std::string name = json_object_get_string(parent, "Name");
 
+	mesh = new ResourceMesh(name.c_str());
+
+	App->renderer3D->mesh_list.push_back(this);
+
+	App->resources->AddResource(mesh);
+
 	
 }
