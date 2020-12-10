@@ -25,6 +25,8 @@ public:
 public:
 	unsigned int tex_id = 0u;
 
+	ResourceTexture* RTexture;
+
 	std::string name;
 
 	std::string path;

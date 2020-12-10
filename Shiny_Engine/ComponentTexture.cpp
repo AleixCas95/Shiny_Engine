@@ -16,10 +16,16 @@ void ComponentTexture::Inspector()
 {
 	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Checkbox("Active", &print);
+		ImGui::Checkbox("Texture Active", &print);
 		ImGui::Text("%s", path.c_str());
-		ImGui::Image((void*)(intptr_t)tex_id, ImVec2(225, 225), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		ImGui::Image((void*)(intptr_t)RTexture->id, ImVec2(225, 225), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 		ImGui::Checkbox("Checkers", &checkers);
+		ImGui::Text("Resource used %i times", RTexture->usage);
+
+		if (ImGui::Button("Delete Texture"))
+		{
+			App->gobject->componentsToDelete.push_back(this);
+		}
 	}
 }
 
