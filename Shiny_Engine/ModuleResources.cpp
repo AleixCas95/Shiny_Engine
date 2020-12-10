@@ -122,6 +122,11 @@ void ModuleResources::AddResource(Resource* resource)
 	ResourceUsageIncreased(resource);
 }
 
+void ModuleResources::ResourceUsageIncreased(Resource* resource)
+{
+	resource->usage++;
+}
+
 void ModuleResources::ResourceUsageDecreased(Resource* resource)
 {
 	resource->usage--;
