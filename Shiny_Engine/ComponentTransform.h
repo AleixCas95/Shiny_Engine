@@ -47,7 +47,7 @@ public:
 
 	float4x4 GetLocalMatrix() const;
 
-	void GuizmoSetup();
+	void GuizmoOptions();
 	void UpdateBoundingBox();
 
 public:
