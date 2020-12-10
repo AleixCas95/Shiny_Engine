@@ -250,4 +250,23 @@ void ComponentTransform::Load(JSON_Object* parent)
 
 void ComponentTransform::GuizmoOptions()
 {
+	if (ImGui::RadioButton("None", App->scene->guiz_operation == ImGuizmo::BOUNDS))
+	{
+		App->scene->guiz_operation = ImGuizmo::BOUNDS;
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Move", App->scene->guiz_operation == ImGuizmo::TRANSLATE))
+	{
+		App->scene->guiz_operation = ImGuizmo::TRANSLATE;
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Scale", App->scene->guiz_operation == ImGuizmo::SCALE))
+	{
+		App->scene->guiz_operation = ImGuizmo::SCALE;
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Rotate", App->scene->guiz_operation == ImGuizmo::ROTATE))
+	{
+		App->scene->guiz_operation = ImGuizmo::ROTATE;
+	}
 }
