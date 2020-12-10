@@ -3,7 +3,7 @@
 //#include "ModuleImport.h"
 #include "Component.h"
 #include "GameObject.h"
-#include "ModuleFBX.h"
+#include "ResourcesTexture.h"
 #include <string>
 
 class ComponentTexture :
@@ -15,7 +15,7 @@ public:
 
 	void Inspector();
 
-	inline unsigned int GetID() { return checkers == false ? tex_id : 0u; }
+	unsigned int GetID();
 
 
 	void Save(JSON_Object* parent);

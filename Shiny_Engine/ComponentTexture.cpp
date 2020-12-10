@@ -29,6 +29,10 @@ void ComponentTexture::Inspector()
 	}
 }
 
+unsigned int ComponentTexture::GetID()
+{
+	return checkers == false ? RTexture->id : App->fbx->checkerImageID;
+}
 void ComponentTexture::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
