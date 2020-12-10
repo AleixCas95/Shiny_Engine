@@ -128,11 +128,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	for (std::vector<ModelConfig>::iterator item = meshes.begin(); item != meshes.end(); ++item)
-		App->renderer3D->DrawMeshes(*item);
-	for (std::vector<Mesh*>::iterator it = mesh_list.begin(); it != mesh_list.end(); ++it)
+	for (std::list<ComponentMesh*>::iterator it = mesh_list.begin(); it != mesh_list.end(); ++it)
 	{
-		(*it)->InnerRender();
+		(*it)->Draw();
 	}
 
 	return UPDATE_CONTINUE;

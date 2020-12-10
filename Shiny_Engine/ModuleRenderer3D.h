@@ -35,7 +35,7 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-	std::vector<ModelConfig> meshes;
+	//std::vector<ModelConfig> meshes;
 
 
 	std::list<ComponentMesh*> mesh_list;
