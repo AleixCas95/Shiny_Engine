@@ -17,7 +17,7 @@ public:
 
 	char* LoadFile(const char* path, ResourceType type, uint uuid);
 
-	
+	std::string GetDirection(ResourceType type, uint uuid, const char* path = nullptr);
 
 public:
 

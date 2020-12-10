@@ -25,6 +25,8 @@ bool ModuleResources::Init()
 void ModuleResources::SaveFile(uint size, char* output_file, ResourceType type, uint uuid, const char* path)
 {
 
+	string direction = GetDirection(type, uuid, path);
+
 	ofstream file(direction.c_str(), ios::out | ios::binary);
 
 	if (file.is_open())
@@ -39,4 +41,9 @@ char* ModuleResources::LoadFile(const char* path, ResourceType type, uint uuid)
 	
 }
 
+string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* path)
+{
+	string filePath = "Library/";
 
+	return filePath;
+}

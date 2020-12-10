@@ -15,6 +15,9 @@ ComponentMesh::ComponentMesh(Application* app_parent, GameObject* parent) : Comp
 
 ComponentMesh::~ComponentMesh()
 {
+	
+	gameObject->boundingBox.SetNegativeInfinity();
+	gameObject->originalBoundingBox.SetNegativeInfinity();
 }
 
 void ComponentMesh::Inspector()
