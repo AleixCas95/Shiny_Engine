@@ -32,11 +32,33 @@ void ComponentMesh::Inspector()
 	}
 }
 
+void ComponentMesh::Draw()
+{
+	if (gameObject->active && print)
+	{
+		ComponentTransform* transform = gameObject->transform;
+		glPushMatrix();
+		float4x4 mat = transform->GetMatrixOGL();
+
+		glMultMatrixf(mat.ptr());
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex.id);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->index.id);
+
+	}
+}
+
 void ComponentMesh::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
-
+	json_object_set_string(parent, "Name", mesh->name.c_str());
 
 }
 
