@@ -22,3 +22,21 @@ bool ModuleResources::Init()
 	return true;
 }
 
+void ModuleResources::SaveFile(uint size, char* output_file, ResourceType type, uint uuid, const char* path)
+{
+
+	ofstream file(direction.c_str(), ios::out | ios::binary);
+
+	if (file.is_open())
+	{
+		file.write(output_file, size);
+		file.close();
+	}
+}
+
+char* ModuleResources::LoadFile(const char* path, ResourceType type, uint uuid)
+{
+	
+}
+
+
