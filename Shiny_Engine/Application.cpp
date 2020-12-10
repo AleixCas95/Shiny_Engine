@@ -21,7 +21,7 @@ Application::Application()
 	files = new ModuleFiles(this);
 	mouse = new ModuleMousePicking(this);
 	module_time = new Time(this);
-
+	resources = new ModuleResources(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -47,6 +47,7 @@ Application::Application()
 	AddModule(scene);
 	AddModule(fbx);
 	AddModule(gobject);
+	AddModule(resources);
 
 	AddModule(renderer3D);
 	AddModule(gui);

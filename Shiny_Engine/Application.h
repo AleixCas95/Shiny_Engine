@@ -26,6 +26,7 @@
 #include "Component.h"
 #include "ModuleMousePicking.h"
 #include "ModuleTime.h"
+#include "ModuleResources.h"
 //#include "ModuleGeometry.h"
 #include <list>
 
@@ -50,6 +51,8 @@ public:
 	ModuleScene* scene;
 	ModuleFiles* files;
 	ModuleMousePicking* mouse;
+	ModuleResources* resources;
+
 	Time* module_time;
 
 	
