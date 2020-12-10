@@ -560,9 +560,6 @@
     <ClCompile Include="ComponentTransform.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Sources\Engine\Modules\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="par_shapes.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>

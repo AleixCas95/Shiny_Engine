@@ -243,7 +243,6 @@
     <ClCompile Include="MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="MathGeoLib\Time\Clock.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp" />
     <ClCompile Include="ModuleAbout.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
