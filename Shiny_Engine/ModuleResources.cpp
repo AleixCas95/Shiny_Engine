@@ -98,6 +98,30 @@ string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* p
 	return filePath;
 }
 
+Resource* ModuleResources::GetResource(ResourceType type, const char* path)
+{
+	for (std::list<Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		if ((*it)->type == type)
+		{
+			if (strcmp((*it)->name.c_str(), path) == 0)
+				return *it;
+		}
+	}
+	return nullptr;
+}
+
+void ModuleResources::AddResource(Resource* resource)
+{
+	for (std::list<Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		if (&resource == &*it)
+			return;
+	}
+	resources.push_back(resource);
+	ResourceUsageIncreased(resource);
+}
+
 void ModuleResources::ResourceUsageDecreased(Resource* resource)
 {
 	resource->usage--;
