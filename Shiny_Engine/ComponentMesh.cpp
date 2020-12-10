@@ -15,7 +15,8 @@ ComponentMesh::ComponentMesh(Application* app_parent, GameObject* parent) : Comp
 
 ComponentMesh::~ComponentMesh()
 {
-	
+	App->renderer3D->mesh_list.remove(this);
+	App->resources->ResourceUsageDecreased(mesh);
 	gameObject->boundingBox.SetNegativeInfinity();
 	gameObject->originalBoundingBox.SetNegativeInfinity();
 }

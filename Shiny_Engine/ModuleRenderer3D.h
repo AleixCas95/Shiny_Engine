@@ -8,6 +8,7 @@
 #include "Light.h"
 #include "ModuleFBX.h"
 #include "ComponentCamera.h"
+#include "ComponentMesh.h"
 
 #define MAX_LIGHTS 8
 class Application;
@@ -37,7 +38,7 @@ public:
 	std::vector<ModelConfig> meshes;
 
 
-	std::vector<Mesh*> mesh_list;
+	std::list<ComponentMesh*> mesh_list;
 
 
 	float tex_alpha = 0.0f;

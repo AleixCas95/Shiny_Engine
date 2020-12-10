@@ -19,6 +19,14 @@ public:
 
 	std::string GetDirection(ResourceType type, uint uuid, const char* path = nullptr);
 
+	Resource* GetResource(ResourceType type, const char* path);
+
+	void AddResource(Resource* resource);
+
+	void ResourceUsageIncreased(Resource* resource);
+
+	void ResourceUsageDecreased(Resource* resource);
+
 public:
 
 	std::list<Resource*> resources;

@@ -47,3 +47,14 @@ string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* p
 
 	return filePath;
 }
+
+void ModuleResources::ResourceUsageDecreased(Resource* resource)
+{
+	resource->usage--;
+	if (resource->usage <= 0)
+	{
+		///resource->Unload();
+		resources.remove(resource);
+		delete resource;
+	}
+}
