@@ -372,50 +372,75 @@ void ModuleFBX::ImportTexture(const char* path)
 
 void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 {
-	ilInit();
-	iluInit();
-	ilutInit();
-	if (ilLoadImage(path))
+	ResourceTexture* m = (ResourceTexture*)App->resources->GetResource(ResourceType::Texture, path);
+	if (m == nullptr)
 	{
+		m = new ResourceTexture(path);
 
-
-		uint texture_id = 0;
-
-		uint id = 0;
-
-		ilGenImages(1, &id);
-		ilBindImage(id);
-		ilLoadImage(path);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		texture_id = ilutGLBindTexImage();
-		glBindTexture(GL_TEXTURE_2D, 0);
-		ilDeleteImages(1, &id);
-
-
-		if (go->HasComponent(CompTexture))
+		ilInit();
+		iluInit();
+		ilutInit();
+		if (ilLoadImage(path))
 		{
-			ComponentTexture* texture = (ComponentTexture*)go->GetComponent(CompTexture);
-			glDeleteTextures(1, &texture->tex_id);
-			texture->tex_id = texture_id;
-			std::string tex_path(path);
-			texture->path = tex_path;
-			LOG("Texture loaded");
+			ilEnable(IL_FILE_OVERWRITE);
+
+			ILuint size;
+			ILubyte* data;
+
+			ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+			size = ilSaveL(IL_DDS, NULL, 0);
+			if (size > 0) {
+				data = new ILubyte[size];
+				if (ilSaveL(IL_DDS, data, size) > 0)
+					App->resources->SaveFile(size, (char*)data, ResourceType::Texture, 0u, path);
+			}
+
+			uint texture_id = 0;
+
+			uint id = 0;
+
+			ilGenImages(1, &id);
+			ilBindImage(id);
+			ilLoadImage(path);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			texture_id = ilutGLBindTexImage();
+			glBindTexture(GL_TEXTURE_2D, 0);
+			ilDeleteImages(1, &id);
+
+			m->id = texture_id;
+
+			App->resources->AddResource(m);
 		}
 		else
 		{
-			ComponentTexture* texture = new ComponentTexture(App, go);
-			texture->tex_id = texture_id;
-			std::string tex_path(path);
-			texture->path = tex_path;
-			LOG("Texture loaded");
+			LOG("Couldn't load texture: %s", path);
+			return;
 		}
 	}
 	else
 	{
-		LOG("Couldn't load texture: %s", path);
+		App->resources->ResourceUsageIncreased(m);
+	}
+
+	if (go->HasComponent(CompTexture))
+	{
+		ComponentTexture* texture = (ComponentTexture*)go->GetComponent(CompTexture);
+		App->resources->ResourceUsageDecreased(texture->RTexture);
+		std::string tex_path(path);
+		texture->path = tex_path;
+		texture->RTexture = m;
+		LOG("Texture loaded");
+	}
+	else
+	{
+		ComponentTexture* texture = new ComponentTexture(App, go);
+		std::string tex_path(path);
+		texture->path = tex_path;
+		texture->RTexture = m;
+		LOG("Texture loaded");
 	}
 }
 
