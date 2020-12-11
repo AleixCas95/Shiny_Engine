@@ -1,10 +1,8 @@
 
 #pragma once
+#include "Globals.h"
 #include "glmath.h"
 #include "Color.h"
-#include "Globals.h"
-
-class GameObject;
 
 enum PrimitiveTypes
 {
@@ -13,11 +11,7 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder,
-	Primitive_Arrow,
-	Primitive_Axis,
-	Primitive_Ray,
-	P_Mesh
+	Primitive_Cylinder
 };
 
 class Primitive
@@ -38,49 +32,39 @@ public:
 	Color color;
 	mat4x4 transform;
 	bool axis, wire;
-	//uint my_id = 0;
-	//uint my_indices = 0;
-	//uint my_normals = 0;
-	float* vertices = nullptr;
-	uint* indices = nullptr;
-	float* normals = nullptr;
 
 protected:
 	PrimitiveTypes type;
 };
 
 // ============================================
-class Cube : public Primitive
+class PrimitiveCube : public Primitive
 {
 public:
-	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
+	PrimitiveCube();
+	PrimitiveCube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
-	void CreateBuffers();
 public:
 	vec3 size;
-	float sx = 0;
-	float sy = 0;
-	float sz = 0;
 };
 
 // ============================================
-class Sphere : public Primitive
+class PrimitiveSphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius);
+	PrimitiveSphere();
+	PrimitiveSphere(float radius);
 	void InnerRender() const;
 public:
 	float radius;
 };
 
 // ============================================
-class Cylinder : public Primitive
+class PrimitiveCylinder : public Primitive
 {
 public:
-	Cylinder();
-	Cylinder(float radius, float height);
+	PrimitiveCylinder();
+	PrimitiveCylinder(float radius, float height);
 	void InnerRender() const;
 public:
 	float radius;
@@ -88,11 +72,11 @@ public:
 };
 
 // ============================================
-class Line : public Primitive
+class PrimitiveLine : public Primitive
 {
 public:
-	Line();
-	Line(float x, float y, float z);
+	PrimitiveLine();
+	PrimitiveLine(float x, float y, float z);
 	void InnerRender() const;
 public:
 	vec3 origin;
@@ -100,40 +84,15 @@ public:
 };
 
 // ============================================
-class PlaneGrid : public Primitive
+class PrimitivePlane : public Primitive
 {
 public:
-	PlaneGrid();
-	PlaneGrid(float x, float y, float z, float d);
+	PrimitivePlane();
+	PrimitivePlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;
 	float constant;
 };
 
-
-template <typename T>
-struct buffer
-{
-
-	uint id = 0u;
-	uint size = 0u;
-	T* data = nullptr;
-};
-
-class Mesh : public Primitive
-{
-public:
-	Mesh(GameObject* parent);
-	void InnerRender() const;
-public:
-	int id = -1;
-	buffer<uint> index;
-	buffer<float> vertex;
-	buffer<float> normals;
-	buffer<float> uvs;
-
-	bool hasNormals = false;
-
-	GameObject* parent = nullptr;
-};
+// ============================================

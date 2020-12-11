@@ -26,7 +26,7 @@ bool ModuleScene::Start()
 	glewInit();
 	ImGuizmo::Enable(true);
 	//App->camera->Move(vec3(1,1,0));
-	App->camera->LookAt(math::float3(0,0,0));
+	App->camera->LookAt(math::float3(0, 0, 0));
 
 	return ret;
 }
@@ -103,7 +103,7 @@ update_status ModuleScene::Update(float dt)
 	}
 
 
-	PlaneGrid p(0, 1, 0, 0);
+	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
 	return UPDATE_CONTINUE;

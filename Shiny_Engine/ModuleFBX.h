@@ -10,7 +10,8 @@
 #include "MathGeoLib\Geometry\AABB.h"
 #include "ParShapes/par_shapes.h"
 
-class Mesh;
+class ResourceMesh;
+class ResourceTexture;
 
 class aiScene;
 class aiNode;
@@ -58,10 +59,10 @@ public:
 
 	bool LoadFBX(const char* path);
 	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path);
-	void SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path = nullptr);
-	void LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff); 
-	void RealLoadTexture(const char* path, uint& texture_id);
 
+	void SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path = nullptr);
+	void LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff);
+	void RealLoadTexture(const char* path, uint& texture_id);
 	void ImportTexture(const char* path);
 	void ImportTextureGo(const char* path, GameObject* go);
 
