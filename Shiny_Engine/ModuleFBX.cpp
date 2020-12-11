@@ -51,9 +51,46 @@ bool ModuleFBX::Start()
 
 void ModuleFBX::SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path)
 {
-	
-}
+	uint ranges[4] = { m->index.size, m->vertex.size, m->normals.size, m->uvs.size };
+	float size =
+		sizeof(ranges) +
+		sizeof(uint) * m->index.size +
+		sizeof(float) * m->vertex.size +
+		sizeof(float) * m->normals.size +
+		sizeof(float) * m->uvs.size;
 
+	char* meshBuffer = new char[size];
+	char* cursor = meshBuffer;
+
+	uint bytes = sizeof(ranges);
+	memcpy(cursor, ranges, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(uint) * m->index.size;
+	memcpy(cursor, m->index.data, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * m->vertex.size;
+	memcpy(cursor, m->vertex.data, bytes);
+
+	if (m->normals.data)
+	{
+		cursor += bytes;
+		bytes = sizeof(float) * m->normals.size;
+		memcpy(cursor, m->normals.data, bytes);
+	}
+
+	if (m->uvs.data)
+	{
+		cursor += bytes;
+		bytes = sizeof(float) * m->uvs.size;
+		memcpy(cursor, m->uvs.data, bytes);
+	}
+
+	App->resources->SaveFile(size, meshBuffer, ResourceType::Mesh, uuid, path);
+
+	delete[] meshBuffer;
+}
 void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 {
 	uint ranges[4];
@@ -73,6 +110,7 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 bool ModuleFBX::CleanUp()
 {
 	aiDetachAllLogStreams();
+
 	path.clear();
 	texture_path.clear();
 	return true;
