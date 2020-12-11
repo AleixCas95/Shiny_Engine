@@ -165,7 +165,7 @@ bool ModuleFBX::LoadFBX(const char* path)
 	return false;
 }
 
-GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent)
+GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path)
 {
 	GameObject* go = new GameObject(App, parent, node->mName.C_Str());
 
@@ -173,44 +173,76 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 	{
 		aiMesh* new_mesh = scene->mMeshes[node->mMeshes[0]];
 
-		Mesh* m = new Mesh(go);
+		std::string _path = path;
+		std::string _name = node->mName.C_Str();
 
-		m->vertex.size = new_mesh->mNumVertices;
-		m->vertex.data = new float[m->vertex.size * 3];
-		memcpy(m->vertex.data, new_mesh->mVertices, sizeof(float) * m->vertex.size * 3);
-		LOG("New mesh with %d vertices", m->vertex.size);
-
-		if (new_mesh->HasFaces())
+		ResourceMesh* m = (ResourceMesh*)App->resources->GetResource(ResourceType::Mesh, (_path + _name).c_str());
+		if (m == nullptr)
 		{
-			m->index.size = new_mesh->mNumFaces * 3;
-			m->index.data = new uint[m->index.size];
-			for (uint i = 0; i < new_mesh->mNumFaces; ++i)
-			{
-				if (new_mesh->mFaces[i].mNumIndices != 3)
-				{
-					LOG("WARNING, geometry face with != 3 indices!");
-				}
+			m = new ResourceMesh((_path + _name).c_str());
+			m->vertex.size = new_mesh->mNumVertices * 3;
+			m->vertex.data = new float[m->vertex.size];
+			memset(m->vertex.data, 0, sizeof(float) * m->vertex.size);
+			memcpy(m->vertex.data, new_mesh->mVertices, sizeof(float) * m->vertex.size);
+			LOG("New mesh with %d vertices", m->vertex.size);
 
-				else
+			//Load bounding box
+			go->originalBoundingBox.Enclose((float3*)m->vertex.data, m->vertex.size / 3);
+			go->boundingBox = go->originalBoundingBox;
+
+			if (new_mesh->HasFaces())
+			{
+				m->index.size = new_mesh->mNumFaces * 3;
+				m->index.data = new uint[m->index.size];
+				memset(m->index.data, 0, sizeof(float) * m->index.size);
+				for (uint i = 0; i < new_mesh->mNumFaces; ++i)
 				{
-					memcpy(&m->index.data[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+					if (new_mesh->mFaces[i].mNumIndices != 3)
+					{
+						LOG("WARNING, geometry face with != 3 indices!");
+					}
+
+					else
+					{
+						memcpy(&m->index.data[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+					}
 				}
 			}
+			if (new_mesh->HasTextureCoords(m->uvs.id))
+			{
+				m->uvs.size = new_mesh->mNumVertices * 2;
+				m->uvs.data = new float[m->uvs.size];
+
+				for (int i = 0; i < new_mesh->mNumVertices; ++i)
+				{
+					memcpy(&m->uvs.data[i * 2], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
+					memcpy(&m->uvs.data[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
+				}
+
+				glGenBuffers(1, (GLuint*) & (m->uvs.id));
+				glBindBuffer(GL_ARRAY_BUFFER, m->uvs.id);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->uvs.size, m->uvs.data, GL_STATIC_DRAW);
+			}
+
+			if (new_mesh->HasNormals()) {
+				m->hasNormals = true;
+				m->normals.size = new_mesh->mNumVertices * 3;
+				m->normals.data = new float[m->normals.size];
+				memcpy(m->normals.data, new_mesh->mNormals, sizeof(float) * m->normals.size);
+			}
+			glGenBuffers(1, (GLuint*) & (m->vertex.id));
+			glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
+
+			glGenBuffers(1, (GLuint*) & (m->index.id));
+			glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+
+			App->resources->AddResource(m);
 		}
-		if (new_mesh->HasTextureCoords(m->uvs.id))
+		else
 		{
-			m->uvs.size = new_mesh->mNumVertices;
-			m->uvs.data = new float[m->uvs.size * 2];
-
-			for (int i = 0; i < new_mesh->mNumVertices; ++i)
-			{
-				memcpy(&m->uvs.data[i * 2], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
-				memcpy(&m->uvs.data[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
-			}
-
-			glGenBuffers(1, (GLuint*) & (m->uvs.id));
-			glBindBuffer(GL_ARRAY_BUFFER, m->uvs.id);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * m->uvs.size, m->uvs.data, GL_STATIC_DRAW);
+			App->resources->ResourceUsageIncreased(m);
 		}
 
 		if (scene->HasMaterials())
@@ -226,39 +258,38 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 				textPath = textPath.substr(textPath.find_last_of("\\") + 1);
 
-				//textPath = "Game\\Assets\\Textures\\" + textPath;
+				textPath = "Assets\\Textures\\" + textPath;
 
 				ImportTextureGo(textPath.c_str(), go);
 			}
 		}
 
-		if (new_mesh->HasNormals()) {
-			m->hasNormals = true;
-			m->normals.size = new_mesh->mNumVertices;
-			m->normals.data = new float[m->normals.size * 3];
-			memcpy(m->normals.data, new_mesh->mNormals, sizeof(float) * m->normals.size * 3);
-		}
-		glGenBuffers(1, (GLuint*) & (m->vertex.id));
-		glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
-
-		glGenBuffers(1, (GLuint*) & (m->index.id));
-		glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
-
 		ComponentMesh* newMesh = new ComponentMesh(App, go);
 		newMesh->mesh = m;
 
-		App->renderer3D->mesh_list.push_back(m);
+		SaveMeshImporter(m, newMesh->uuid);
+
+		App->renderer3D->mesh_list.push_back(newMesh);
+
+		
+
 		LOG("Mesh loaded");
 	}
+
+	float4x4 transformMat(
+		node->mTransformation.a1, node->mTransformation.a2, node->mTransformation.a3, node->mTransformation.a4,
+		node->mTransformation.b1, node->mTransformation.b2, node->mTransformation.b3, node->mTransformation.b4,
+		node->mTransformation.c1, node->mTransformation.c2, node->mTransformation.c3, node->mTransformation.c4,
+		node->mTransformation.d1, node->mTransformation.d2, node->mTransformation.d3, node->mTransformation.d4);
+
+	go->transform->SetTransform(transformMat);
+
 	for (int child = 0; child < node->mNumChildren; ++child)
 	{
-		LoadMeshNode(scene, node->mChildren[child], go);
+		LoadMeshNode(scene, node->mChildren[child], go, path);
 	}
 	return go;
 }
-
 void ModuleFBX::ImportTexture(const char* path)
 {
 	ilInit();
