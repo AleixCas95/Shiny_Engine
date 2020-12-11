@@ -67,7 +67,7 @@ bool ModuleFBX::LoadFBX(const char* path)
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		GameObject* newGameObject = App->scene->current_object = LoadMeshNode(scene, scene->mRootNode, App->gobject->root);
+		GameObject* newGameObject = App->scene->current_object = LoadMeshNode(scene, scene->mRootNode, App->gobject->root, path);
 
 		aiReleaseImport(scene);
 	}
@@ -445,7 +445,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 }
 
 
-Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
+ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 {
 	GameObject* go = new GameObject(App, App->gobject->root, name);
 
@@ -501,10 +501,6 @@ math::AABB ModuleFBX::GetAABB()const
 	return box;
 }
 
-uint ModuleFBX::MeshesSize()const
-{
-	return App->renderer3D->meshes.size();
-}
 
 uint ModuleFBX::GetIndicesQuantity()const
 {

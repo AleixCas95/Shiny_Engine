@@ -54,7 +54,7 @@ public:
 
 	bool Start();
 	bool CleanUp();
-	Mesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
+	ResourceMesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
 
 	bool LoadFBX(const char* path);
 	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path);
