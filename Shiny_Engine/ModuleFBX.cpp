@@ -11,6 +11,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 #include "ModuleConsole.h"
+#include "ResourcesMesh.h
 
 #pragma comment (lib, "Assimp\\libx86\\assimp.lib")
 #pragma comment (lib, "Devil\\libx86\\DevIL.lib")
@@ -68,30 +69,10 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 	m->uvs.size = ranges[3];
 }
 
-void ModuleFBX::ClearMeshes()
-{
-	for (int i = App->renderer3D->meshes.size() - 1; App->renderer3D->meshes.size() != 0; i--)
-	{
-		delete[] App->renderer3D->meshes[i].indices;
-		delete[] App->renderer3D->meshes[i].vertices;
-		delete[] App->renderer3D->meshes[i].uvs;
-		delete[] App->renderer3D->meshes[i].normals;
-		App->renderer3D->meshes.pop_back();
-	}
-
-	//Geometry
-	delete data.indices;
-	delete data.vertices;
-
-	//Texture
-	delete data.uvs;
-	delete data.normals;
-}
 
 bool ModuleFBX::CleanUp()
 {
 	aiDetachAllLogStreams();
-	ClearMeshes();
 	path.clear();
 	texture_path.clear();
 	return true;
