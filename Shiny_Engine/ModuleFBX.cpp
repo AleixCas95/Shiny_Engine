@@ -449,34 +449,45 @@ Mesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 {
 	GameObject* go = new GameObject(App, App->gobject->root, name);
 
-	Mesh* m = new Mesh(go);
+	ResourceMesh* m = (ResourceMesh*)App->resources->GetResource(ResourceType::Mesh, name);
 
-	m->vertex.size = mesh->npoints;
-	m->vertex.data = new float[m->vertex.size * 3];
-	memcpy(m->vertex.data, mesh->points, sizeof(float) * mesh->npoints * 3);
-
-	m->index.size = mesh->ntriangles * 3;
-	m->index.data = new uint[m->index.size];
-
-	for (int i = 0; i < m->index.size; i++)
+	if (m == nullptr)
 	{
-		m->index.data[i] = (uint)mesh->triangles[i];
+		m = new ResourceMesh(name);
+
+		m->vertex.size = mesh->npoints;
+		m->vertex.data = new float[m->vertex.size * 3];
+		memcpy(m->vertex.data, mesh->points, sizeof(float) * mesh->npoints * 3);
+
+		m->index.size = mesh->ntriangles * 3;
+		m->index.data = new uint[m->index.size];
+
+		for (int i = 0; i < m->index.size; i++)
+		{
+			m->index.data[i] = (uint)mesh->triangles[i];
+		}
+
+		glGenBuffers(1, (GLuint*) & (m->vertex.id));
+		glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
+
+		glGenBuffers(1, (GLuint*) & (m->index.id));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+
+		App->resources->AddResource(m);
 	}
-
-	glGenBuffers(1, (GLuint*) & (m->vertex.id));
-	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) & (m->index.id));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+	else
+	{
+		App->resources->ResourceUsageIncreased(m);
+	}
 
 	ComponentMesh* newMesh = new ComponentMesh(App, go);
 	newMesh->mesh = m;
 
-	App->renderer3D->mesh_list.push_back(m);
+	App->renderer3D->mesh_list.push_back(newMesh);
 
-	App->console->AddLog("Par_Shapes Mesh loaded");
+	LOG("Par_Shapes Mesh loaded");
 
 	return m;
 }
