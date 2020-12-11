@@ -104,8 +104,41 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 	m->vertex.size = ranges[1];
 	m->normals.size = ranges[2];
 	m->uvs.size = ranges[3];
-}
 
+	cursor += bytes;
+	bytes = sizeof(uint) * m->index.size;
+	m->index.data = new uint[m->index.size];
+	memcpy(m->index.data, cursor, bytes);
+
+	glGenBuffers(1, (GLuint*) & (m->index.id));
+	glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
+
+	cursor += bytes;
+	bytes = sizeof(float) * m->vertex.size;
+	m->vertex.data = new float[m->vertex.size];
+	memcpy(m->vertex.data, cursor, bytes);
+
+	glGenBuffers(1, (GLuint*) & (m->vertex.id));
+	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
+
+	cursor += bytes;
+	bytes = sizeof(float) * m->normals.size;
+	m->normals.data = new float[m->normals.size];
+	memcpy(m->normals.data, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * m->uvs.size;
+	m->uvs.data = new float[m->uvs.size];
+	memcpy(m->uvs.data, cursor, bytes);
+
+	glGenBuffers(1, (GLuint*) & (m->uvs.id));
+	glBindBuffer(GL_ARRAY_BUFFER, m->uvs.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->uvs.size, m->uvs.data, GL_STATIC_DRAW);
+
+	delete buff;
+}
 
 bool ModuleFBX::CleanUp()
 {
