@@ -31,7 +31,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Sphere"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_subdivided_sphere(3);
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Sphere");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Sphere");
 		par_shapes_free_mesh(shape);
 
 	}
@@ -41,7 +41,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Cube"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_cube();
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Cube");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Cube");
 		par_shapes_free_mesh(shape);
 	}
 
@@ -50,7 +50,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Cylinder"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_cylinder(15, 15);
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Cylinder");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Cylinder");
 		par_shapes_free_mesh(shape);
 	}
 
@@ -59,7 +59,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Cone"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_cone(15, 15);
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Cone");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Cone");
 		par_shapes_free_mesh(shape);
 	}
 
@@ -68,7 +68,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Knot"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_trefoil_knot(15, 15, 2.0f);
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Knot");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Knot");
 		par_shapes_free_mesh(shape);
 	}
 
@@ -77,7 +77,7 @@ void ModuleShapes::Draw()
 	if (ImGui::Button("Torus"))
 	{
 		par_shapes_mesh* shape = par_shapes_create_torus(15, 15, 0.3f);
-		Mesh* mesh = App->fbx->MeshParShape(shape, "Torus");
+		ResourceMesh* mesh = App->fbx->MeshParShape(shape, "Torus");
 		par_shapes_free_mesh(shape);
 	}
 
