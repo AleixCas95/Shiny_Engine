@@ -63,7 +63,7 @@ public:
 
 	void ImportTexture(const char* path);
 	void ImportTextureGo(const char* path, GameObject* go);
-	void ClearMeshes();
+
 
 
 	// Read only
