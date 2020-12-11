@@ -335,47 +335,38 @@ void ModuleFBX::RealLoadTexture(const char* path, uint& texture_id)
 
 void ModuleFBX::ImportTexture(const char* path)
 {
-	ilInit();
-	iluInit();
-	ilutInit();
-	if (ilLoadImage(path))
+	ResourceTexture* m = (ResourceTexture*)App->resources->GetResource(ResourceType::Texture, path);
+	if (m == nullptr)
 	{
+		m = new ResourceTexture(path);
 		uint texture_id = 0;
 
-		uint id = 0;
+		RealLoadTexture(path, texture_id);
+		m->id = texture_id;
 
-		ilGenImages(1, &id);
-		ilBindImage(id);
-		ilLoadImage(path);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		texture_id = ilutGLBindTexImage();
-		glBindTexture(GL_TEXTURE_2D, 0);
-		ilDeleteImages(1, &id);
-
-		if (App->scene->current_object->HasComponent(CompTexture))
-		{
-			ComponentTexture* texture = (ComponentTexture*)App->scene->current_object->GetComponent(CompTexture);
-			glDeleteTextures(1, &texture->tex_id);
-			texture->tex_id = texture_id;
-			std::string tex_path(path);
-			texture->path = tex_path;
-			LOG("Texture loaded");
-		}
-		else
-		{
-			ComponentTexture* texture = new ComponentTexture(App, App->scene->current_object);
-			texture->tex_id = texture_id;
-			std::string tex_path(path);
-			texture->path = tex_path;
-			LOG("Texture loaded");
-		}
+		App->resources->AddResource(m);
 	}
 	else
 	{
-		LOG("Couldn't load texture");
+		App->resources->ResourceUsageIncreased(m);
+	}
+
+	if (App->scene->current_object->HasComponent(CompTexture))
+	{
+		ComponentTexture* texture = (ComponentTexture*)App->scene->current_object->GetComponent(CompTexture);
+		App->resources->ResourceUsageDecreased(texture->RTexture);
+		std::string tex_path(path);
+		texture->path = tex_path;
+		texture->RTexture = m;
+		LOG("Texture loaded");
+	}
+	else
+	{
+		ComponentTexture* texture = new ComponentTexture(App, App->scene->current_object);
+		std::string tex_path(path);
+		texture->path = tex_path;
+		texture->RTexture = m;
+		LOG("Texture loaded");
 	}
 }
 
