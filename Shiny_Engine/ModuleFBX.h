@@ -57,7 +57,7 @@ public:
 	Mesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
 
 	bool LoadFBX(const char* path);
-	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent);
+	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path);
 	void SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path = nullptr);
 	void LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff); 
 	void RealLoadTexture(const char* path, uint& texture_id);
