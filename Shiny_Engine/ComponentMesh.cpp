@@ -25,10 +25,18 @@ void ComponentMesh::Inspector()
 {
 	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ImGui::Checkbox("Mesh Active", &print);
 		ImGui::Text("Number of vertices: %u", mesh->vertex.size);
 		ImGui::Text("Number of faces: %u", mesh->index.size / 3);
 
 		ImGui::Checkbox("Vertex normals", &printVertexNormals);
+
+		ImGui::Text("Resource used %i times", mesh->usage);
+
+		if (ImGui::Button("Delete Mesh"))
+		{
+			App->gobject->componentsToDelete.push_back(this);
+		}
 	}
 }
 
