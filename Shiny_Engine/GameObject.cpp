@@ -7,20 +7,25 @@
 using namespace std;
 
 
-GameObject::GameObject(Application* app_parent,GameObject* parent, const char* name)
+GameObject::GameObject(Application* app_parent, GameObject* parent, const char* name, bool addToList)
 {
 	App = app_parent;
+
 	this->parent = parent;
 	if (parent)
 		parent->childs.push_back(this);
 	if (name)
 		this->name = name;
 
-	transform = new ComponentTransform(App,this);
+	if (addToList)
+		App->gobject->gameObjects.push_back(this);
+
+	transform = new ComponentTransform(App, this);
 
 	uuid = pcg32_random();
 
-	//components.push_back((Component*)transform);
+	originalBoundingBox.SetNegativeInfinity();
+	boundingBox.SetNegativeInfinity();
 }
 
 
