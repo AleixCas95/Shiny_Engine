@@ -1,11 +1,12 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
+#include "Glew/include/glew.h"
 #include "Application.h"
 #include "ComponentTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ModuleScene.h"
-#include "parson/parson.h"
+#include "ModuleFBX.h"
 
 ComponentMesh::ComponentMesh(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompMesh)
 {
@@ -58,6 +59,20 @@ void ComponentMesh::Draw()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->index.id);
+
+		if (gameObject)
+		{
+			ComponentTexture* tex = (ComponentTexture*)gameObject->GetComponent(CompTexture);
+			if (tex)
+			{
+				if (tex->print)
+				{
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, tex->GetID());
+				}
+			}
+		}
+
 
 	}
 }
