@@ -123,6 +123,10 @@ update_status ModuleGameObject::Update()
 
 GameObject* ModuleGameObject::GetGO(unsigned int uuid)
 {
-	
+	for (auto go : gameObjects)
+	{
+		if (go->uuid == uuid)
+			return go;
+	}
 	return nullptr;
 }
