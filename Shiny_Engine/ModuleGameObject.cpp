@@ -11,3 +11,35 @@ ModuleGameObject::ModuleGameObject(Application* app, bool start_enabled) : Modul
 ModuleGameObject::~ModuleGameObject()
 {
 }
+
+bool ModuleGameObject::Init()
+{
+	
+	return true;
+}
+
+void ModuleGameObject::SaveScene(const char* name)
+{
+	
+}
+
+void ModuleGameObject::LoadScene(const char* name)
+{
+	
+}
+
+void ModuleGameObject::SaveGameObjects(JSON_Array*& parent, GameObject* current)
+{
+	
+}
+
+update_status ModuleGameObject::Update()
+{
+	
+}
+
+GameObject* ModuleGameObject::GetGO(unsigned int uuid)
+{
+	
+	return nullptr;
+}

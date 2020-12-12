@@ -8,6 +8,18 @@ public:
 	ModuleGameObject(Application* app, bool start_enabled = true);
 	~ModuleGameObject();
 
+	bool Init();
+
+	void SaveScene(const char* name);
+
+	void LoadScene(const char* name);
+
+	void SaveGameObjects(JSON_Array*& parent, GameObject* current);
+
+	update_status Update();
+
+	GameObject* GetGO(unsigned int uuid);
+
 public:
 	GameObject* root = nullptr;
 
