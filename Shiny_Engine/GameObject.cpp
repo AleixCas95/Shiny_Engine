@@ -31,6 +31,22 @@ GameObject::GameObject(Application* app_parent, GameObject* parent, const char* 
 
 GameObject::~GameObject()
 {
+	delete transform;
+	transform = nullptr;
+}
+
+void GameObject::RealDelete()
+{
+	for (auto comp : components)
+	{
+		delete comp;
+		comp = nullptr;
+	}
+	components.clear();
+
+	childs.clear();
+
+	parent = nullptr;
 }
 
 bool GameObject::HasComponent(Object_Type type)
@@ -130,9 +146,9 @@ void GameObject::Load(JSON_Object* info)
 			transform->Load(comp);
 		}
 		break;
-		/*case CompMesh:
+		case CompMesh:
 		{
-			ComponentMesh* mesh = new ComponentMesh(this);
+			ComponentMesh* mesh = new ComponentMesh(App, this);
 			mesh->Load(comp);
 			originalBoundingBox.Enclose((float3*)mesh->mesh->vertex.data, mesh->mesh->vertex.size / 3);
 			boundingBox = originalBoundingBox;
@@ -140,13 +156,13 @@ void GameObject::Load(JSON_Object* info)
 		break;
 		case CompTexture:
 		{
-			ComponentTexture* tex = new ComponentTexture(this);
+			ComponentTexture* tex = new ComponentTexture(App, this);
 			tex->Load(comp);
 		}
 		break;
 		case CompCamera:
 		{
-			ComponentCamera* cam = new ComponentCamera(this);
+			ComponentCamera* cam = new ComponentCamera(App, this);
 			cam->Load(comp);
 		}
 		break;
@@ -154,8 +170,8 @@ void GameObject::Load(JSON_Object* info)
 			break;
 		default:
 			break;
-		}*/
 		}
+		
 	}
 }
 

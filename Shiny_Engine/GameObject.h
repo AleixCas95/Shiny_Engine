@@ -16,6 +16,8 @@ public:
 	GameObject(Application* app_parent,GameObject* parent, const char* name = nullptr, bool addToList = true);
 	~GameObject();
 
+	void RealDelete();
+
 	bool HasComponent(Object_Type type);
 
 	Component* GetComponent(Object_Type type);
@@ -26,7 +28,7 @@ public:
 
 	bool SetParent(GameObject* parent);
 public:
-	bool active = true;
+	
 	std::string name = "gameObject";
 	std::list<Component*> components;
 	ComponentTransform* transform = nullptr;
@@ -36,7 +38,7 @@ public:
 	AABB originalBoundingBox;
 	AABB boundingBox;
 
-
+	bool active = true;
 	bool isStatic = false;
 
 	unsigned int uuid = 0u;
