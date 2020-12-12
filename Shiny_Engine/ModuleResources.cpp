@@ -69,7 +69,7 @@ string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* p
 	{
 		filePath += "Models/";
 		filePath += to_string(uuid);
-		filePath += ".dmnd";
+		filePath += ".shyn";
 	}
 	break;
 	case ResourceType::Texture:

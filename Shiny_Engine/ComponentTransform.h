@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "MathGeoLib/MathGeoLib.h"
-#include "ImGui/imgui.h"
+#include "imgui/imgui.h"
 
 class ComponentTransform : public Component
 {
@@ -10,11 +10,6 @@ public:
 	~ComponentTransform();
 
 	void Inspector();
-
-
-	void Save(JSON_Object* parent);
-
-	void Load(JSON_Object* parent);
 
 	void SetPos(float x, float y, float z);
 	void SetPos(float3 position);
@@ -47,18 +42,17 @@ public:
 
 	float4x4 GetLocalMatrix() const;
 
-	void GuizmoOptions();
 	void UpdateBoundingBox();
 
-public:
-	GameObject* parent = nullptr;
-	AABB bounding_box;
-	AABB original_box;
+	void Save(JSON_Object* parent);
+
+	void Load(JSON_Object* parent);
+
+	void GuizmoOptions();
 
 private:
 	float3 position = float3::zero;
 	Quat rotation = Quat::identity;
 	float3 scale = float3::one;
 };
-
 

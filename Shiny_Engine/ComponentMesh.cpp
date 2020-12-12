@@ -8,6 +8,8 @@
 #include "ModuleScene.h"
 #include "ModuleFBX.h"
 
+
+
 ComponentMesh::ComponentMesh(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompMesh)
 {
 	parent->components.push_back(this);
@@ -71,23 +73,35 @@ void ComponentMesh::Draw()
 					glBindTexture(GL_TEXTURE_2D, tex->GetID());
 				}
 			}
-		}
 
-		if (printVertexNormals && mesh->hasNormals)
-		{
-			int size = 2;
-			glColor3f(0.0f, 1.0f, 0.0f);
-
-			for (uint i = 0; i < mesh->vertex.size; i += 3)
+			if (printVertexNormals && mesh->hasNormals)
 			{
-				glBegin(GL_LINES);
-				glVertex3f(mesh->vertex.data[i], mesh->vertex.data[i + 1], mesh->vertex.data[i + 2]);
-				glVertex3f(mesh->vertex.data[i] + mesh->normals.data[i] * size, mesh->vertex.data[i + 1] + mesh->normals.data[i + 1] * size, mesh->vertex.data[i + 2] + mesh->normals.data[i + 2] * size);
-				glEnd();
+				int size = 2;
+				glColor3f(0.0f, 1.0f, 0.0f);
+
+				for (uint i = 0; i < mesh->vertex.size; i += 3)
+				{
+					glBegin(GL_LINES);
+					glVertex3f(mesh->vertex.data[i], mesh->vertex.data[i + 1], mesh->vertex.data[i + 2]);
+					glVertex3f(mesh->vertex.data[i] + mesh->normals.data[i] * size, mesh->vertex.data[i + 1] + mesh->normals.data[i + 1] * size, mesh->vertex.data[i + 2] + mesh->normals.data[i + 2] * size);
+					glEnd();
+				}
+				glColor3f(1.0f, 1.0f, 1.0f);
 			}
-			glColor3f(1.0f, 1.0f, 1.0f);
 		}
 
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->uvs.id);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+		glDrawElements(GL_TRIANGLES, mesh->index.size, GL_UNSIGNED_INT, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_TEXTURE_2D);
+
+		glPopMatrix();
 	}
 }
 
@@ -96,7 +110,6 @@ void ComponentMesh::Save(JSON_Object* parent)
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
 	json_object_set_string(parent, "Name", mesh->name.c_str());
-
 }
 
 void ComponentMesh::Load(JSON_Object* parent)
@@ -107,9 +120,12 @@ void ComponentMesh::Load(JSON_Object* parent)
 
 	mesh = new ResourceMesh(name.c_str());
 
+	App->fbx->LoadMeshImporter(mesh, uuid, App->resources->LoadFile(nullptr, ResourceType::Mesh, uuid));
+
 	App->renderer3D->mesh_list.push_back(this);
 
 	App->resources->AddResource(mesh);
 
-	
+	//App->scene->quadtree.QT_Insert(gameObject);
 }
+

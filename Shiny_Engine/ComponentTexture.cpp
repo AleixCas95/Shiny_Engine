@@ -1,6 +1,6 @@
 #include "ComponentTexture.h"
 #include "Application.h"
-
+#include "ModuleFBX.h"
 
 ComponentTexture::ComponentTexture(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompTexture)
 {
@@ -10,6 +10,7 @@ ComponentTexture::ComponentTexture(Application* app_parent, GameObject* parent) 
 
 ComponentTexture::~ComponentTexture()
 {
+	App->resources->ResourceUsageDecreased(RTexture);
 }
 
 void ComponentTexture::Inspector()
@@ -33,12 +34,16 @@ unsigned int ComponentTexture::GetID()
 {
 	return checkers == false ? RTexture->id : App->fbx->checkerImageID;
 }
+
 void ComponentTexture::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
 	json_object_set_number(parent, "UUID", uuid);
-	
+
+	// Path
+	//------------------------------------------------------------------------
 	json_object_set_string(parent, "Path", path.c_str());
+	//------------------------------------------------------------------------
 }
 
 void ComponentTexture::Load(JSON_Object* parent)
@@ -46,11 +51,10 @@ void ComponentTexture::Load(JSON_Object* parent)
 	uuid = json_object_get_number(parent, "UUID");
 
 	path = json_object_get_string(parent, "Path");
-	
+
 	RTexture = new ResourceTexture(path.c_str());
 
 	App->fbx->RealLoadTexture(path.c_str(), RTexture->id);
 
 	App->resources->AddResource(RTexture);
-	
 }
