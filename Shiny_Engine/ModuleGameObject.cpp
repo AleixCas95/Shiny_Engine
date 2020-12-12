@@ -44,7 +44,7 @@ void ModuleGameObject::LoadScene(const char* name)
 	JSON_Value* scene = json_parse_file(name);
 	if (json_value_get_type(scene) == JSONArray)
 	{
-		
+
 		for (auto gameObj : gameObjects)
 		{
 			gameObj->RealDelete();
@@ -55,39 +55,47 @@ void ModuleGameObject::LoadScene(const char* name)
 		App->scene->current_object = nullptr;
 		App->renderer3D->mesh_list.clear();
 
+		JSON_Array* objArray = json_value_get_array(scene);
 
-	}
+		int objectsInScene = json_array_get_count(objArray);
 
-	JSON_Array* objArray = json_value_get_array(scene);
+		std::list<GameObject*> goInNewScene;
 
-	int objectsInScene = json_array_get_count(objArray);
-
-	std::list<GameObject*> goInNewScene;
-
-	for (int i = 0; i < objectsInScene; ++i)
-	{
-		JSON_Object* currentGO = json_array_get_object(objArray, i);
-
-		GameObject* newGO = new GameObject(App, nullptr, json_object_get_string(currentGO, "Name"));
-		newGO->Load(currentGO);
-
-		goInNewScene.push_back(newGO);
-	}
-
-	for (auto obj : goInNewScene)
-	{
-		if (!obj->SetParent(GetGO(obj->parentUUID)))
+		for (int i = 0; i < objectsInScene; ++i)
 		{
-			root = obj;
+			JSON_Object* currentGO = json_array_get_object(objArray, i);
+
+			GameObject* newGO = new GameObject(App, nullptr, json_object_get_string(currentGO, "Name"));
+			newGO->Load(currentGO);
+
+			goInNewScene.push_back(newGO);
 		}
+
+		for (auto obj : goInNewScene)
+		{
+			if (!obj->SetParent(GetGO(obj->parentUUID)))
+			{
+				root = obj;
+			}
+		}
+		root->transform->UpdateBoundingBox();
 	}
-	root->transform->UpdateBoundingBox();
 }
-}
+
 
 void ModuleGameObject::SaveGameObjects(JSON_Array*& parent, GameObject* current)
 {
-	
+	JSON_Value* newValue = json_value_init_object();
+	JSON_Object* newObj = json_value_get_object(newValue);
+
+	current->Save(newObj);
+
+	json_array_append_value(parent, newValue);
+
+	for (auto gameobject : current->childs)
+	{
+		SaveGameObjects(parent, gameobject);
+	}
 }
 
 update_status ModuleGameObject::Update()
