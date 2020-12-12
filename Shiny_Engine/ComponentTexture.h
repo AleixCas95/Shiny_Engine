@@ -1,6 +1,4 @@
 #pragma once
-#include "Application.h"
-//#include "ModuleImport.h"
 #include "Component.h"
 #include "GameObject.h"
 #include "ResourcesTexture.h"
@@ -17,13 +15,11 @@ public:
 
 	unsigned int GetID();
 
-
 	void Save(JSON_Object* parent);
 
 	void Load(JSON_Object* parent);
 
 public:
-
 	ResourceTexture* RTexture;
 
 	std::string name;
