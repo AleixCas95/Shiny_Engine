@@ -95,7 +95,6 @@ update_status ModuleInput::PreUpdate(float dt)
 		ImGui_ImplSdlGL3_ProcessEvent(&e);
 		switch (e.type)
 		{
-			FILE_TYPE file_type;
 		case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
 			break;
@@ -128,6 +127,8 @@ update_status ModuleInput::PreUpdate(float dt)
 			else if (!extension.compare("png") || !extension.compare("dds") || !extension.compare("jpg") || !extension.compare("jpeg") || !extension.compare("tga"))
 				App->fbx->ImportTexture(dropped_filedir);
 
+			else if (!extension.compare("json"))
+				App->gobject->LoadScene(dropped_filedir);
 
 			SDL_free(dropped_filedir);
 		}
@@ -153,32 +154,3 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
-const FILE_TYPE ModuleInput::GetFileType(const char* dir) const
-{
-	if (dir != nullptr)
-	{
-		std::string type;
-		//From const char* to std::string
-		std::string path(dir);
-
-		//Find extension
-		type = path.substr(path.find_last_of("."));
-		if (type == ".png" || type == ".jpg" || type == ".bmp" || type == ".dds" ||
-			type == ".PNG" || type == ".JPG" || type == ".BMP" || type == ".DDS")
-		{
-			return TEXTURE;
-		}
-		else if (type == ".fbx" || type == ".obj" ||
-			type == ".FBX" || type == ".OBJ")
-		{
-			return GEOMETRY_MODEL;
-		}
-		else
-		{
-			return UNKNOWN;
-		}
-	}
-
-	App->console->AddLog("File directory ERROR. Is nullptr.");
-	return DIR_NULLPTR;
-}
