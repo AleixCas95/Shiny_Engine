@@ -77,6 +77,15 @@ void ComponentMesh::Draw()
 		{
 			int size = 2;
 			glColor3f(0.0f, 1.0f, 0.0f);
+
+			for (uint i = 0; i < mesh->vertex.size; i += 3)
+			{
+				glBegin(GL_LINES);
+				glVertex3f(mesh->vertex.data[i], mesh->vertex.data[i + 1], mesh->vertex.data[i + 2]);
+				glVertex3f(mesh->vertex.data[i] + mesh->normals.data[i] * size, mesh->vertex.data[i + 1] + mesh->normals.data[i + 1] * size, mesh->vertex.data[i + 2] + mesh->normals.data[i + 2] * size);
+				glEnd();
+			}
+			glColor3f(1.0f, 1.0f, 1.0f);
 		}
 
 	}
