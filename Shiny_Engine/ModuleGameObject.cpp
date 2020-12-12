@@ -100,7 +100,25 @@ void ModuleGameObject::SaveGameObjects(JSON_Array*& parent, GameObject* current)
 
 update_status ModuleGameObject::Update()
 {
-	
+	for (auto comp : componentsToDelete)
+	{
+		comp->gameObject->components.remove(comp);
+		delete comp;
+	}
+	componentsToDelete.clear();
+
+	for (auto obj : gameObjectsToDelete)
+	{
+		if (obj == App->scene->current_object)
+			App->scene->current_object = nullptr;
+
+		gameObjects.remove(obj);
+		obj->RealDelete();
+		delete obj;
+	}
+	gameObjectsToDelete.clear();
+
+	return UPDATE_CONTINUE;
 }
 
 GameObject* ModuleGameObject::GetGO(unsigned int uuid)
