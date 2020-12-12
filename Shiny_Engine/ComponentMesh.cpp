@@ -73,6 +73,11 @@ void ComponentMesh::Draw()
 			}
 		}
 
+		if (printVertexNormals && mesh->hasNormals)
+		{
+			int size = 2;
+			glColor3f(0.0f, 1.0f, 0.0f);
+		}
 
 	}
 }
