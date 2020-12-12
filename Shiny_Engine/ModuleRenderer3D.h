@@ -40,8 +40,9 @@ public:
 
 	std::list<ComponentMesh*> mesh_list;
 
-
 	float tex_alpha = 0.0f;
+
+	bool culling = false;
 
 	//Camera
 

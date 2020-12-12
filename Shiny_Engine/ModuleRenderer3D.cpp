@@ -109,8 +109,16 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	if (Time::gameState != GameState::EDITOR)
+	{
+		current_cam->UpdateFrustum();
+	}
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+
+	glLoadMatrixf(current_cam->GetProjectionMatrix().ptr());
+
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(current_cam->GetProjectionMatrix().ptr());
@@ -139,6 +147,19 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	if (culling && play_cam)
+	{
+		std::list<ComponentMesh*> toDraw;
+
+		for (std::list<ComponentMesh*>::iterator it = mesh_list.begin(); it != mesh_list.end(); ++it)
+		{
+			if (play_cam->frustum.Intersects((*it)->gameObject->boundingBox))
+			{
+				toDraw.push_back(*it);
+			}
+		}
+
+	}
 
 
 	SDL_GL_SwapWindow(App->window->window);
