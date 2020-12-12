@@ -159,8 +159,23 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			}
 		}
 
+		for (std::list<ComponentMesh*>::iterator it = toDraw.begin(); it != toDraw.end(); ++it)
+		{
+			(*it)->Draw();
+		}
+		toDraw.clear();
 	}
 
+	//Debug Draw
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		drawBoxes = !drawBoxes;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		culling = !culling;
+	}
 
 	SDL_GL_SwapWindow(App->window->window);
 

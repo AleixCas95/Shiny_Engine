@@ -44,6 +44,9 @@ public:
 
 	bool culling = false;
 
+	bool drawBoxes = false;
+
+
 	//Camera
 
 	ComponentCamera* current_cam = nullptr;
