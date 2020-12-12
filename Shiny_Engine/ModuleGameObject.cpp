@@ -41,6 +41,21 @@ void ModuleGameObject::SaveScene(const char* name)
 
 void ModuleGameObject::LoadScene(const char* name)
 {
+	JSON_Value* scene = json_parse_file(name);
+	if (json_value_get_type(scene) == JSONArray)
+	{
+		// Delete previous scene
+
+		for (auto gameObj : gameObjects)
+		{
+			gameObj->RealDelete();
+			delete gameObj;
+		}
+
+		gameObjects.clear();
+		App->scene->current_object = nullptr;
+		App->renderer3D->mesh_list.clear();
+
 	
 }
 
