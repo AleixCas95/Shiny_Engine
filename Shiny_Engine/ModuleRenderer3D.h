@@ -28,6 +28,7 @@ public:
 
 	bool DrawMeshes(const ModelConfig mesh) const;
 	void OnResize(int width, int height);
+	void DebugTextures();
 
 public:
 
@@ -45,6 +46,8 @@ public:
 	bool culling = false;
 
 	bool drawBoxes = false;
+
+	bool paintTextures = true;
 
 
 	//Camera

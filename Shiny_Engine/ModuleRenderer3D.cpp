@@ -172,6 +172,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		drawBoxes = !drawBoxes;
 	}
 
+
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		culling = !culling;
@@ -253,4 +254,24 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void ModuleRenderer3D::DebugTextures()
+{
+	for (auto gameobject : App->gobject->gameObjects)
+	{
+		if (gameobject->HasComponent(Object_Type::CompTexture))
+		{
+			ComponentTexture* tex = (ComponentTexture*)gameobject->GetComponent(Object_Type::CompTexture);
+			if (paintTextures)
+			{
+				tex->print = false;
+			}
+			else if (!paintTextures)
+			{
+				tex->print = true;
+			}
+		}
+	}
+	paintTextures = !paintTextures;
 }
