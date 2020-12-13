@@ -186,6 +186,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		toDraw.clear();
 	}
 
+
 	//Debug Draw
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -229,6 +230,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			else
 				glColor3f(0.0f, 0.0f, 1.0f);
 
+			glBegin(GL_QUADS);
+
 			glVertex3fv((GLfloat*)&corners[1]);
 			glVertex3fv((GLfloat*)&corners[5]);
 			glVertex3fv((GLfloat*)&corners[7]);
@@ -262,18 +265,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			glEnd();
 		}
 
-
-		//Here should go Bounding boxes and quadtree
-
-	/*	std::vector<math::AABB> vecquad;
-
+		std::vector<math::AABB> vecquad;
+		//App->scene->quadtree.QT_GetBoxes(vecquad);
 		glLineWidth(2.0f);
 
 		glColor3f(0.0f, 1.0f, 0.0f);
 
-		glBegin(GL_QUADS);*/
+		glBegin(GL_QUADS);
 
-		
 		glEnd();
 	}
 
@@ -387,8 +386,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 
 	SDL_GL_SwapWindow(App->window->window);
-
 	return UPDATE_CONTINUE;
+
 }
 
 // Called before quitting
