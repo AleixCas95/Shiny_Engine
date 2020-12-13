@@ -181,6 +181,16 @@ update_status ModuleGUI::Update(float dt)
 					App->renderer3D->current_cam = Time::gameState == GameState::PLAYING ? App->renderer3D->play_cam : App->camera->compCamera;
 				}
 			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Pause"))
+			{
+				if (Time::gameState != GameState::EDITOR)
+					Time::gameState = Time::gameState == GameState::PLAYING ? GameState::PAUSE : GameState::PLAYING;
+			}
+
+			ImGui::End();
 		}
 
 
