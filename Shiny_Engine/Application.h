@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
@@ -57,18 +55,12 @@ public:
 
 	Time* module_time;
 
-	
-
-
 
 private:
 
 	Timer	ms_timer;
-	float	dt = 0.0f;
-	float last_FPS = 0.0f;
-	float last_ms = 0.0f;
+	float	dt;
 	std::list<Module*> list_modules;
-
 
 public:
 
@@ -79,11 +71,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	float GetMS();
-	float GetFPS();
+	bool toCap = false;
 
-	JSON_Value* JSONconfig = nullptr;
-	JSON_Object* JSONconfig_obj = nullptr;
+	int capFrames = 60;
+
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
 
 private:
 
@@ -91,3 +84,4 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+

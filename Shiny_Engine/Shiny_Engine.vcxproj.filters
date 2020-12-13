@@ -596,9 +596,6 @@
     <ClCompile Include="ModuleFiles.cpp">
       <Filter>Sources\Engine\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Globals.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClCompile>
