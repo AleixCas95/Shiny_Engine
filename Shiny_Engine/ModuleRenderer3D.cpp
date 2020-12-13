@@ -188,6 +188,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		drawBoxes = !drawBoxes;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		DebugTextures();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
@@ -195,6 +199,35 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	SDL_GL_SwapWindow(App->window->window);
+
+	if (drawBoxes)
+	{
+		for (auto gameobject : App->gobject->gameObjects)
+		{
+			float3 corners[8];
+			gameobject->boundingBox.GetCornerPoints(corners);
+
+			glLineWidth(2.0f);
+
+			if (gameobject == App->scene->current_object)
+				glColor3f(0.0f, 1.0f, 0.0f);
+
+			else
+				glColor3f(0.0f, 0.0f, 1.0f);
+			glEnd();
+		}
+
+		std::vector<math::AABB> vecquad;
+
+		glLineWidth(2.0f);
+
+		glColor3f(0.0f, 1.0f, 0.0f);
+
+		glBegin(GL_QUADS);
+
+		
+		glEnd();
+	}
 
 	return UPDATE_CONTINUE;
 }
