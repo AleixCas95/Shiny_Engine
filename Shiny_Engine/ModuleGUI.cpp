@@ -155,6 +155,19 @@ update_status ModuleGUI::Update(float dt)
 			}
 			ImGui::EndPopup();
 		}
+
+		if (loadScenePopup)
+		{
+			ImGui::OpenPopup("Load");
+			loadScenePopup = false;
+		}
+
+		if (ImGui::BeginPopup("Load"))
+		{
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Drag the scene file to load");
+			ImGui::EndPopup();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 	
