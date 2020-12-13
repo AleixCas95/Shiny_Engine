@@ -1,6 +1,6 @@
 #include "ComponentCamera.h"
 #include "Application.h"
-	
+#include "ModuleTime.h"
 ComponentCamera::ComponentCamera(Application* app_parent,GameObject* parent) : Component(app_parent,parent, CompCamera)
 {
 	parent->components.push_back(this);
@@ -48,8 +48,9 @@ void ComponentCamera::Inspector()
 
 		if (ImGui::Button("Delete Camera"))
 		{
+			if(App->module_time->gameState == GameState::EDITOR)
 			App->gobject->componentsToDelete.push_back(this);
-			App->renderer3D->current_cam = nullptr;
+			
 		}
 	}
 }

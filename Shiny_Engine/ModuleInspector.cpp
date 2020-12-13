@@ -45,14 +45,6 @@ void ModuleInspector::Draw()
 			}
 			if (ImGui::BeginMenu("New Component"))
 			{
-				if (ImGui::MenuItem("Mesh"))
-				{
-					ComponentMesh* mesh = new ComponentMesh(App, App->scene->current_object);
-				}
-				if (ImGui::MenuItem("Texture"))
-				{
-					ComponentTexture* mesh = new ComponentTexture(App, App->scene->current_object);
-				}
 				if (ImGui::MenuItem("Camera"))
 				{
 					ComponentCamera* camera = new ComponentCamera(App, App->scene->current_object);
@@ -62,19 +54,7 @@ void ModuleInspector::Draw()
 				ImGui::EndMenu();
 			}
 
-		/*	if (App->scene->current_object->GetComponent(CompMesh) == nullptr)
-			{
-				if (ImGui::Button("Delete Object"))
-				{
-					if (App->scene->current_object->parent)
-					{
-						App->scene->current_object->parent->childs.remove(App->scene->current_object);
-
-					}
-					NewObjectsToDelete(App->scene->current_object);
-				}
-			}*/
-			
+		
 		}
 	}
 	ImGui::End();
