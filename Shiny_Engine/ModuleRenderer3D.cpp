@@ -370,6 +370,20 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			}
 		}
 	}
+
+	if (wireframeMode)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (cullFace)
+		glEnable(GL_CULL_FACE);
+
+
+	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
