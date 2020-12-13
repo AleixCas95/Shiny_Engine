@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 
+#include <string>
+
 class ModuleGUI : public Module
 {
 public:
@@ -21,6 +23,7 @@ public:
 	bool saveScenePopup = false;
 	bool loadScenePopup = false;
 
+	std::string lastSceneName = "Scene";
 
 private:
 	bool configActive = true;

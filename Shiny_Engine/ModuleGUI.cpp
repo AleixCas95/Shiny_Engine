@@ -9,6 +9,9 @@
 #include "ModuleGUI.h"
 #include "ParShapes/par_shapes.h"
 
+#define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+
+
 ModuleGUI::ModuleGUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -127,6 +130,31 @@ update_status ModuleGUI::Update(float dt)
 			saveScenePopup = false;
 		}
 
+		if (ImGui::BeginPopup("Save Scene Here"))
+		{
+			char buf[64];
+			sprintf_s(buf, 64, lastSceneName.data());
+			if (ImGui::InputText("Scene Name", buf, IM_ARRAYSIZE(buf)))
+			{
+				lastSceneName = buf;
+			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("SAVE"))
+			{
+				App->gobject->SaveScene(lastSceneName.data());
+
+				ImGui::CloseCurrentPopup();
+			}
+
+			if (ImGui::Button("CANCEL"))
+			{
+				lastSceneName = "Scene";
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
 		ImGui::EndMainMenuBar();
 	}
 	
