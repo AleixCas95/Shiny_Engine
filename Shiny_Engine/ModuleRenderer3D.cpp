@@ -396,6 +396,8 @@ bool ModuleRenderer3D::CleanUp()
 
 	return true;
 }
+
+// need to delete
 bool ModuleRenderer3D::DrawMeshes(const ModelConfig mesh) const
 {
 	bool ret = true;
@@ -451,6 +453,9 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
+	App->window->width = width;
+	App->window->height = height;
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
@@ -458,6 +463,9 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	if (App->camera->compCamera)
+		App->camera->compCamera->frustum.horizontalFov = 2.f * atan(tan(App->camera->compCamera->frustum.verticalFov * 0.5f) * (float(App->window->width) / App->window->height));
 }
 
 void ModuleRenderer3D::DebugTextures()
