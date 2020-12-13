@@ -2,6 +2,8 @@
 #include "ModuleGUI.h"
 #include "imgui/imgui.h"
 
+class GameObject;
+
 class ModuleInspector : public Module
 {
 public:
