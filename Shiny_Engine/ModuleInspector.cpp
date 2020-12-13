@@ -3,6 +3,8 @@
 #include "ModuleScene.h"
 #include "ImGui/imgui.h"
 
+class GameObject;
+
 ModuleInspector::ModuleInspector(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 ModuleInspector::~ModuleInspector()
@@ -61,8 +63,19 @@ void ModuleInspector::Draw()
 				}
 				ImGui::MenuItem("Cancel");
 				ImGui::EndMenu();
+
+				
 			}
 		}
 	}
 	ImGui::End();
+}
+
+void ModuleInspector::NewObjectsToDelete(GameObject* object)
+{
+	App->gobject->gameObjectsToDelete.push_back(object);
+	for (auto child : object->childs)
+	{
+		NewObjectsToDelete(child);
+	}
 }

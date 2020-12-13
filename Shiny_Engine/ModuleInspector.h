@@ -13,5 +13,7 @@ public:
 	bool CleanUp();
 
 	void Draw();
+
+	void NewObjectsToDelete(GameObject* object);
 };
 
