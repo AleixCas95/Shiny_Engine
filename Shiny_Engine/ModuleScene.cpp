@@ -32,7 +32,7 @@ bool ModuleScene::Start()
 }
 update_status ModuleScene::PreUpdate(float dt)
 {
-	//ImGui::NewFrame();
+
 	ImGui_ImplSdlGL3_NewFrame(App->window->window);
 	ImGuizmo::BeginFrame();
 	return(UPDATE_CONTINUE);
@@ -111,9 +111,3 @@ update_status ModuleScene::Update(float dt)
 	
 	return UPDATE_CONTINUE;
 }
-
-void ModuleScene::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
-	App->console->AddLog("Hit!");
-}
-

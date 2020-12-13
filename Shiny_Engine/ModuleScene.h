@@ -8,8 +8,7 @@
 
 #define MAX_SNAKE 2
 
-struct PhysBody3D;
-struct PhysMotor3D;
+
 
 class ModuleScene : public Module
 {
@@ -22,7 +21,7 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	
 
 public:
 	uint my_id = 0;

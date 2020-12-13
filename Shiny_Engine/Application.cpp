@@ -34,12 +34,7 @@ Application::Application()
 
 	//UI
 	
-	/*AddModule(console);
-	AddModule(hardware);
-	AddModule(config);
-	AddModule(about);
-	AddModule(inspector);
-	AddModule(hierarchy);*/
+	
 	AddModule(fileB);
 	AddModule(module_time);
 	AddModule(mouse);
