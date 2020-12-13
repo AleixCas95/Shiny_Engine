@@ -1,8 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
-#include "ModuleConsole.h"
-
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -14,7 +12,7 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
-	App->console->AddLog("Setting up the camera");
+	LOG("Setting up the camera");
 	bool ret = true;
 
 	cameraGO = new GameObject(App, false, "Editor Camera");
@@ -33,7 +31,7 @@ bool ModuleCamera3D::Start()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
-	App->console->AddLog("Cleaning camera");
+	LOG("Cleaning camera");
 
 	return true;
 }

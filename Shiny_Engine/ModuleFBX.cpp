@@ -90,7 +90,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 			m->vertex.data = new float[m->vertex.size];
 			memset(m->vertex.data, 0, sizeof(float) * m->vertex.size);
 			memcpy(m->vertex.data, new_mesh->mVertices, sizeof(float) * m->vertex.size);
-			App->console->AddLog("New mesh with %d vertices", m->vertex.size);
+			LOG("New mesh with %d vertices", m->vertex.size);
 
 			//Load bounding box
 			go->originalBoundingBox.Enclose((float3*)m->vertex.data, m->vertex.size / 3);
@@ -105,7 +105,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 				{
 					if (new_mesh->mFaces[i].mNumIndices != 3)
 					{
-						App->console->AddLog("WARNING, geometry face with != 3 indices!");
+						LOG("WARNING, geometry face with != 3 indices!");
 					}
 
 					else
@@ -179,7 +179,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 		//App->scene->quadtree.QT_Insert(go);
 
-		App->console->AddLog("Mesh loaded");
+		LOG("Mesh loaded");
 	}
 
 	float4x4 transformMat(
@@ -325,7 +325,7 @@ void ModuleFBX::RealLoadTexture(const char* path, uint& texture_id)
 	}
 	else
 	{
-		App->console->AddLog("Couldn't load texture");
+		LOG("Couldn't load texture");
 	}
 }
 
@@ -354,7 +354,7 @@ void ModuleFBX::ImportTexture(const char* path)
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
-		App->console->AddLog("Texture loaded");
+		LOG("Texture loaded");
 	}
 	else
 	{
@@ -362,7 +362,7 @@ void ModuleFBX::ImportTexture(const char* path)
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
-		App->console->AddLog("Texture loaded");
+		LOG("Texture loaded");
 	}
 }
 
@@ -412,7 +412,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 		}
 		else
 		{
-			App->console->AddLog("Couldn't load texture: %s", path);
+			LOG("Couldn't load texture: %s", path);
 			return;
 		}
 	}
@@ -428,7 +428,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
-		App->console->AddLog("Texture loaded");
+		LOG("Texture loaded");
 	}
 	else
 	{
@@ -436,7 +436,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
-		App->console->AddLog("Texture loaded");
+		LOG("Texture loaded");
 	}
 }
 
@@ -483,7 +483,7 @@ ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 
 	App->renderer3D->mesh_list.push_back(newMesh);
 
-	App->console->AddLog("Par_Shapes Mesh loaded");
+	LOG("Par_Shapes Mesh loaded");
 
 	return m;
 }

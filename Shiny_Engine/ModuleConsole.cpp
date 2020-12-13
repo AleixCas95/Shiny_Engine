@@ -8,7 +8,7 @@ ModuleConsole::ModuleConsole(Application* app, bool start_enabled) : Module(app,
 {
 	ClearLog();
 	memset(inputBuf, 0, sizeof(inputBuf));
-	App->console->AddLog("Welcome to ImGui!");
+	AddLog("Welcome to ImGui!");
 }
 ModuleConsole::~ModuleConsole()
 {}
