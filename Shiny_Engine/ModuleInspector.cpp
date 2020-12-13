@@ -3,8 +3,6 @@
 #include "ModuleScene.h"
 #include "ImGui/imgui.h"
 
-
-
 ModuleInspector::ModuleInspector(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 ModuleInspector::~ModuleInspector()
@@ -25,9 +23,9 @@ bool ModuleInspector::CleanUp()
 
 void ModuleInspector::Draw()
 {
-	if (ImGui::Begin("Inspector", &App->gui->showInspector,ImGuiWindowFlags_HorizontalScrollbar))
+	if (ImGui::Begin("Inspector", &App->gui->showInspector, ImGuiWindowFlags_HorizontalScrollbar))
 		ImGui::SetWindowPos(ImVec2(App->config->width * 0.75, App->config->height * 0.30));
-        ImGui::SetWindowSize(ImVec2(App->config->width * 0.25, App->config->height * 0.70));
+	ImGui::SetWindowSize(ImVec2(App->config->width * 0.25, App->config->height * 0.70));
 	{
 		if (App->scene->current_object)
 		{
@@ -37,15 +35,14 @@ void ModuleInspector::Draw()
 			{
 				App->scene->current_object->name = buf;
 			}
-
 			ImGui::Checkbox("Active", &App->scene->current_object->active);
 
 			App->scene->current_object->transform->Inspector();
+
 			for (std::list<Component*>::iterator it = App->scene->current_object->components.begin(); it != App->scene->current_object->components.end(); ++it)
 			{
 				(*it)->Inspector();
 			}
-
 			if (ImGui::BeginMenu("New Component"))
 			{
 				if (ImGui::MenuItem("Mesh"))
@@ -63,16 +60,15 @@ void ModuleInspector::Draw()
 				}
 				ImGui::MenuItem("Cancel");
 				ImGui::EndMenu();
+			}
 
-				if (ImGui::Button("Delete Object"))
+			if (ImGui::Button("Delete Object"))
+			{
+				if (App->scene->current_object->parent)
 				{
-					if (App->scene->current_object->parent)
-					{
-						App->scene->current_object->parent->childs.remove(App->scene->current_object);
-					}
-					NewObjectsToDelete(App->scene->current_object);
+					App->scene->current_object->parent->childs.remove(App->scene->current_object);
 				}
-				
+				NewObjectsToDelete(App->scene->current_object);
 			}
 		}
 	}
