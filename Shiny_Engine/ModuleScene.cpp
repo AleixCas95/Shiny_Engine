@@ -5,6 +5,7 @@
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
+#include "ImGuizmo/ImGuizmo.h"
 
 #pragma comment( lib, "Glew/libx86/glew32.lib" )
 
@@ -25,13 +26,15 @@ bool ModuleScene::Start()
 	bool ret = true;
 	glewInit();
 	ImGuizmo::Enable(true);
-	//App->camera->Move(vec3(1,1,0));
 	App->camera->LookAt(math::float3(0, 0, 0));
 
 	return ret;
 }
 update_status ModuleScene::PreUpdate(float dt)
 {
+	//ImGui::NewFrame();
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	ImGuizmo::BeginFrame();
 	return(UPDATE_CONTINUE);
 }
 
@@ -102,10 +105,10 @@ update_status ModuleScene::Update(float dt)
 		}
 	}
 
-
 	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+	
 	return UPDATE_CONTINUE;
 }
 

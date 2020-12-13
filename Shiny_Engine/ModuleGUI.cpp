@@ -23,7 +23,6 @@ ModuleGUI::~ModuleGUI()
 bool ModuleGUI::Start()
 {
 	App->console->AddLog("Loading ImGui");
-
 	glewInit();
 	ImGui_ImplSdlGL3_Init(App->window->window);
 	App->config->active = false;
@@ -33,8 +32,8 @@ bool ModuleGUI::Start()
 
 update_status ModuleGUI::Update(float dt)
 {
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
-	ImGuizmo::BeginFrame();
+	//ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	//ImGuizmo::BeginFrame();
 
 	static bool show_test_window = false;
 
