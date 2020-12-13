@@ -38,6 +38,8 @@ public:
 	bool windowed = false;
 	bool full_desktop = false;
 
+	SDL_Surface* icon = nullptr;
+
 	int width = 0;
 	int height = 0;
 	int scale = 0;

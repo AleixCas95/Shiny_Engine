@@ -16,8 +16,11 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
+	icon = SDL_LoadBMP("Game\\Shiny_Logo.bmp");
 	App->console->AddLog("Init SDL window & surface");
 	bool ret = true;
+
+
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -68,6 +71,8 @@ bool ModuleWindow::Init()
 			screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
+
+	SDL_SetWindowIcon(window, icon);
 
 	return ret;
 }
