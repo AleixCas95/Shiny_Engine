@@ -1,6 +1,5 @@
 #include "Application.h"
-#include "pcg/pcg_basic.h"
-#include <time.h>
+#include "ModuleConsole.h"
 
 Application::Application()
 {
@@ -63,13 +62,12 @@ Application::Application()
 
 Application::~Application()
 {
-	std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::iterator item = list_modules.begin();
 
 	while (item != list_modules.end())
 	{
-		delete(*item);
-		list_modules.erase(item);
-		item = list_modules.begin();
+		delete item._Ptr->_Myval;
+		item++;
 	}
 }
 
@@ -78,26 +76,23 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
-	std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::iterator item = list_modules.begin();
 
 	while (item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Init();
+		ret = item._Ptr->_Myval->Init();
 		item++;
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	console->AddLog("-------------- Application Start --------------");
 	item = list_modules.begin();
 
 	while (item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Start();
+		ret = item._Ptr->_Myval->Start();
 		item++;
 	}
-
-	pcg32_random_t RNG1;
-	pcg32_srandom(time(NULL), (intptr_t)&RNG1);
 
 	ms_timer.Start();
 	return ret;
@@ -108,34 +103,11 @@ void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
 	ms_timer.Start();
-
-	fps_log.push_back(1 / dt);
-	if (fps_log.size() > 75)
-	{
-		fps_log.erase(fps_log.begin());
-	}
-
-	ms_log.push_back(dt * 1000);
-	if (ms_log.size() > 75)
-	{
-		ms_log.erase(ms_log.begin());
-	}
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	/*if (!renderer3D->vsync && toCap)
-	{
-		float dt = dt * 1000.0f;
-		float toVsync = dt;
-
-		if (capFrames > 0)
-			toVsync = 1000.0f / capFrames;
-
-		if (dt < toVsync)
-			SDL_Delay(toVsync - dt);
-	}*/
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -144,11 +116,11 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 
-	std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::iterator item = list_modules.begin();
 
 	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->PreUpdate(dt);
+		ret = item._Ptr->_Myval->PreUpdate(dt);
 		item++;
 	}
 
@@ -156,7 +128,7 @@ update_status Application::Update()
 
 	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->Update(dt);
+		ret = item._Ptr->_Myval->Update(dt);
 		item++;
 	}
 
@@ -164,9 +136,10 @@ update_status Application::Update()
 
 	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->PostUpdate(dt);
+		ret = item._Ptr->_Myval->PostUpdate(dt);
 		item++;
 	}
+
 
 	FinishUpdate();
 	return ret;
@@ -175,11 +148,11 @@ update_status Application::Update()
 bool Application::CleanUp()
 {
 	bool ret = true;
-	std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::iterator item = list_modules.end();
 
 	while (item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->CleanUp();
+		ret = item._Ptr->_Myval->CleanUp();
 		item++;
 	}
 	return ret;
@@ -188,4 +161,15 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+
+float Application::GetMS()
+{
+	return last_ms;
+}
+
+float Application::GetFPS()
+{
+	return last_FPS;
 }
