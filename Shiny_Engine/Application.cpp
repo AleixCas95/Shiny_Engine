@@ -18,6 +18,7 @@ Application::Application()
 	gobject = new ModuleGameObject(this);
 	inspector = new ModuleInspector(this);
 	hierarchy = new ModuleHierarchy(this);
+	fileB = new ModuleFileBrowser(this);
 	files = new ModuleFiles(this);
 	mouse = new ModuleMousePicking(this);
 	module_time = new Time(this);
@@ -39,6 +40,7 @@ Application::Application()
 	AddModule(about);
 	AddModule(inspector);
 	AddModule(hierarchy);*/
+	AddModule(fileB);
 	AddModule(module_time);
 	AddModule(mouse);
 	

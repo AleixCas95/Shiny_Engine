@@ -25,9 +25,10 @@
 #include "ModuleFiles.h"
 #include "Component.h"
 #include "ModuleMousePicking.h"
+#include "ModuleFileBrowser.h"
 #include "ModuleTime.h"
 #include "ModuleResources.h"
-//#include "ModuleGeometry.h"
+
 #include <list>
 
 class Application
@@ -46,6 +47,7 @@ public:
 	ModuleInspector* inspector;
 	ModuleHierarchy* hierarchy;
 	ModuleShapes* shape;
+	ModuleFileBrowser* fileB;
 	ModuleFBX* fbx;
 	ModuleGameObject* gobject;
 	ModuleScene* scene;
