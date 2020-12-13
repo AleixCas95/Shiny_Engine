@@ -6,6 +6,6 @@ public:
 	ModuleMousePicking(Application* app, bool start_enabled = true);
 	~ModuleMousePicking();
 
-	update_status Update();
+	update_status Update(float dt);
 };
 
