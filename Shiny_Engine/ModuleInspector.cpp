@@ -62,14 +62,16 @@ void ModuleInspector::Draw()
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::Button("Delete Object"))
+			/*if (ImGui::Button("Delete Object"))
 			{
 				if (App->scene->current_object->parent)
 				{
 					App->scene->current_object->parent->childs.remove(App->scene->current_object);
+								
 				}
 				NewObjectsToDelete(App->scene->current_object);
-			}
+				
+			}*/
 		}
 	}
 	ImGui::End();
@@ -78,6 +80,15 @@ void ModuleInspector::Draw()
 void ModuleInspector::NewObjectsToDelete(GameObject* object)
 {
 	App->gobject->gameObjectsToDelete.push_back(object);
+	for (Component* comp : object->components)
+	{
+		if(comp->type == CompMesh)
+		{
+		//App->renderer3D->mesh_list.remove((ComponentMesh)comp);
+		}
+		App->gobject->componentsToDelete.push_back(comp);
+		
+	}
 	for (auto child : object->childs)
 	{
 		NewObjectsToDelete(child);

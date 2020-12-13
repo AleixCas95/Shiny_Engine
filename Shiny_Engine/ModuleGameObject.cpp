@@ -98,20 +98,20 @@ void ModuleGameObject::SaveGameObjects(JSON_Array*& parent, GameObject* current)
 	}
 }
 
-update_status ModuleGameObject::Update()
+update_status ModuleGameObject::Update(float dt)
 {
-	for (auto comp : componentsToDelete)
+	for (Component* comp : componentsToDelete)
 	{
 		comp->gameObject->components.remove(comp);
 		delete comp;
 	}
 	componentsToDelete.clear();
 
-	for (auto obj : gameObjectsToDelete)
+	for (GameObject* obj : gameObjectsToDelete)
 	{
 		if (obj == App->scene->current_object)
-			App->scene->current_object = nullptr;
-
+			App->scene->current_object = App->scene->current_object->parent;
+			
 		gameObjects.remove(obj);
 		obj->RealDelete();
 		delete obj;

@@ -39,6 +39,19 @@ void ComponentMesh::Inspector()
 		if (ImGui::Button("Delete Mesh"))
 		{
 			App->gobject->componentsToDelete.push_back(this);
+			App->renderer3D->mesh_list.remove(this);
+		}
+
+		if (ImGui::Button("Delete Object"))
+		{
+			App->renderer3D->mesh_list.remove(this);
+			if (App->scene->current_object->parent)
+			{
+				App->scene->current_object->parent->childs.remove(App->scene->current_object);
+
+			}
+			App->inspector->NewObjectsToDelete(App->scene->current_object);
+
 		}
 	}
 }

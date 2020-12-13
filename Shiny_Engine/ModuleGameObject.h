@@ -16,7 +16,7 @@ public:
 
 	void SaveGameObjects(JSON_Array*& parent, GameObject* current);
 
-	update_status Update();
+	update_status Update(float dt);
 
 	GameObject* GetGO(unsigned int uuid);
 
