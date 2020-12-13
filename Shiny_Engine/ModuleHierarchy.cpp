@@ -43,7 +43,8 @@ void ModuleHierarchy::Draw()
 
 		if (App->gobject->root)
 		{
-			DrawGameObjects(App->gobject->root);
+			for (auto child : App->gobject->root->childs)
+				DrawGameObjects(child);
 		}
 	}
 	ImGui::End();

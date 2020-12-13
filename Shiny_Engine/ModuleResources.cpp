@@ -18,7 +18,6 @@ bool ModuleResources::Init()
 	CreateDirectory("Library", NULL);
 	CreateDirectory("Library/Models", NULL);
 	CreateDirectory("Library/Textures", NULL);
-
 	return true;
 }
 
@@ -62,7 +61,7 @@ char* ModuleResources::LoadFile(const char* path, ResourceType type, uint uuid)
 
 string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* path)
 {
-	string filePath = "Game/Library/";
+	string filePath = "Library/";
 
 	switch (type)
 	{
@@ -72,7 +71,7 @@ string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* p
 		filePath += to_string(uuid);
 		filePath += ".shyn";
 	}
-		break;
+	break;
 	case ResourceType::Texture:
 	{
 		filePath += "Textures/";
@@ -81,17 +80,17 @@ string ModuleResources::GetDirection(ResourceType type, uint uuid, const char* p
 		uint finalPos = name.find_last_of(".") + 1;
 		filePath += name.substr(initialPos, (finalPos - initialPos)) + "dds";
 	}
-		break;
+	break;
 
 	case ResourceType::Scene:
 	{
-		filePath = "Game/Assets/Scenes/";
+		filePath = "Assets/Scenes/";
 		string name(path);
 		uint initialPos = name.find_last_of("\\") + 1;
 		uint finalPos = name.find_last_of(".");
 		filePath += name.substr(initialPos, (finalPos - initialPos)) + ".json";
 	}
-		break;
+	break;
 	default:
 		break;
 	}

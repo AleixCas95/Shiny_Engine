@@ -169,6 +169,7 @@ update_status ModuleGUI::Update(float dt)
 		}
 
 		if (ImGui::Begin("State Buttons", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
+			ImGui::SetWindowPos(ImVec2(App->config->width * 0.25, App->config->height * 0 + 20));
 		{
 			std::string play(Time::gameState == GameState::EDITOR ? "Play" : "Stop");
 
@@ -216,7 +217,6 @@ update_status ModuleGUI::Update(float dt)
 
 update_status ModuleGUI::PostUpdate(float dt)
 {
-	
 	return(UPDATE_CONTINUE);
 }
 
