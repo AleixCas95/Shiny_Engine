@@ -79,6 +79,17 @@ void ModuleAbout::Draw()
 		ShellExecuteA(0, 0, "chrome.exe", "http://glew.sourceforge.net/", 0, SW_SHOWMAXIMIZED);
 	}
 
+	if (ImGui::MenuItem("PCG 0.94"))
+	{
+		ShellExecuteA(0, 0, "chrome.exe", "http://www.pcg-random.org/download.html", 0, SW_SHOWMAXIMIZED);
+	}
+
+
+	if (ImGui::MenuItem("- Glew (v2.0.0)"))
+	{
+		ShellExecuteA(0, 0, "chrome.exe", "http://glew.sourceforge.net/", 0, SW_SHOWMAXIMIZED);
+	}
+
 	if (ImGui::MenuItem("- SDL (v2.0.6)"))
 	{
 		ShellExecuteA(0, 0, "chrome.exe", "https://www.libsdl.org/", 0, SW_SHOWMAXIMIZED);
