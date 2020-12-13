@@ -198,7 +198,17 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		culling = !culling;
 	}
 
-	SDL_GL_SwapWindow(App->window->window);
+	bool wireframeMode = false;
+	GLint polygonMode[2];
+	glGetIntegerv(GL_POLYGON_MODE, polygonMode);
+
+	if (polygonMode[0] == GL_LINE && polygonMode[1] == GL_LINE)
+		wireframeMode = true;
+
+	bool cullFace = glIsEnabled(GL_CULL_FACE);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
 
 	if (drawBoxes)
 	{
