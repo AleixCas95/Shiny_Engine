@@ -11,7 +11,7 @@ public:
 	~ModuleCamera3D();
 
 	bool Start();
-	update_status Update();
+	update_status Update(float dt);
 	bool CleanUp();
 
 	void LookAt(const float3& Spot);

@@ -37,17 +37,16 @@ bool ModuleCamera3D::CleanUp()
 }
 
 // -----------------------------------------------------------------
-update_status ModuleCamera3D::Update()
+update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 
-	if (!ImGui::IsWindowRectHovered())
-	{
+
 		float3 newPos(0, 0, 0);
-		float speed = 3.0f * Time::dt;
+		float speed = 3.0f * dt;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 6.0f * Time::dt;
+			speed = 6.0f * dt;
 
 		float3 forward = compCamera->frustum.front * speed;
 		float3 right = compCamera->frustum.WorldRight() * speed;
@@ -143,7 +142,7 @@ update_status ModuleCamera3D::Update()
 				}
 			}
 		}
-	}
+	
 
 	return UPDATE_CONTINUE;
 }
