@@ -35,10 +35,23 @@ void ModuleInspector::Draw()
 			{
 				App->scene->current_object->name = buf;
 			}
+
+			ImGui::Checkbox("Active", &App->scene->current_object->active);
+
 			App->scene->current_object->transform->Inspector();
 			for (std::list<Component*>::iterator it = App->scene->current_object->components.begin(); it != App->scene->current_object->components.end(); ++it)
 			{
 				(*it)->Inspector();
+			}
+
+			if (ImGui::BeginMenu("New Component"))
+			{
+				if (ImGui::MenuItem("Mesh"))
+				{
+					ComponentMesh* mesh = new ComponentMesh(App, App->scene->current_object);
+				}
+				ImGui::MenuItem("Cancel");
+				ImGui::EndMenu();
 			}
 		}
 	}
