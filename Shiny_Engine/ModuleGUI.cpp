@@ -66,6 +66,7 @@ update_status ModuleGUI::Update(float dt)
 			ImGui::Checkbox("ShowHirearchy", &showHierarchy);
 			ImGui::Checkbox("ShowConsole", &showConsole);
 			ImGui::Checkbox("show_text_window", &show_test_window);
+			ImGui::Checkbox("ShowCamera", &showCamera);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("About"))
@@ -76,6 +77,18 @@ update_status ModuleGUI::Update(float dt)
 		if (ImGui::BeginMenu("Shapes"))
 		{
 			App->shape->Draw();
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Debug"))
+		{
+			if (ImGui::MenuItem("AABB", "F1"))
+				App->renderer3D->drawBoxes = !App->renderer3D->drawBoxes;
+			if (ImGui::MenuItem("Textures", "F2"))
+				App->renderer3D->DebugTextures();
+			if (ImGui::MenuItem("Culling", "F3"))
+				App->renderer3D->culling = !App->renderer3D->culling;
+
 			ImGui::EndMenu();
 		}
 	

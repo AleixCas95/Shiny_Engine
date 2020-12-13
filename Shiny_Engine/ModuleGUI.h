@@ -17,6 +17,7 @@ public:
 	bool showHierarchy = true;
 	bool showInspector = true;
 	bool showConsole = true;
+	bool showCamera = false;
 	bool saveScenePopup = false;
 	bool loadScenePopup = false;
 
