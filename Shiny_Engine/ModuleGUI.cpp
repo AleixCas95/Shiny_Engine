@@ -49,6 +49,14 @@ update_status ModuleGUI::Update(float dt)
 			{
 				return UPDATE_STOP;
 			}
+			if (ImGui::MenuItem("Save"))
+			{
+				saveScenePopup = true;
+			}
+			if (ImGui::MenuItem("Load"))
+			{
+				loadScenePopup = true;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Window"))

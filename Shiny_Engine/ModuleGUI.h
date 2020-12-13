@@ -17,6 +17,9 @@ public:
 	bool showHierarchy = true;
 	bool showInspector = true;
 	bool showConsole = true;
+	bool saveScenePopup = false;
+	bool loadScenePopup = false;
+
 
 private:
 	bool configActive = true;
