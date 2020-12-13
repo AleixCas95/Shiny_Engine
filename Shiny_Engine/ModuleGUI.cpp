@@ -111,7 +111,21 @@ update_status ModuleGUI::Update(float dt)
 			App->hierarchy->Draw();
 		
 		}
-		//App->camera->compCamera->Inspector();
+
+		if (showCamera)
+		{
+			ImGui::Begin("Camera", &App->gui->showCamera);
+
+			App->camera->compCamera->Inspector();
+
+			ImGui::End();
+		}
+
+		if (saveScenePopup)
+		{
+			ImGui::OpenPopup("Save Scene Here");
+			saveScenePopup = false;
+		}
 
 		ImGui::EndMainMenuBar();
 	}
