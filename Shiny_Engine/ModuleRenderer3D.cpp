@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl_gl3.h"
 #include "Primitive.h"
 #include "ModuleCamera3D.h"
 #include "ModuleScene.h"
@@ -23,14 +25,14 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	App->console->AddLog("Creating 3D Renderer context");
+	LOG("Creating 3D Renderer context");
 	bool ret = true;
 
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if (context == NULL)
 	{
-		App->console->AddLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -49,12 +51,11 @@ bool ModuleRenderer3D::Init()
 		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	}
-
 	if (ret == true)
 	{
 		//Use Vsync
 		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			App->console->AddLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -64,7 +65,7 @@ bool ModuleRenderer3D::Init()
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			App->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -76,7 +77,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			App->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -90,7 +91,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			App->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -114,10 +115,15 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
 
 	return ret;
 }
@@ -129,14 +135,11 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	{
 		current_cam->UpdateFrustum();
 	}
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glLoadMatrixf(current_cam->GetProjectionMatrix().ptr());
-
-
-	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(current_cam->GetProjectionMatrix().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
@@ -144,6 +147,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	// light 0 on cam pos
 	lights[0].SetPos(current_cam->frustum.pos.x, current_cam->frustum.pos.y, current_cam->frustum.pos.z);
+
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
