@@ -50,6 +50,15 @@ void ModuleInspector::Draw()
 				{
 					ComponentMesh* mesh = new ComponentMesh(App, App->scene->current_object);
 				}
+				if (ImGui::MenuItem("Texture"))
+				{
+					ComponentTexture* mesh = new ComponentTexture(App, App->scene->current_object);
+				}
+				if (ImGui::MenuItem("Camera"))
+				{
+					ComponentCamera* camera = new ComponentCamera(App, App->scene->current_object);
+					App->renderer3D->play_cam = camera;
+				}
 				ImGui::MenuItem("Cancel");
 				ImGui::EndMenu();
 			}
