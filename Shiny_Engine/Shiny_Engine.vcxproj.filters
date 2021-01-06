@@ -61,6 +61,9 @@
     <Filter Include="Sources\Engine\Resources">
       <UniqueIdentifier>{6e8060eb-c6e1-414b-ab12-ceb30a6b9323}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Engine\ScriptingNodes">
+      <UniqueIdentifier>{7eaa7345-0f4f-4b3a-8250-5bf5f51485bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glmath.h">
@@ -396,6 +399,9 @@
     <ClInclude Include="ModuleFileBrowser.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="NodeGraph_Manager.h">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -631,6 +637,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFileBrowser.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeGraph_Manager.cpp">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
