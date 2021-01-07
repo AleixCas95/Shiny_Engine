@@ -7,7 +7,7 @@
 
 static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
 static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
-// Dummy
+
 struct Node
 {
 	int     ID;
@@ -45,6 +45,12 @@ public:
 
 
 private: 
+
+	bool isshow_grid = true;
+	ImVector<Node> nodes;
+	ImVector<NodeLink> links;
+
+	ImVec2 scrolling = ImVec2(0.0f, 0.0f);
 
 };
 

@@ -11,7 +11,7 @@ NodeGraph_Manager::~NodeGraph_Manager() {}
 void NodeGraph_Manager::Draw() {
 
 	static ImVec2 scrolling = ImVec2(0.0f, 0.0f);
-	static bool show_grid = true;
+	static bool isshow_grid = true;
 	static ImVector<Node> nodes;
 	static ImVector<NodeLink> links;
 	static int node_selected = -1;
@@ -39,7 +39,7 @@ void NodeGraph_Manager::Draw() {
 	ImGui::BeginGroup();
 	ImGui::Text("Hold middle mouse button to scroll (%.2f,%.2f)", scrolling.x, scrolling.y);
 	ImGui::SameLine(ImGui::GetWindowWidth() - 100);
-	ImGui::Checkbox("Show grid", &show_grid);
+	ImGui::Checkbox("Show grid", &isshow_grid);
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, IM_COL32(60, 60, 70, 200));
@@ -48,7 +48,7 @@ void NodeGraph_Manager::Draw() {
 
 	ImVec2 offset = ImGui::GetCursorScreenPos() + scrolling;
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();
-	if (show_grid)
+	if (isshow_grid)
 	{
 		ImU32 GRID_COLOR = IM_COL32(200, 200, 200, 40);
 		float GRID_SZ = 32.0f;
