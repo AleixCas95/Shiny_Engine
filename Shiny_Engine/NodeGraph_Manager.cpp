@@ -255,6 +255,12 @@ void NodeGraph_Manager::Draw() {
 	//ImGui::End();
 }
 
+void NodeGraph_Manager::Update(float dt)
+{
+	for (int i = 0; i < nodes.size(); ++i) {
+		nodes[i]->Update(dt);
+	}
+}
 
 Node* NodeGraph_Manager::AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value, const ImVec4& color) {
 
