@@ -6,6 +6,7 @@
 #include <vector>
 #include "imgui/imgui.h"
 
+
 static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
 static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
 
@@ -48,8 +49,10 @@ public:
 	void Draw();
 
 	Node* AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value = 0.0f, const ImVec4& color = ImColor(255, 100, 100));
-	NodeLink AddLink(int input_idx, int input_slot, int output_idx, int output_slot);
-
+	void AddLink(int input_idx, int input_slot, int output_idx, int output_slot);
+	void DeleteLink(int node_id, int slot_num);
+	void DeleteNode(Node* node);
+	Node* GetNodeByID(int ID);
 
 private: 
 

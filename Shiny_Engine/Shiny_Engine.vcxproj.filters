@@ -641,6 +641,9 @@
     <ClCompile Include="NodeGraph_Manager.cpp">
       <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClCompile>
+    <ClCompile Include="node__graph_test.cpp">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
