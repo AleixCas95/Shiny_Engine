@@ -1,11 +1,21 @@
 #include "NodeGraph_Manager.h"
+#include "Globals.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl_gl3.h"
+
 #include <string>
 #include <vector>
 
 NodeGraph_Manager::NodeGraph_Manager() {}
-NodeGraph_Manager::~NodeGraph_Manager() {}
+NodeGraph_Manager::~NodeGraph_Manager() {
+
+	for (uint i = 0; i < nodes.size(); i++) {
+
+		RELEASE(nodes[i]);
+
+	}
+	nodes.clear();
+}
 
 
 void NodeGraph_Manager::Draw() {
@@ -28,11 +38,12 @@ void NodeGraph_Manager::Draw() {
 
 	if (!inited)
 	{
-		nodes.push_back(Node(0, "MainTex", ImVec2(40, 50), 0.5f, ImColor(255, 100, 100), 1, 1));
-		nodes.push_back(Node(1, "BumpMap", ImVec2(40, 150), 0.42f, ImColor(200, 100, 200), 1, 1));
-		nodes.push_back(Node(2, "Combine", ImVec2(270, 80), 1.0f, ImColor(0, 200, 100), 2, 2));
-		links.push_back(NodeLink(0, 0, 2, 0));
-		links.push_back(NodeLink(1, 0, 2, 1));
+		AddNode("MainTex", ImVec2(40, 50), 1, 1, 0.5f, ImColor(255, 100, 100));
+		AddNode("BumpMap", ImVec2(40, 150), 1, 1, 0.42f, ImColor(200, 100, 200));
+		AddNode("Combine", ImVec2(270, 80), 3, 3, 1.0f, ImColor(0, 200, 100));
+
+		AddLink(0, 0, 2, 0);
+		AddLink(1, 0, 2, 1);
 		inited = true;
 	}
 
@@ -75,7 +86,7 @@ void NodeGraph_Manager::Draw() {
 	}
 
 	// Display nodes
-	for (int node_idx = 0; node_idx < nodes.Size; node_idx++)
+	for (int node_idx = 0; node_idx < nodes.size(); node_idx++)
 	{
 		Node* node = &nodes[node_idx];
 		ImGui::PushID(node->ID);
@@ -114,10 +125,45 @@ void NodeGraph_Manager::Draw() {
 		ImU32 node_bg_color = (node_hovered_in_list == node->ID || node_hovered_in_scene == node->ID || (node_hovered_in_list == -1 && node_selected == node->ID)) ? IM_COL32(75, 75, 75, 255) : IM_COL32(60, 60, 60, 255);
 		draw_list->AddRectFilled(node_rect_min, node_rect_max, node_bg_color, 4.0f);
 		draw_list->AddRect(node_rect_min, node_rect_max, IM_COL32(100, 100, 100, 255), 4.0f);
-		for (int slot_idx = 0; slot_idx < node->InputsCount; slot_idx++)
-			draw_list->AddCircleFilled(offset + node->GetInputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(150, 150, 150, 150));
-		for (int slot_idx = 0; slot_idx < node->OutputsCount; slot_idx++)
-			draw_list->AddCircleFilled(offset + node->GetOutputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(150, 150, 150, 150));
+		
+		for (int slot_idx = 0; slot_idx < node->InputsCount; slot_idx++) {
+
+			if (node_idx == input_id_clicked && slot_idx == input_slot_clicked)
+				draw_list->AddCircleFilled(offset + node->GetInputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(200, 200, 200, 200));
+			else
+				draw_list->AddCircleFilled(offset + node->GetInputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(150, 150, 150, 150));
+
+
+			//Check if input/output circles where pressed
+			ImVec2 input_num = node->GetInputSlotPos(slot_idx) + offset;
+			if (ImGui::IsMouseHoveringRect(ImVec2(input_num.x - NODE_SLOT_RADIUS, input_num.y - NODE_SLOT_RADIUS), ImVec2(input_num.x + NODE_SLOT_RADIUS, input_num.y + NODE_SLOT_RADIUS))) {
+				if (ImGui::IsMouseClicked(0)) {
+
+					LOG("Node input: %i, Input num: %i", node_idx, slot_idx);
+					input_id_clicked = node_idx;
+					input_slot_clicked = slot_idx;
+				}
+			}
+		}
+
+		for (int slot_idx = 0; slot_idx < node->OutputsCount; slot_idx++) {
+
+			if (node_idx == output_id_clicked && slot_idx == output_slot_clicked)
+				draw_list->AddCircleFilled(offset + node->GetOutputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(200, 200, 200, 200));
+			else
+				draw_list->AddCircleFilled(offset + node->GetOutputSlotPos(slot_idx), NODE_SLOT_RADIUS, IM_COL32(150, 150, 150, 150));
+
+
+			ImVec2 input_num = node->GetOutputSlotPos(slot_idx) + offset;
+			if (ImGui::IsMouseHoveringRect(ImVec2(input_num.x - NODE_SLOT_RADIUS, input_num.y - NODE_SLOT_RADIUS), ImVec2(input_num.x + NODE_SLOT_RADIUS, input_num.y + NODE_SLOT_RADIUS))) {
+				if (ImGui::IsMouseClicked(0)) {
+
+					LOG("Node output: %i, Output num: %i", node_idx, slot_idx);
+					output_id_clicked = node_idx;
+					output_slot_clicked = slot_idx;
+				}
+			}
+		}
 
 		ImGui::PopID();
 	}
@@ -172,3 +218,44 @@ void NodeGraph_Manager::Draw() {
 	ImGui::EndGroup();
 }
 	//ImGui::End();
+
+Node* NodeGraph_Manager::AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value, const ImVec4& color) {
+
+	last_node_id++;
+
+	Node* n = new Node(last_node_id, name, pos, value, color, inputs_count, outputs_count);
+	nodes.push_back(n);
+
+
+	return n;
+}
+
+NodeLink NodeGraph_Manager::AddLink(int input_idx, int input_slot, int output_idx, int output_slot) {
+
+
+	Node* in = nullptr;
+	Node* out = nullptr;
+
+	for (uint i = 0; i < nodes.size(); i++) {
+
+		if (input_idx == nodes[i]->ID) {
+			in = nodes[i];
+		}
+
+		if (output_idx == nodes[i]->ID) {
+			out = nodes[i];
+		}
+
+	}
+
+	if (in != nullptr && out != nullptr) {
+
+		in->outputs.push_back(out);
+		out->inputs.push_back(in);
+	}
+
+	NodeLink l(input_idx, input_slot, output_idx, output_slot);
+	links.push_back(l);
+
+	return (l);
+}

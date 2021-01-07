@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include <string>
+#include <vector>
 #include "imgui/imgui.h"
 
 static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
@@ -16,6 +17,9 @@ struct Node
 	float   Value;
 	ImVec4  Color;
 	int     InputsCount, OutputsCount;
+
+	std::vector<Node*>inputs;
+	std::vector<Node*>outputs;
 
 	Node(int id, const char* name, const ImVec2& pos, float value, const ImVec4& color, int inputs_count, int outputs_count) {
 		ID = id; strncpy(Name, name, 31); Name[31] = 0; Pos = pos; Value = value; Color = color; InputsCount = inputs_count;
@@ -43,14 +47,24 @@ public:
 	~NodeGraph_Manager();
 	void Draw();
 
+	Node* AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value = 0.0f, const ImVec4& color = ImColor(255, 100, 100));
+	NodeLink AddLink(int input_idx, int input_slot, int output_idx, int output_slot);
+
 
 private: 
 
 	bool isshow_grid = true;
-	ImVector<Node> nodes;
-	ImVector<NodeLink> links;
+	std::vector<Node*> nodes;
+	std::vector<NodeLink> links;
 
 	ImVec2 scrolling = ImVec2(0.0f, 0.0f);
+
+	int last_node_id = -1;
+
+	int input_id_clicked = -1;
+	int input_slot_clicked = -1;
+	int output_id_clicked = -1;
+	int output_slot_clicked = -1;
 
 };
 
