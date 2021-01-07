@@ -12,7 +12,6 @@ static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return Im
 
 struct Node
 {
-public:
 	int     ID;
 	char    Name[32];
 	ImVec2  Pos, Size;
