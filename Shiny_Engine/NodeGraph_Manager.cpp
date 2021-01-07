@@ -220,7 +220,18 @@ void NodeGraph_Manager::Draw() {
 				node_selected = -1;
 			}
 
-			if (ImGui::MenuItem("Copy", NULL, false, false)) {}
+			if (ImGui::MenuItem("Copy", NULL, false, false)) 
+			{
+				ImGui::Separator();
+				if (ImGui::MenuItem("Add input", NULL, false, true))
+					node->SetInputsCount(node->InputsCount + 1);
+				if (ImGui::MenuItem("Reduce input", NULL, false, true))
+					node->SetInputsCount(node->InputsCount - 1);
+				if (ImGui::MenuItem("Add output", NULL, false, true))
+					node->SetOutputsCount(node->OutputsCount + 1);
+				if (ImGui::MenuItem("Reduce output", NULL, false, true))
+					node->SetOutputsCount(node->OutputsCount - 1);
+			}
 		}
 		else
 		{
