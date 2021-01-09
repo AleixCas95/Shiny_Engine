@@ -19,6 +19,7 @@ void log(const char file[], int line, const char* format, ...);
 
 
 typedef unsigned int uint;
+typedef unsigned int scriptType;
 
 enum update_status
 {
