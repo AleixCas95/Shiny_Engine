@@ -426,6 +426,12 @@
     <ClInclude Include="NodeLoadScene.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
+    <ClInclude Include="NodeLogToConsole.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeMouseInput.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -690,6 +696,12 @@
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="NodeLoadScene.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeLogToConsole.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeMouseInput.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>
