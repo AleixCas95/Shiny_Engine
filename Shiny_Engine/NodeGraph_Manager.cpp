@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
+NodeGraph_Manager::NodeGraph_Manager()
 {
 
 }
-
 
 NodeGraph_Manager::~NodeGraph_Manager() {
 
