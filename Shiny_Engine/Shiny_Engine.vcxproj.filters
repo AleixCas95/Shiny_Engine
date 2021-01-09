@@ -61,12 +61,6 @@
     <Filter Include="Sources\Engine\Resources">
       <UniqueIdentifier>{6e8060eb-c6e1-414b-ab12-ceb30a6b9323}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Engine\ScriptingNodes">
-      <UniqueIdentifier>{7eaa7345-0f4f-4b3a-8250-5bf5f51485bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Engine\ScriptingNodes\NodeFiles">
-      <UniqueIdentifier>{b8cac638-b94f-4f5d-9504-c6b126890c79}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glmath.h">
@@ -402,53 +396,8 @@
     <ClInclude Include="ModuleFileBrowser.h">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="NodeGraph_Manager.h">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentGraphScript.h">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceGraphManager.h">
-      <Filter>Sources\Engine\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeDeleteObject.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeInstantiateObject.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeKeyInput.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeLoadScene.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeLogToConsole.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeMouseInput.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeMouseMove.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeMoveObject.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeRotateObject.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeTimer.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeToggleActiveComp.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeToggleActiveObject.h">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -686,53 +635,8 @@
     <ClCompile Include="ModuleFileBrowser.cpp">
       <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="NodeGraph_Manager.cpp">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentGraphScript.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceGraphManager.cpp">
-      <Filter>Sources\Engine\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeDeleteObject.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeInstantiateObject.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeKeyInput.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeLoadScene.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeLogToConsole.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeMouseInput.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeMouseMove.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeMoveObject.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeRotateObject.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeTimer.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeToggleActiveComp.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeToggleActiveObject.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="node__graph_test.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
