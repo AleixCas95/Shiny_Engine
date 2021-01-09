@@ -320,36 +320,40 @@ void NodeGraph_Manager::Draw(std::vector<GameObject*> BB_objects, bool go_active
 }
 
 
-void NodeGraph_Manager::Update(float dt)
+void NodeGraph_Manager::Update(float dt, std::vector<GameObject*> BB_objects, uint num_comp_graph)
 {
-	for (int i = 0; i < nodes.size(); ++i) {
-		nodes[i]->Update(dt);
+	for (int i = 0; i < fst_ev_nodes.size(); ++i) {
+		//This nodes update always (first event nodes)
+		fst_ev_nodes[i]->Update(dt, BB_objects, num_comp_graph);
+
+		//Look for every output update
+		for (int j = 0; j < fst_ev_nodes[i]->outputs.size(); ++j)
+			UpdateOutputNodes(dt, BB_objects, fst_ev_nodes[i]->outputs[j], fst_ev_nodes[i]->node_state, num_comp_graph);
 	}
 }
 
-Node* NodeGraph_Manager::AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value, const ImVec4& color) {
+Node* NodeGraph_Manager::AddNode(NodeFunction node_function, const ImVec2& pos) {
 
 	last_node_id++;
 
-	Node* n = new Node(last_node_id, name, pos, value, color, inputs_count, outputs_count);
-	nodes.push_back(n);
+	Node* node = nullptr;
 
-
-	return n;
+	return node;
 }
 
 void NodeGraph_Manager::AddLink(int input_idx, int input_slot, int output_idx, int output_slot) {
 
 	if (input_idx != output_idx) {
 
+
 		//If on the same slot of another link, delete it
 		for (int i = links.size() - 1; i >= 0; i--) {
 
 			if (links[i].InputIdx == input_idx && links[i].InputSlot == input_slot)
-				DeleteLink(input_idx, input_slot);
+				DeleteLink(input_idx, input_slot, true);
 			else {
 				if (links[i].OutputIdx == output_idx && links[i].OutputSlot == output_slot)
-					DeleteLink(output_idx, output_slot);
+					DeleteLink(output_idx, output_slot, false);
 			}
 		}
 
@@ -370,10 +374,30 @@ void NodeGraph_Manager::AddLink(int input_idx, int input_slot, int output_idx, i
 
 		}
 
+
+
 		if (in != nullptr && out != nullptr) {
+
+			//If the nodes don't have as many inputs as the slot, add slots
+			if (input_slot + 1 > in->OutputsCount)
+				in->OutputsCount = input_slot + 1;
+
+			if (output_slot + 1 > out->InputsCount)
+				out->InputsCount = output_slot + 1;
+
 
 			in->outputs.push_back(out);
 			out->inputs.push_back(in);
+
+			//Erase from the first event nodes if the output is an event
+			if (out->type == Node_Type_Event && out->inputs.size() == 1) {
+				std::vector<Node*>::const_iterator it_fst_ev_n = std::find(fst_ev_nodes.begin(), fst_ev_nodes.end(), out);
+
+				if (it_fst_ev_n != fst_ev_nodes.end()) {
+					fst_ev_nodes.erase(it_fst_ev_n);
+					fst_ev_nodes.shrink_to_fit();
+				}
+			}
 		}
 
 		NodeLink l(input_idx, input_slot, output_idx, output_slot);
@@ -382,15 +406,15 @@ void NodeGraph_Manager::AddLink(int input_idx, int input_slot, int output_idx, i
 	}
 }
 
-void NodeGraph_Manager::DeleteLink(int node_id, int slot_num) {
+void NodeGraph_Manager::DeleteLink(int node_id, int slot_num, bool input) {
 
 
 	for (uint i = 0; i < links.size(); i++) {
 
 
-		if (links[i].InputIdx == node_id && links[i].InputSlot == slot_num || links[i].OutputIdx == node_id && links[i].OutputSlot == slot_num) {
+		if ((input == false && links[i].InputIdx == node_id && links[i].InputSlot == slot_num) || (input == true && links[i].OutputIdx == node_id && links[i].OutputSlot == slot_num)) {
 
-			
+
 			Node* aux = GetNodeByID(links[i].OutputIdx);
 
 			//Look for link's Out. Then if it exists in the Out vector of the Input, erase it. Same the other way around later.
@@ -399,7 +423,12 @@ void NodeGraph_Manager::DeleteLink(int node_id, int slot_num) {
 
 				if (it != nodes[links[i].InputIdx]->outputs.end())
 					nodes[links[i].InputIdx]->outputs.erase(it);
-					
+
+
+				//Check if the out is an event node, if it is and no other node points to it, add it to first event nodes
+				if (aux->type == Node_Type_Event && aux->outputs.size() == 0)
+					fst_ev_nodes.push_back(aux);
+
 			}
 
 			aux = GetNodeByID(links[i].InputIdx);
@@ -408,20 +437,18 @@ void NodeGraph_Manager::DeleteLink(int node_id, int slot_num) {
 
 				if (it != nodes[links[i].OutputIdx]->inputs.end())
 					nodes[links[i].OutputIdx]->inputs.erase(it);
-					
+
 			}
-			
+
 			std::vector<NodeLink>::const_iterator link_to_delete = links.begin() + i;
 
 			links.erase(link_to_delete);
 			links.shrink_to_fit();
-			
+
 			i = 0;
 
 		}
-
 	}
-
 }
 Node* NodeGraph_Manager::GetNodeByID(int ID) {
 
@@ -515,6 +542,47 @@ void NodeGraph_Manager::DeleteNode(Node* node) {
 
 	}
 
+
+
+
+}
+
+void NodeGraph_Manager::LoadFile(scriptType uuid, std::string name) {
+
+	//std::string file = ASSETS_SCRIPT_FOLDER + std::to_string(uuid) + ".script";
+	std::string file = "Assets/Scripts/" + name + ".script";
+
+	JSON_Value* root_value = json_parse_file(file.c_str());
+	JSON_Object* object = json_value_get_object(root_value);
+
+	JSON_Array* array_nodes = json_object_get_array(object, "Nodes");
+	JSON_Array* array_links = json_object_get_array(object, "Links");
+
+	JSON_Object* it;
+
+
+
+	for (uint i = 0; i < json_array_get_count(array_nodes); i++) {
+
+		it = json_array_get_object(array_nodes, i);
+
+		int func = json_object_get_number(it, "Function");
+
+		Node* n = AddNode((NodeFunction)func, ImVec2(json_object_get_number(it, "PosX"), json_object_get_number(it, "PosY")));
+		n->ID = json_object_get_number(it, "NodeID");
+		n->type = (NodeType)((int)json_object_get_number(it, "Type"));
+		n->InputsCount = json_object_get_number(it, "InputsCount");
+		n->OutputsCount = json_object_get_number(it, "OutputsCount");
+
+	}
+
+	for (uint i = 0; i < json_array_get_count(array_links); i++) {
+
+		it = json_array_get_object(array_links, i);
+
+		AddLink(json_object_get_number(it, "Input ID"), json_object_get_number(it, "Input Slot"), json_object_get_number(it, "Output ID"), json_object_get_number(it, "Output Slot"));
+
+	}
 
 
 
