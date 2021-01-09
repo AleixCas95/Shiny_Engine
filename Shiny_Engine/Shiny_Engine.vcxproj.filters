@@ -417,6 +417,9 @@
     <ClInclude Include="NodeDeleteObject.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
+    <ClInclude Include="NodeInstantiateObject.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -672,6 +675,9 @@
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="NodeDeleteObject.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeInstantiateObject.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>
