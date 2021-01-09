@@ -196,6 +196,8 @@
     <ClInclude Include="NodeMoveObject.h" />
     <ClInclude Include="NodeRotateObject.h" />
     <ClInclude Include="NodeTimer.h" />
+    <ClInclude Include="NodeToggleActiveComp.h" />
+    <ClInclude Include="NodeToggleActiveObject.h" />
     <ClInclude Include="ParShapes\par_shapes.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="pcg\pcg_basic.h" />
@@ -291,6 +293,8 @@
     <ClCompile Include="NodeMoveObject.cpp" />
     <ClCompile Include="NodeRotateObject.cpp" />
     <ClCompile Include="NodeTimer.cpp" />
+    <ClCompile Include="NodeToggleActiveComp.cpp" />
+    <ClCompile Include="NodeToggleActiveObject.cpp" />
     <ClCompile Include="node__graph_test.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />

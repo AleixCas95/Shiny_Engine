@@ -444,6 +444,12 @@
     <ClInclude Include="NodeTimer.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
+    <ClInclude Include="NodeToggleActiveComp.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeToggleActiveObject.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -726,6 +732,12 @@
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="NodeTimer.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeToggleActiveComp.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeToggleActiveObject.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>
