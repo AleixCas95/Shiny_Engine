@@ -408,6 +408,9 @@
     <ClInclude Include="Node.h">
       <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceGraphManager.h">
+      <Filter>Sources\Engine\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -655,6 +658,9 @@
     </ClCompile>
     <ClCompile Include="Node.cpp">
       <Filter>Sources\Engine\ScriptingNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceGraphManager.cpp">
+      <Filter>Sources\Engine\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
