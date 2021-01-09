@@ -3,43 +3,28 @@
 
 #include "Globals.h"
 #include <string>
-#include <vector>
 #include "imgui/imgui.h"
+#include "Parson/parson.h"
+#include <vector>
+
+#define NODE_WINDOW_PADDING ImVec2(8.0f, 8.0f)
+#define NODE_SLOT_RADIUS 4.0f
 
 
 static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
 static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
 
-struct Node
+class GameObject;
+class Node;
+enum NodeFunction;
+enum NodeState;
+
+class NodeLink
 {
-	int     ID;
-	char    Name[32];
-	ImVec2  Pos, Size;
-	float   Value;
-	ImVec4  Color;
-	int     InputsCount, OutputsCount;
-
-	std::vector<Node*>inputs;
-	std::vector<Node*>outputs;
-
-	Node(int id, const char* name, const ImVec2& pos, float value, const ImVec4& color, int inputs_count, int outputs_count) {
-		ID = id; strncpy(Name, name, 31); Name[31] = 0; Pos = pos; Value = value; Color = color; InputsCount = inputs_count;
-		OutputsCount = outputs_count;
-	}
-
-	ImVec2 GetInputSlotPos(int slot_no) const { return ImVec2(Pos.x, Pos.y + Size.y * ((float)slot_no + 1) / ((float)InputsCount + 1)); }
-	ImVec2 GetOutputSlotPos(int slot_no) const { return ImVec2(Pos.x + Size.x, Pos.y + Size.y * ((float)slot_no + 1) / ((float)OutputsCount + 1)); }
-
-	void SetInputsCount(int num) { InputsCount = num; }
-	void SetOutputsCount(int num) { OutputsCount = num; }
-	virtual void Update(float dt) {}
-
-};
-struct NodeLink
-{
+public:
 	int     InputIdx, InputSlot, OutputIdx, OutputSlot;
 
-	NodeLink(int input_idx, int input_slot, int output_idx, int output_slot) {
+	NodeLink(int input_idx, int input_slot, int output_idx, int output_slot) {  //id of node input, slot number, id of node output, slot number 
 		InputIdx = input_idx; InputSlot = input_slot; OutputIdx = output_idx; OutputSlot = output_slot;
 	}
 };
@@ -51,21 +36,26 @@ public:
 
 	NodeGraph_Manager();
 	~NodeGraph_Manager();
-	void Draw();
-	void Update(float dt);
 
-	Node* AddNode(const char* name, const ImVec2& pos, int inputs_count, int outputs_count, float value = 0.0f, const ImVec4& color = ImColor(255, 100, 100));
+	void Draw(std::vector<GameObject*> BB_objects, bool go_active, bool& show_graph);
+	void Update(float dt, std::vector<GameObject*> BB_objects, uint num_comp_graph);
+	void UpdateOutputNodes(float dt, std::vector<GameObject*> BB_objects, Node* output, NodeState input_updating, uint num_comp_graph);
+	void SaveFile(JSON_Array* arr_nodes, JSON_Array* arr_links) const;
+	void LoadFile(scriptType uuid, std::string name);
+
+	Node* AddNode(NodeFunction node_function, const ImVec2& pos);
 	void AddLink(int input_idx, int input_slot, int output_idx, int output_slot);
-	void DeleteLink(int node_id, int slot_num);
+	void DeleteLink(int node_id, int slot_num, bool input); //Send true if slot is input (left of the node) or false if it's output (right of the node)
 	void DeleteNode(Node* node);
 	Node* GetNodeByID(int ID);
 
+	uint GetTimerNum() const;
 
+private:
 
-private: 
-
-	bool isshow_grid = true;
+	bool show_grid = true;
 	std::vector<Node*> nodes;
+	std::vector<Node*> fst_ev_nodes;
 	std::vector<NodeLink> links;
 
 	ImVec2 scrolling = ImVec2(0.0f, 0.0f);
@@ -76,6 +66,9 @@ private:
 	int input_slot_clicked = -1;
 	int output_id_clicked = -1;
 	int output_slot_clicked = -1;
+
+	
+	bool inited = false;
 
 };
 

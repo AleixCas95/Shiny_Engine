@@ -6,7 +6,12 @@
 #include <string>
 #include <vector>
 
-NodeGraph_Manager::NodeGraph_Manager() {}
+NodeGraph_Manager::NodeGraph_Manager()
+{
+
+}
+
+
 NodeGraph_Manager::~NodeGraph_Manager() {
 
 	for (uint i = 0; i < nodes.size(); i++) {
@@ -15,43 +20,34 @@ NodeGraph_Manager::~NodeGraph_Manager() {
 
 	}
 	nodes.clear();
+	fst_ev_nodes.clear();
 }
 
 
-void NodeGraph_Manager::Draw() {
-
-	static ImVec2 scrolling = ImVec2(0.0f, 0.0f);
-	static bool isshow_grid = true;
-	static ImVector<Node> nodes;
-	static ImVector<NodeLink> links;
-	static int node_selected = -1;
-
-	int node_hovered_in_list = -1;
-	int node_hovered_in_scene = -1;
-
-	static bool inited = false;
-
-	const float NODE_SLOT_RADIUS = 4.0f;
-	const ImVec2 NODE_WINDOW_PADDING(8.0f, 8.0f);
+void NodeGraph_Manager::Draw(std::vector<GameObject*> BB_objects, bool go_active, bool& show_graph) {
 
 	bool open_context_menu = false;
+	static int node_selected = -1;
 
+	static int node_hovered_in_scene = -1;
+
+	//DELETE THIS AFTER ***************
+	/*
 	if (!inited)
 	{
-		AddNode("MainTex", ImVec2(40, 50), 1, 1, 0.5f, ImColor(255, 100, 100));
-		AddNode("BumpMap", ImVec2(40, 150), 1, 1, 0.42f, ImColor(200, 100, 200));
-		AddNode("Combine", ImVec2(270, 80), 3, 3, 1.0f, ImColor(0, 200, 100));
+		AddNode(Func_KeyInput, ImVec2(40, 50));
+		AddNode(Func_MoveObject, ImVec2(500, 50));
 
-		AddLink(0, 0, 2, 0);
-		AddLink(1, 0, 2, 1);
+		AddLink(0, 0, 1, 0);
 		inited = true;
-	}
+	}*/
 
+	ImGui::Begin("Graph", &show_graph);
 
 	ImGui::BeginGroup();
 	ImGui::Text("Hold middle mouse button to scroll (%.2f,%.2f)", scrolling.x, scrolling.y);
 	ImGui::SameLine(ImGui::GetWindowWidth() - 100);
-	ImGui::Checkbox("Show grid", &isshow_grid);
+	ImGui::Checkbox("Show grid", &show_grid);
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, IM_COL32(60, 60, 70, 200));
@@ -61,7 +57,7 @@ void NodeGraph_Manager::Draw() {
 	ImVec2 offset = ImGui::GetCursorScreenPos() + scrolling;
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
-	if (isshow_grid)
+	if (show_grid)
 	{
 		ImU32 GRID_COLOR = IM_COL32(200, 200, 200, 40);
 		float GRID_SZ = 32.0f;
@@ -77,11 +73,11 @@ void NodeGraph_Manager::Draw() {
 	// Display links
 	draw_list->ChannelsSplit(2);
 	draw_list->ChannelsSetCurrent(0); // Background
-	for (int link_idx = 0; link_idx < links.Size; link_idx++)
+	for (int link_idx = 0; link_idx < links.size(); link_idx++)
 	{
 		NodeLink* link = &links[link_idx];
-		Node* node_inp = &nodes[link->InputIdx];
-		Node* node_out = &nodes[link->OutputIdx];
+		Node* node_inp = nodes[link->InputIdx];
+		Node* node_out = nodes[link->OutputIdx];
 		ImVec2 p1 = offset + node_inp->GetOutputSlotPos(link->InputSlot);
 		ImVec2 p2 = offset + node_out->GetInputSlotPos(link->OutputSlot);
 		draw_list->AddBezierCurve(p1, p1 + ImVec2(+50, 0), p2 + ImVec2(-50, 0), p2, IM_COL32(200, 200, 100, 255), 3.0f);
@@ -90,7 +86,7 @@ void NodeGraph_Manager::Draw() {
 	// Display nodes
 	for (int node_idx = 0; node_idx < nodes.size(); node_idx++)
 	{
-		Node* node = &nodes[node_idx];
+		Node* node = nodes[node_idx];
 		ImGui::PushID(node->ID);
 		ImVec2 node_rect_min = offset + node->Pos;
 
@@ -99,9 +95,10 @@ void NodeGraph_Manager::Draw() {
 		bool old_any_active = ImGui::IsAnyItemActive();
 		ImGui::SetCursorScreenPos(node_rect_min + NODE_WINDOW_PADDING);
 		ImGui::BeginGroup(); // Lock horizontal position
-		ImGui::Text("%s", node->Name);
-		ImGui::SliderFloat("##value", &node->Value, 0.0f, 1.0f, "Alpha %.2f");
-		ImGui::ColorEdit3("##color", &node->Color.x);
+
+		ImGui::Text(node->Name);
+		node->Draw(BB_objects);
+
 		ImGui::EndGroup();
 
 		// Save the size of what we have emitted and whether any of the widgets are being used
@@ -124,9 +121,41 @@ void NodeGraph_Manager::Draw() {
 		if (node_moving_active && ImGui::IsMouseDragging(0))
 			node->Pos = node->Pos + ImGui::GetIO().MouseDelta;
 
-		ImU32 node_bg_color = (node_hovered_in_scene == node->ID || (node_selected == node->ID)) ? IM_COL32(75, 75, 75, 255) : IM_COL32(60, 60, 60, 255);
+		//Node color if selected and if updating
+		uint bg_opatcity = 255;
+		if (!go_active)
+			bg_opatcity = 100;
+
+		ImU32 node_bg_color = (node_hovered_in_scene == node->ID || (node_selected == node->ID)) ? IM_COL32(75, 75, 75, bg_opatcity) : IM_COL32(60, 60, 60, bg_opatcity);
+		ImU32 node_outline_color = IM_COL32(100, 100, 100, 255);
+		float node_outline_thickness = 4.0f;
+
+		if (go_active) {
+			switch (node->node_state)
+			{
+			case Node_State_Updating:
+				node_outline_color = IM_COL32(0, 255, 0, 255); //Green
+				node_outline_thickness = 8.0f;
+				break;
+
+			case Node_State_ToUpdate:
+				node_outline_color = IM_COL32(255, 255, 0, 255); //Yellow
+				node_outline_thickness = 8.0f;
+				break;
+
+			case Node_State_Error:
+				node_outline_color = IM_COL32(255, 0, 0, 255); //Red
+				node_outline_thickness = 8.0f;
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		//Print node
 		draw_list->AddRectFilled(node_rect_min, node_rect_max, node_bg_color, 4.0f);
-		draw_list->AddRect(node_rect_min, node_rect_max, IM_COL32(100, 100, 100, 255), 4.0f);
+		draw_list->AddRect(node_rect_min, node_rect_max, node_outline_color, node_outline_thickness);
 		for (int slot_idx = 0; slot_idx < node->InputsCount; slot_idx++) {
 
 			if (node_idx == input_id_clicked && slot_idx == input_slot_clicked)
@@ -146,7 +175,7 @@ void NodeGraph_Manager::Draw() {
 				}
 
 				if (ImGui::IsMouseClicked(1)) {
-					DeleteLink(node_idx, slot_idx);
+					DeleteLink(node_idx, slot_idx, true);
 				}
 			}
 		}
@@ -169,7 +198,7 @@ void NodeGraph_Manager::Draw() {
 				}
 
 				if (ImGui::IsMouseClicked(1)) {
-					DeleteLink(node_idx, slot_idx);
+					DeleteLink(node_idx, slot_idx, false);
 				}
 			}
 		}
@@ -191,7 +220,7 @@ void NodeGraph_Manager::Draw() {
 	}
 
 	// Open context menu (Right Click options)
-	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(1))
+	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(1) && ImGui::IsWindowHovered())
 	{
 		node_selected = node_hovered_in_scene = -1;
 		open_context_menu = true;
@@ -207,36 +236,71 @@ void NodeGraph_Manager::Draw() {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
 	if (ImGui::BeginPopup("context_menu"))
 	{
-		Node* node = node_selected != -1 ? &nodes[node_selected] : NULL;
+		Node* node = node_selected != -1 ? nodes[node_selected] : NULL;
 		ImVec2 scene_pos = ImGui::GetMousePosOnOpeningCurrentPopup() - offset;
 		if (node)
 		{
 			ImGui::Text("Node '%s'", node->Name);
 			ImGui::Separator();
-			if (ImGui::MenuItem("Rename..", NULL, false, false)) {}
 			if (ImGui::MenuItem("Delete", NULL, false, true)) {
 
 				DeleteNode(node);
 				node_selected = -1;
 			}
 
-			if (ImGui::MenuItem("Copy", NULL, false, false)) 
-			{
-				ImGui::Separator();
-				if (ImGui::MenuItem("Add input", NULL, false, true))
-					node->SetInputsCount(node->InputsCount + 1);
-				if (ImGui::MenuItem("Reduce input", NULL, false, true))
-					node->SetInputsCount(node->InputsCount - 1);
-				if (ImGui::MenuItem("Add output", NULL, false, true))
-					node->SetOutputsCount(node->OutputsCount + 1);
-				if (ImGui::MenuItem("Reduce output", NULL, false, true))
-					node->SetOutputsCount(node->OutputsCount - 1);
-			}
+
+			ImGui::Separator();
+			if (ImGui::MenuItem("Add input", NULL, false, true))
+				node->SetInputsCount(node->InputsCount + 1);
+			if (ImGui::MenuItem("Reduce input", NULL, false, true))
+				node->SetInputsCount(node->InputsCount - 1);
+			if (ImGui::MenuItem("Add output", NULL, false, true))
+				node->SetOutputsCount(node->OutputsCount + 1);
+			if (ImGui::MenuItem("Reduce output", NULL, false, true))
+				node->SetOutputsCount(node->OutputsCount - 1);
+
 		}
 		else
 		{
-			if (ImGui::MenuItem("Add")) { nodes.push_back(Node(nodes.Size, "New node", scene_pos, 0.5f, ImColor(100, 100, 200), 2, 2)); }
-			if (ImGui::MenuItem("Paste", NULL, false, false)) {}
+			if (ImGui::BeginMenu("Add")) {
+				if (ImGui::BeginMenu("Event")) {
+					if (ImGui::MenuItem("Key Input"))
+						AddNode(Func_KeyInput, scene_pos);
+					if (ImGui::MenuItem("Mouse Input"))
+						AddNode(Func_MouseInput, scene_pos);
+					if (ImGui::MenuItem("Mouse Move"))
+						AddNode(Func_MouseMove, scene_pos);
+					if (ImGui::MenuItem("Timer"))
+						AddNode(Func_Timer, scene_pos);
+
+					ImGui::EndMenu();
+				}
+				if (ImGui::BeginMenu("Action")) {
+					if (ImGui::MenuItem("Move GameObject"))
+						AddNode(Func_MoveObject, scene_pos);
+					if (ImGui::MenuItem("Rotate GameObject"))
+						AddNode(Func_RotateObject, scene_pos);
+					if (ImGui::MenuItem("Active GameObject"))
+						AddNode(Func_ToggleActiveObject, scene_pos);
+					if (ImGui::MenuItem("Active Component"))
+						AddNode(Func_ToggleActiveComp, scene_pos);
+					if (ImGui::MenuItem("Instantiate GameObject"))
+						AddNode(Func_InstObject, scene_pos);
+					if (ImGui::MenuItem("Delete GameObject"))
+						AddNode(Func_DelObject, scene_pos);
+					if (ImGui::MenuItem("Load Scene"))
+						AddNode(Func_LoadScene, scene_pos);
+					if (ImGui::MenuItem("Log to Console"))
+						AddNode(Func_LogToConsole, scene_pos);
+
+					ImGui::EndMenu();
+				}
+
+				ImGui::EndMenu();
+			}
+
+
+
 		}
 		ImGui::EndPopup();
 	}
@@ -252,8 +316,9 @@ void NodeGraph_Manager::Draw() {
 	ImGui::PopStyleVar(2);
 	ImGui::EndGroup();
 
-	//ImGui::End();
+	ImGui::End();
 }
+
 
 void NodeGraph_Manager::Update(float dt)
 {
