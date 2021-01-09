@@ -18,7 +18,15 @@ enum Object_Type
 	CompGraphScript
 };
 
-class Component 
+enum PrimitiveType {
+	PRIMITIVE_NONE,
+	PRIMITIVE_CUBE,
+	PRIMITIVE_SPHERE,
+	PRIMITIVE_PLANE
+};
+
+
+class Component
 {
 public:
 
