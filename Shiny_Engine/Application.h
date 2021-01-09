@@ -34,7 +34,7 @@ class Application
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	
+
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleGUI* gui;
@@ -55,7 +55,7 @@ public:
 
 	Time* module_time;
 
-	
+
 
 
 
@@ -89,3 +89,4 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+extern Application* App;
