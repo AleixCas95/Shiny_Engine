@@ -64,6 +64,9 @@
     <Filter Include="Sources\Engine\ScriptingNodes">
       <UniqueIdentifier>{7eaa7345-0f4f-4b3a-8250-5bf5f51485bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Engine\ScriptingNodes\NodeFiles">
+      <UniqueIdentifier>{e15767ed-beff-4469-92c6-f5bb380d9aed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glmath.h">
@@ -411,6 +414,9 @@
     <ClInclude Include="ResourceGraphManager.h">
       <Filter>Sources\Engine\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="NodeDeleteObject.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -650,9 +656,6 @@
     <ClCompile Include="NodeGraph_Manager.cpp">
       <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClCompile>
-    <ClCompile Include="node__graph_test.cpp">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentGraphScript.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClCompile>
@@ -664,6 +667,12 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Sources\Engine\Modules\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="node__graph_test.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeDeleteObject.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

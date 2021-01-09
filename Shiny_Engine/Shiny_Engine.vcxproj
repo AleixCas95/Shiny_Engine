@@ -185,6 +185,7 @@
     <ClInclude Include="ModuleHardware.h" />
     <ClInclude Include="ModuleConsole.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeDeleteObject.h" />
     <ClInclude Include="NodeGraph_Manager.h" />
     <ClInclude Include="ParShapes\par_shapes.h" />
     <ClInclude Include="parson\parson.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="ModuleHardware.cpp" />
     <ClCompile Include="ModuleConsole.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="NodeDeleteObject.cpp" />
     <ClCompile Include="NodeGraph_Manager.cpp" />
     <ClCompile Include="node__graph_test.cpp" />
     <ClCompile Include="parson\parson.c" />
