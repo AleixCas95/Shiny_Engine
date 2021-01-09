@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __Application__H__
+#define __Application__H__
+
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
