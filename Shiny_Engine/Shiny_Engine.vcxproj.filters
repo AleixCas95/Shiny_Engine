@@ -420,6 +420,12 @@
     <ClInclude Include="NodeInstantiateObject.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
+    <ClInclude Include="NodeKeyInput.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeLoadScene.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -678,6 +684,12 @@
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="NodeInstantiateObject.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeKeyInput.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeLoadScene.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>

@@ -188,6 +188,8 @@
     <ClInclude Include="NodeDeleteObject.h" />
     <ClInclude Include="NodeGraph_Manager.h" />
     <ClInclude Include="NodeInstantiateObject.h" />
+    <ClInclude Include="NodeKeyInput.h" />
+    <ClInclude Include="NodeLoadScene.h" />
     <ClInclude Include="ParShapes\par_shapes.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="pcg\pcg_basic.h" />
@@ -275,6 +277,8 @@
     <ClCompile Include="NodeDeleteObject.cpp" />
     <ClCompile Include="NodeGraph_Manager.cpp" />
     <ClCompile Include="NodeInstantiateObject.cpp" />
+    <ClCompile Include="NodeKeyInput.cpp" />
+    <ClCompile Include="NodeLoadScene.cpp" />
     <ClCompile Include="node__graph_test.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
