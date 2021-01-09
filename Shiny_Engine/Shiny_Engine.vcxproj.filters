@@ -432,6 +432,12 @@
     <ClInclude Include="NodeMouseInput.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClInclude>
+    <ClInclude Include="NodeMouseMove.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeMoveObject.h">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -702,6 +708,12 @@
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
     <ClCompile Include="NodeMouseInput.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeMouseMove.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeMoveObject.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
   </ItemGroup>

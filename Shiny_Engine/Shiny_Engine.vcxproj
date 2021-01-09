@@ -192,6 +192,8 @@
     <ClInclude Include="NodeLoadScene.h" />
     <ClInclude Include="NodeLogToConsole.h" />
     <ClInclude Include="NodeMouseInput.h" />
+    <ClInclude Include="NodeMouseMove.h" />
+    <ClInclude Include="NodeMoveObject.h" />
     <ClInclude Include="ParShapes\par_shapes.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="pcg\pcg_basic.h" />
@@ -283,6 +285,8 @@
     <ClCompile Include="NodeLoadScene.cpp" />
     <ClCompile Include="NodeLogToConsole.cpp" />
     <ClCompile Include="NodeMouseInput.cpp" />
+    <ClCompile Include="NodeMouseMove.cpp" />
+    <ClCompile Include="NodeMoveObject.cpp" />
     <ClCompile Include="node__graph_test.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
