@@ -1,12 +1,12 @@
 #include "NodeGraph_Manager.h"
 #include "Globals.h"
+#include "Node.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl_gl3.h"
 
 #include <string>
 #include <vector>
 
-NodeGraph_Manager::NodeGraph_Manager()
 {
 
 }
@@ -31,16 +31,7 @@ void NodeGraph_Manager::Draw(std::vector<GameObject*> BB_objects, bool go_active
 
 	static int node_hovered_in_scene = -1;
 
-	//DELETE THIS AFTER ***************
-	/*
-	if (!inited)
-	{
-		AddNode(Func_KeyInput, ImVec2(40, 50));
-		AddNode(Func_MoveObject, ImVec2(500, 50));
 
-		AddLink(0, 0, 1, 0);
-		inited = true;
-	}*/
 
 	ImGui::Begin("Graph", &show_graph);
 

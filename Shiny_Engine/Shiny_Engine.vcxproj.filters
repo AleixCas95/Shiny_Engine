@@ -405,6 +405,9 @@
     <ClInclude Include="ComponentGraphScript.h">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -649,6 +652,9 @@
     </ClCompile>
     <ClCompile Include="ComponentGraphScript.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
