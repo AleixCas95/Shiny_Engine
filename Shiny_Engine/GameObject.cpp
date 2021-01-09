@@ -166,12 +166,17 @@ void GameObject::Load(JSON_Object* info)
 			cam->Load(comp);
 		}
 		break;
-		case CompLight:
-			break;
+		case CompGraphScript:
+		{
+			uint c = 0;
+			ComponentGraphScript* gra = new ComponentGraphScript(App, this, c);
+			gra->Load(comp);
+		}
+		break;
 		default:
 			break;
 		}
-		
+
 	}
 }
 
@@ -199,4 +204,20 @@ bool GameObject::SetParent(GameObject* parent)
 	}
 
 	return ret;
+}
+
+const char* GameObject::GetName() const
+{
+	return namechar
+		;
+}
+
+void GameObject::SetActive(bool active)
+{
+	this->active = active;
+}
+
+bool GameObject::IsActive() const
+{
+	return active;
 }

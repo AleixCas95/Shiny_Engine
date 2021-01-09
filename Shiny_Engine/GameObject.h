@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ComponentGraphScript.h"
 #include "Globals.h"
 
 #include <string>
@@ -13,7 +14,7 @@ class GameObject
 {
 public:
 	Application* App;
-	GameObject(Application* app_parent,GameObject* parent, const char* name = nullptr, bool addToList = true);
+	GameObject(Application* app_parent, GameObject* parent, const char* name = nullptr, bool addToList = true);
 	~GameObject();
 
 	void RealDelete();
@@ -27,9 +28,14 @@ public:
 	void Load(JSON_Object* info);
 
 	bool SetParent(GameObject* parent);
+	const char* GetName()const;
+	void SetActive(bool active);
+	bool IsActive() const;
+
 public:
-	
+
 	std::string name = "gameObject";
+	char namechar[50];
 	std::list<Component*> components;
 	ComponentTransform* transform = nullptr;
 	GameObject* parent = nullptr;
