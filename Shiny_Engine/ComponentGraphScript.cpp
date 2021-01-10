@@ -98,3 +98,53 @@ void ComponentGraphScript::Load(JSON_Object* comp_obj) {
 
 }
 
+void ComponentGraphScript::ForceAddReferenceToBlackboard(GameObject* ref)
+{
+	gobjects.push_back(ref);
+}
+
+uint ComponentGraphScript::GetCompSriptNum() const
+{
+	return script_num;
+}
+
+std::vector<GameObject*> ComponentGraphScript::GetBlackboard() const
+{
+	return gobjects;
+}
+
+
+uint ComponentGraphScript::CreateNewTimer()
+{
+	timers.push_back(0.0f);
+	return timers.size();
+}
+
+void ComponentGraphScript::IncrementTimer(uint idx, float dt)
+{
+	timers[idx - 1] += dt;
+}
+
+float ComponentGraphScript::GetTimer(uint idx) const
+{
+	return timers[idx - 1];
+}
+
+uint ComponentGraphScript::GetNumTimers() const
+{
+	return timers.size();
+}
+
+void ComponentGraphScript::LoadBlackBoard() {
+
+
+	for (uint i = 0; i < uuidsLoad.size(); i++) {
+
+		GameObject* bb_go = App->scene->GetGameObjectFromUUID(uuidsLoad[i], App->scene->GetRootGameObject());
+		gobjects.push_back(bb_go);
+
+	}
+
+	uuidsLoad.clear();
+
+}
