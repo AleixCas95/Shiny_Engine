@@ -24,7 +24,7 @@ public:
 	bool loadScenePopup = false;
 
 	std::string lastSceneName = "Scene";
-
+	char scene_name[50] = "";
 private:
 	bool configActive = true;
 	//bool hirearchyActive = true;

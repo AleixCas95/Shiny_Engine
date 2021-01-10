@@ -4,7 +4,7 @@
 #include "ModuleShapes.h"
 #include "ComponentCamera.h"
 #include "imGUI\imgui.h"
-#include "imGUI\imgui_impl_sdl_gl3.h"
+#include "imGUI\imgui_impl_sdl.h"
 #include "Glew\include\glew.h"
 #include "ModuleGUI.h"
 #include "ParShapes/par_shapes.h"
@@ -24,7 +24,8 @@ bool ModuleGUI::Start()
 {
 	App->console->AddLog("Loading ImGui");
 	glewInit();
-	ImGui_ImplSdlGL3_Init(App->window->window);
+	//ImGui_ImplSdlGL3_Init(App->window->window);
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	App->config->active = false;
 
 	return true;
@@ -37,7 +38,7 @@ update_status ModuleGUI::Update(float dt)
 
 	static bool show_test_window = false;
 
-	
+
 	if (show_test_window == true)
 	{
 		ImGui::ShowTestWindow();
@@ -93,7 +94,7 @@ update_status ModuleGUI::Update(float dt)
 
 			ImGui::EndMenu();
 		}
-	
+
 		if (configActive == true)
 		{
 			App->config->Draw();
@@ -111,7 +112,7 @@ update_status ModuleGUI::Update(float dt)
 		if (showHierarchy == true)
 		{
 			App->hierarchy->Draw();
-		
+
 		}
 
 		if (showCamera)
@@ -196,19 +197,19 @@ update_status ModuleGUI::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
-	
-	if (App->config->wireframeMode == true) 
+
+	if (App->config->wireframeMode == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
-		
+
 	ImGui::Render();
 
 	if (App->config->wireframeMode == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	
+
 	return UPDATE_CONTINUE;
 
 
@@ -222,6 +223,7 @@ update_status ModuleGUI::PostUpdate(float dt)
 bool ModuleGUI::CleanUp()
 {
 	App->console->AddLog("Unloading ImGui");
-	ImGui_ImplSdlGL3_Shutdown();
+	//ImGui_ImplSdlGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
 	return true;
 }
