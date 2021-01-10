@@ -28,14 +28,14 @@ bool ModuleHierarchy::CleanUp()
 void ModuleHierarchy::Draw()
 {
 	if (ImGui::Begin("Hierarchy", &App->gui->showHierarchy, ImGuiWindowFlags_HorizontalScrollbar))
-	ImGui::SetWindowPos(ImVec2(App->config->width * 0.75, App->config->height * 0 + 20));
+		ImGui::SetWindowPos(ImVec2(App->config->width * 0.75, App->config->height * 0 + 20));
 	ImGui::SetWindowSize(ImVec2(App->config->width * 0.25, App->config->height * 0.30 - 20));
 	{
 		if (ImGui::BeginMenu("Options"))
 		{
 			if (ImGui::MenuItem("New Game Object"))
 			{
-				GameObject* newGO = new GameObject(App,App->gobject->root);
+				GameObject* newGO = new GameObject(App, App->gobject->root);
 			}
 			ImGui::MenuItem("Cancel");
 			ImGui::EndMenu();
@@ -71,7 +71,7 @@ void ModuleHierarchy::DrawGameObjects(GameObject* current)
 			App->scene->current_object = current;
 		}
 
-		for (std::list<GameObject*>::iterator childs = current->childs.begin(); childs != current->childs.end(); ++childs)
+		for (std::vector<GameObject*>::iterator childs = current->childs.begin(); childs != current->childs.end(); ++childs)
 		{
 			DrawGameObjects(*childs);
 		}
