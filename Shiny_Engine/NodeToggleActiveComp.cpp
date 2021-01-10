@@ -10,7 +10,7 @@
 NodeToggleActiveComp::NodeToggleActiveComp(int id, const ImVec2& pos) : Node(id, "Action: ToggleActiveComp", pos, 1, 1, Node_Type_Action, Func_ToggleActiveComp)
 {
 	active_set = Toggle;
-	comp_type = Comp_Mesh;
+	comp_type = Object_Type::CompMesh;
 }
 
 
@@ -77,17 +77,12 @@ void NodeToggleActiveComp::Draw(std::vector<GameObject*> BB_objects)
 	if (ImGui::BeginCombo("Set component", comp_str)) {
 		if (ImGui::Selectable("Mesh")) {
 			comp_str = comp_set_str[0];
-			comp_type = Comp_Mesh;
-		}
-
-		if (ImGui::Selectable("Material")) {
-			comp_str = comp_set_str[1];
-			comp_type = Comp_Material;
+			comp_type = Object_Type::CompMesh;
 		}
 
 		if (ImGui::Selectable("Graph Script")) {
 			comp_str = comp_set_str[2];
-			comp_type = Comp_Graph_Script;
+			comp_type = Object_Type::CompGraphScript;
 		}
 
 		ImGui::EndCombo();
