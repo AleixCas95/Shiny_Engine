@@ -3,7 +3,7 @@
 #include "MathGeoLib/MathGeoLib.h"
 
 class ComponentCamera :
-	public Component 
+	public Component
 {
 public:
 	ComponentCamera(Application* app_parent, GameObject* parent);
@@ -19,6 +19,14 @@ public:
 	void Load(JSON_Object* parent);
 
 	void UpdateFrustum();
+
+	void SetFOV(float fov);
+	float GetFOV() const;
+	void SetNearPlane(float near_plane);
+	float GetNearPlane() const;
+	void SetFarPlane(float far_plane);
+	float GetFarPlane() const;
+
 public:
 
 	Frustum frustum;

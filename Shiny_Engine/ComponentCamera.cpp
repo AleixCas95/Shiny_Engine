@@ -1,7 +1,9 @@
 #include "ComponentCamera.h"
 #include "Application.h"
 #include "ModuleTime.h"
-ComponentCamera::ComponentCamera(Application* app_parent,GameObject* parent) : Component(app_parent,parent, CompCamera)
+
+
+ComponentCamera::ComponentCamera(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompCamera)
 {
 	parent->components.push_back(this);
 
@@ -48,9 +50,9 @@ void ComponentCamera::Inspector()
 
 		if (ImGui::Button("Delete Camera"))
 		{
-			if(App->module_time->gameState == GameState::EDITOR)
-			App->gobject->componentsToDelete.push_back(this);
-			
+			if (App->module_time->gameState == GameState::EDITOR)
+				App->gobject->componentsToDelete.push_back(this);
+
 		}
 	}
 }
@@ -72,6 +74,7 @@ float4x4 ComponentCamera::GetProjectionMatrix()
 	matrix.Transpose();
 	return matrix;
 }
+
 void ComponentCamera::Save(JSON_Object* parent)
 {
 	json_object_set_number(parent, "Type", type);
@@ -112,8 +115,8 @@ void ComponentCamera::UpdateFrustum()
 	if (gameObject != nullptr && gameObject->transform != nullptr)
 	{
 		frustum.pos = gameObject->transform->GetPos();
-		frustum.front = gameObject->transform->GetRotation() * float3::unitZ;
-		frustum.up = gameObject->transform->GetRotation() * float3::unitY;
+		frustum.front = gameObject->transform->GetRotationQuat() * float3::unitZ;
+		frustum.up = gameObject->transform->GetRotationQuat() * float3::unitY;
 	}
 	else
 	{
@@ -122,4 +125,49 @@ void ComponentCamera::UpdateFrustum()
 		frustum.up = float3::unitY;
 	}
 
+}
+
+void ComponentCamera::SetFOV(float fov) {
+
+	frustum.verticalFov = DEGTORAD * fov;
+	frustum.horizontalFov = 2.0f * atanf(0.0f * tanf(frustum.verticalFov * 0.5f));
+}
+
+float ComponentCamera::GetFOV() const {
+
+	return RADTODEG * frustum.verticalFov;
+}
+
+
+
+void ComponentCamera::SetNearPlane(float near_plane) {
+
+	if (near_plane >= frustum.farPlaneDistance)
+		near_plane = frustum.farPlaneDistance - 1.0f;
+
+	if (near_plane < 0.0f)
+		near_plane = 0.1f;
+
+	frustum.nearPlaneDistance = near_plane;
+}
+
+
+float ComponentCamera::GetNearPlane() const {
+
+	return frustum.nearPlaneDistance;
+}
+
+
+void ComponentCamera::SetFarPlane(float far_plane) {
+
+	if (far_plane <= frustum.nearPlaneDistance)
+		far_plane = frustum.nearPlaneDistance + 1.0f;
+
+	frustum.farPlaneDistance = far_plane;
+}
+
+
+float ComponentCamera::GetFarPlane() const {
+
+	return frustum.farPlaneDistance;
 }
