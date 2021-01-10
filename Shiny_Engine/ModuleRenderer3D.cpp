@@ -1,9 +1,9 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "SDL\include\SDL_opengl.h"
+#include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_sdl_gl3.h"
+#include "ImGui/imgui_impl_sdl.h"
 #include "Primitive.h"
 #include "ModuleCamera3D.h"
 #include "ModuleScene.h"
@@ -25,10 +25,21 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
+
+	//imGui init
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 
 	//Create context
+
+
+
+
 	context = SDL_GL_CreateContext(App->window->window);
 	if (context == NULL)
 	{
@@ -122,8 +133,8 @@ bool ModuleRenderer3D::Init()
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
+	//ImGuiIO& io = ImGui::GetIO();
+	//(void)io;
 
 	return ret;
 }
@@ -384,6 +395,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	if (cullFace)
 		glEnable(GL_CULL_FACE);
 
+
+	//Render
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
