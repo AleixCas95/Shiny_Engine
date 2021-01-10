@@ -264,7 +264,7 @@ void ComponentTransform::UpdateBoundingBox()
 
 	gameObject->boundingBox = obb.MinimalEnclosingAABB();
 
-	for (std::list<GameObject*>::iterator it = gameObject->childs.begin(); it != gameObject->childs.end(); ++it)
+	for (std::vector<GameObject*>::iterator it = gameObject->childs.begin(); it != gameObject->childs.end(); ++it)
 	{
 		(*it)->transform->UpdateBoundingBox();
 	}
