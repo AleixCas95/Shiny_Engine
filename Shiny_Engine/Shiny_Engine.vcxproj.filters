@@ -453,6 +453,9 @@
     <ClInclude Include="ImGui\imstb_truetype.h">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigEditor.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -745,6 +748,9 @@
     </ClCompile>
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigEditor.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

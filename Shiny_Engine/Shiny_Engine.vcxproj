@@ -88,6 +88,7 @@
     <ClInclude Include="ComponentMesh.h" />
     <ClInclude Include="ComponentTexture.h" />
     <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="ConfigEditor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Glew\include\glew.h" />
     <ClInclude Include="glmath.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="ConfigEditor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Globals.cpp" />
