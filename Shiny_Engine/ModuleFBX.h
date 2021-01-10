@@ -55,17 +55,17 @@ public:
 
 	bool Start();
 	bool CleanUp();
-	ResourceMesh* MeshParShape(par_shapes_mesh* mesh, const char* name);
+	ResourceMesh* MeshParShape(par_shapes_mesh* mesh, const char* name, scriptType name_);
 
 	bool LoadFBX(const char* path);
-	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path);
+	GameObject* LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path, scriptType _name);
 
 	void SaveMeshImporter(ResourceMesh* m, const uint& uuid, char* path = nullptr);
 	void LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff);
 	void RealLoadTexture(const char* path, uint& texture_id);
-	void ImportTexture(const char* path);
-	void ImportTextureGo(const char* path, GameObject* go);
-
+	void ImportTexture(const char* path, scriptType name_);
+	void ImportTextureGo(const char* path, GameObject* go, scriptType name_);
+	bool LoadMesh(const char* exported_file, ResourceMesh* mesh);
 
 
 	// Read only
@@ -83,6 +83,7 @@ public:
 
 
 
+
 public:
 	std::string path;
 	std::string texture_path;
@@ -95,7 +96,7 @@ public:
 
 	uint checkerImageID = 0u;
 
-
+	scriptType uuid;
 
 private:
 	ModelConfig data;

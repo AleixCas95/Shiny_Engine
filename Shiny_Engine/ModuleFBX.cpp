@@ -12,6 +12,8 @@
 #include "ComponentTexture.h"
 #include "ResourcesMesh.h"
 #include "ModuleConsole.h"
+#include "ResourcesTexture.h"
+#include "ResourcesMesh.h"
 
 #pragma comment (lib, "Assimp\\libx86\\assimp.lib")
 #pragma comment (lib, "Devil\\libx86\\DevIL.lib")
@@ -43,7 +45,7 @@ bool ModuleFBX::Start()
 	aiAttachLogStream(&stream);
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 
-	LoadFBX("Game\\Assets\\Models\\Street environment_V01.fbx");
+	LoadFBX("Assets\\Models\\Street environment_V01.fbx");
 
 	return ret;
 }
@@ -62,7 +64,7 @@ bool ModuleFBX::LoadFBX(const char* path)
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		GameObject* newGameObject = App->scene->current_object = LoadMeshNode(scene, scene->mRootNode, App->gobject->root,path);
+		GameObject* newGameObject = App->scene->current_object = LoadMeshNode(scene, scene->mRootNode, App->gobject->root, path, uuid);
 
 		aiReleaseImport(scene);
 	}
@@ -71,9 +73,9 @@ bool ModuleFBX::LoadFBX(const char* path)
 	return false;
 }
 
-GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent,const char* path)
+GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path, scriptType _name)
 {
-	GameObject* go = new GameObject(App,parent, node->mName.C_Str());
+	GameObject* go = new GameObject(App, parent, node->mName.C_Str());
 
 	if (node->mNumMeshes > 0)
 	{
@@ -85,7 +87,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 		ResourceMesh* m = (ResourceMesh*)App->resources->GetResource(ResourceType::Mesh, (_path + _name).c_str());
 		if (m == nullptr)
 		{
-			m = new ResourceMesh((_path + _name).c_str());
+			m = new ResourceMesh(uuid);
 			m->vertex.size = new_mesh->mNumVertices * 3;
 			m->vertex.data = new float[m->vertex.size];
 			memset(m->vertex.data, 0, sizeof(float) * m->vertex.size);
@@ -125,7 +127,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 					memcpy(&m->uvs.data[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
 				}
 
-				glGenBuffers(1, (GLuint*)&(m->uvs.id));
+				glGenBuffers(1, (GLuint*) & (m->uvs.id));
 				glBindBuffer(GL_ARRAY_BUFFER, m->uvs.id);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->uvs.size, m->uvs.data, GL_STATIC_DRAW);
 			}
@@ -136,11 +138,11 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 				m->normals.data = new float[m->normals.size];
 				memcpy(m->normals.data, new_mesh->mNormals, sizeof(float) * m->normals.size);
 			}
-			glGenBuffers(1, (GLuint*)&(m->vertex.id));
+			glGenBuffers(1, (GLuint*) & (m->vertex.id));
 			glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
 
-			glGenBuffers(1, (GLuint*)&(m->index.id));
+			glGenBuffers(1, (GLuint*) & (m->index.id));
 			glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
@@ -164,13 +166,13 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 				textPath = textPath.substr(textPath.find_last_of("\\") + 1);
 
-				textPath = "Game\\Assets\\Textures\\" + textPath;
+				textPath = "Assets\\Textures\\" + textPath;
 
-				ImportTextureGo(textPath.c_str(), go);
+				ImportTextureGo(textPath.c_str(), go, uuid);
 			}
 		}
 
-		ComponentMesh* newMesh = new ComponentMesh(App,go);
+		ComponentMesh* newMesh = new ComponentMesh(App, go);
 		newMesh->mesh = m;
 
 		SaveMeshImporter(m, newMesh->uuid);
@@ -192,7 +194,7 @@ GameObject* ModuleFBX::LoadMeshNode(const aiScene* scene, aiNode* node, GameObje
 
 	for (int child = 0; child < node->mNumChildren; ++child)
 	{
-		LoadMeshNode(scene, node->mChildren[child], go, path);
+		LoadMeshNode(scene, node->mChildren[child], go, path, uuid);
 	}
 	return go;
 }
@@ -259,7 +261,7 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 	m->index.data = new uint[m->index.size];
 	memcpy(m->index.data, cursor, bytes);
 
-	glGenBuffers(1, (GLuint*)&(m->index.id));
+	glGenBuffers(1, (GLuint*) & (m->index.id));
 	glBindBuffer(GL_ARRAY_BUFFER, m->index.id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
@@ -268,7 +270,7 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 	m->vertex.data = new float[m->vertex.size];
 	memcpy(m->vertex.data, cursor, bytes);
 
-	glGenBuffers(1, (GLuint*)&(m->vertex.id));
+	glGenBuffers(1, (GLuint*) & (m->vertex.id));
 	glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
 
@@ -282,7 +284,7 @@ void ModuleFBX::LoadMeshImporter(ResourceMesh* m, const uint& uuid, char* buff)
 	m->uvs.data = new float[m->uvs.size];
 	memcpy(m->uvs.data, cursor, bytes);
 
-	glGenBuffers(1, (GLuint*)&(m->uvs.id));
+	glGenBuffers(1, (GLuint*) & (m->uvs.id));
 	glBindBuffer(GL_ARRAY_BUFFER, m->uvs.id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m->uvs.size, m->uvs.data, GL_STATIC_DRAW);
 
@@ -329,12 +331,12 @@ void ModuleFBX::RealLoadTexture(const char* path, uint& texture_id)
 	}
 }
 
-void ModuleFBX::ImportTexture(const char* path)
+void ModuleFBX::ImportTexture(const char* path, scriptType name_)
 {
 	ResourceTexture* m = (ResourceTexture*)App->resources->GetResource(ResourceType::Texture, path);
 	if (m == nullptr)
 	{
-		m = new ResourceTexture(path);
+		m = new ResourceTexture(name_);
 		uint texture_id = 0;
 
 		RealLoadTexture(path, texture_id);
@@ -358,7 +360,7 @@ void ModuleFBX::ImportTexture(const char* path)
 	}
 	else
 	{
-		ComponentTexture* texture = new ComponentTexture(App,App->scene->current_object);
+		ComponentTexture* texture = new ComponentTexture(App, App->scene->current_object);
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
@@ -366,12 +368,12 @@ void ModuleFBX::ImportTexture(const char* path)
 	}
 }
 
-void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
+void ModuleFBX::ImportTextureGo(const char* path, GameObject* go, scriptType name_)
 {
 	ResourceTexture* m = (ResourceTexture*)App->resources->GetResource(ResourceType::Texture, path);
 	if (m == nullptr)
 	{
-		m = new ResourceTexture(path);
+		m = new ResourceTexture(name_);
 
 		ilInit();
 		iluInit();
@@ -432,7 +434,7 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 	}
 	else
 	{
-		ComponentTexture* texture = new ComponentTexture(App,go);
+		ComponentTexture* texture = new ComponentTexture(App, go);
 		std::string tex_path(path);
 		texture->path = tex_path;
 		texture->RTexture = m;
@@ -441,15 +443,15 @@ void ModuleFBX::ImportTextureGo(const char* path, GameObject* go)
 }
 
 
-ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
+ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name, scriptType name_)
 {
-	GameObject* go = new GameObject(App,App->gobject->root, name);
+	GameObject* go = new GameObject(App, App->gobject->root, name);
 
 	ResourceMesh* m = (ResourceMesh*)App->resources->GetResource(ResourceType::Mesh, name);
 
 	if (m == nullptr)
 	{
-		m = new ResourceMesh(name);
+		m = new ResourceMesh(name_);
 
 		m->vertex.size = mesh->npoints;
 		m->vertex.data = new float[m->vertex.size * 3];
@@ -463,11 +465,11 @@ ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 			m->index.data[i] = (uint)mesh->triangles[i];
 		}
 
-		glGenBuffers(1, (GLuint*)&(m->vertex.id));
+		glGenBuffers(1, (GLuint*) & (m->vertex.id));
 		glBindBuffer(GL_ARRAY_BUFFER, m->vertex.id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * m->vertex.size, m->vertex.data, GL_STATIC_DRAW);
 
-		glGenBuffers(1, (GLuint*)&(m->index.id));
+		glGenBuffers(1, (GLuint*) & (m->index.id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->index.id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m->index.size, m->index.data, GL_STATIC_DRAW);
 
@@ -478,7 +480,7 @@ ResourceMesh* ModuleFBX::MeshParShape(par_shapes_mesh* mesh, const char* name)
 		App->resources->ResourceUsageIncreased(m);
 	}
 
-	ComponentMesh* newMesh = new ComponentMesh(App,go);
+	ComponentMesh* newMesh = new ComponentMesh(App, go);
 	newMesh->mesh = m;
 
 	App->renderer3D->mesh_list.push_back(newMesh);
@@ -535,4 +537,60 @@ float ModuleFBX::GetUvsQuantity()const
 uint ModuleFBX::GetTextureId()const
 {
 	return(mesh.texture_id);
+}
+
+bool ModuleFBX::LoadMesh(const char* exported_file, ResourceMesh* mesh)
+{
+	bool ret = false;
+
+	char* buffer = nullptr;
+	if (App->files->Load("Library/Meshes/", exported_file, &buffer) != 0)
+		ret = true;
+
+	char* cursor = buffer;
+
+	if (buffer) {
+		// amount of indices / vertices / texture_coords / normals
+		uint ranges[4];
+		uint bytes = sizeof(ranges);
+		memcpy(ranges, cursor, bytes);
+
+		mesh->num_index = ranges[0];
+		mesh->num_vertex = ranges[1];
+		mesh->num_uv = ranges[2];
+		mesh->num_normal = ranges[3];
+		cursor += bytes;
+
+		// Load indices
+		bytes = sizeof(uint) * mesh->num_index;
+		mesh->index_ = new uint[mesh->num_index];
+		memcpy(mesh->index_, cursor, bytes);
+		cursor += bytes;
+
+		// Load vertex
+		bytes = sizeof(float) * mesh->num_vertex * 3;
+		mesh->vertex_ = new float[mesh->num_vertex * 3];
+		memcpy(mesh->vertex_, cursor, bytes);
+		cursor += bytes;
+
+		// Load UVs
+		if (mesh->num_uv > 0) {
+			bytes = sizeof(float) * mesh->num_uv * 2;
+			mesh->uv = new float[mesh->num_uv * 2];
+			memcpy(mesh->uv, cursor, bytes);
+			cursor += bytes;
+		}
+
+		// Load Normal
+		if (mesh->num_normal > 0) {
+			bytes = sizeof(float) * mesh->num_normal * 3;
+			mesh->normal = new float[mesh->num_normal * 3];
+			memcpy(mesh->normal, cursor, bytes);
+		}
+
+	}
+
+	RELEASE_ARRAY(buffer);
+
+	return ret;
 }
