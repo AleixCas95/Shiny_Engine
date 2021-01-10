@@ -16,8 +16,8 @@ bool NodeLogToConsole::Update(float dt, std::vector<GameObject*> BB_objects, uin
 {
 	node_state = Node_State_Updating;
 
-	App->console->AddLog(log);
-	
+	//App->gui->AddLogToConsole(log);
+
 	return true;
 }
 

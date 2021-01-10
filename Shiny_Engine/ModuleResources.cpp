@@ -1,6 +1,9 @@
 #include "ModuleResources.h"
+#include "ResourcesMesh.h"
 #include <fstream>
 #include <iostream>
+
+#include <map>
 using namespace std;
 
 
@@ -111,6 +114,16 @@ Resource* ModuleResources::GetResource(ResourceType type, const char* path)
 	return nullptr;
 }
 
+Resource* ModuleResources::Get(scriptType uid)
+{
+	std::map<scriptType, Resource*>::iterator it = resources_map.find(uid);
+	if (it != resources_map.end())
+		return it->second;
+	else
+		return nullptr;
+}
+
+
 void ModuleResources::AddResource(Resource* resource)
 {
 	for (std::list<Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
@@ -136,4 +149,31 @@ void ModuleResources::ResourceUsageDecreased(Resource* resource)
 		resources.remove(resource);
 		delete resource;
 	}
+}
+
+
+scriptType ModuleResources::GetUIDFromMeta(std::string path_no_meta) const
+{
+	std::string meta = path_no_meta + ".meta";
+
+	JSON_Value* root_value = json_parse_file(meta.c_str());
+	JSON_Object* object = json_value_get_object(root_value);
+
+	if (object)
+		return json_object_get_number(object, "UUID");
+
+	return 0;
+}
+
+ResourceMesh* ModuleResources::GetPrimitive(PrimitiveType type)
+{
+	for (std::map<scriptType, Resource*>::iterator it = resources_map.begin(); it != resources_map.end(); ++it) {
+		ResourceMesh* aux = (ResourceMesh*)it->second;
+
+		if (aux->is_primitive == type)
+			return (ResourceMesh*)it->second;
+		
+	}
+
+	return nullptr;
 }

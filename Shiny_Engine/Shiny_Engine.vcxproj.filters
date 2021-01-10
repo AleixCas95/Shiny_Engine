@@ -65,7 +65,13 @@
       <UniqueIdentifier>{7eaa7345-0f4f-4b3a-8250-5bf5f51485bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\Engine\ScriptingNodes\NodeFiles">
-      <UniqueIdentifier>{e15767ed-beff-4469-92c6-f5bb380d9aed}</UniqueIdentifier>
+      <UniqueIdentifier>{b8cac638-b94f-4f5d-9504-c6b126890c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Libraries\SDL">
+      <UniqueIdentifier>{a3d3983c-fe4e-4759-b328-3c1eecef18a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Libraries\PhysFs">
+      <UniqueIdentifier>{08a65860-1586-4b9f-b398-cc6107bc4f43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -387,11 +393,11 @@
     <ClInclude Include="ComponentGraphScript.h">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceGraphManager.h">
       <Filter>Sources\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClInclude>
     <ClInclude Include="NodeDeleteObject.h">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
@@ -444,6 +450,9 @@
     <ClInclude Include="ImGui\imgui_internal.h">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ImGui\ImGuizmo.h">
+      <Filter>Sources\Engine\Libraries\Imgui</Filter>
+    </ClInclude>
     <ClInclude Include="ImGui\imstb_rectpack.h">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClInclude>
@@ -453,14 +462,17 @@
     <ClInclude Include="ImGui\imstb_truetype.h">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAssets.h">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysFS\include\physfs.h">
+      <Filter>Sources\Engine\Libraries\PhysFs</Filter>
+    </ClInclude>
     <ClInclude Include="ConfigEditor.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="SceneSerialization.h">
       <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleAssets.h">
-      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -692,14 +704,11 @@
     <ClCompile Include="ComponentGraphScript.cpp">
       <Filter>Sources\Engine\Modules\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>Sources\Engine\ScriptingNodes</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceGraphManager.cpp">
       <Filter>Sources\Engine\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="node__graph_test.cpp">
-      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    <ClCompile Include="Node.cpp">
+      <Filter>Sources\Engine\ScriptingNodes</Filter>
     </ClCompile>
     <ClCompile Include="NodeDeleteObject.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
@@ -737,6 +746,9 @@
     <ClCompile Include="NodeToggleActiveObject.cpp">
       <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
     </ClCompile>
+    <ClCompile Include="node__graph_test.cpp">
+      <Filter>Sources\Engine\ScriptingNodes\NodeFiles</Filter>
+    </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClCompile>
@@ -755,14 +767,17 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\Engine\Libraries\Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="ImGui\ImGuizmo.cpp">
+      <Filter>Sources\Engine\Libraries\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAssets.cpp">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClCompile>
     <ClCompile Include="ConfigEditor.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="SceneSerialization.cpp">
       <Filter>Sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleAssets.cpp">
-      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
