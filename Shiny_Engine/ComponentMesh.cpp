@@ -142,3 +142,21 @@ void ComponentMesh::Load(JSON_Object* parent)
 	//App->scene->quadtree.QT_Insert(gameObject);
 }
 
+bool ComponentMesh::IsPrimitive() const
+{
+	if (is_primitive == PRIMITIVE_NONE)
+		return false;
+
+	return true;
+}
+
+void ComponentMesh::SetPrimitive(PrimitiveType type)
+{
+	is_primitive = type;
+}
+
+void ComponentMesh::SetPath(const char* path)
+{
+	this->path = path;
+}
+

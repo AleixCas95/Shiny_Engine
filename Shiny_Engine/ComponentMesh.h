@@ -18,11 +18,22 @@ public:
 
 	void Load(JSON_Object* parent);
 
+	bool IsPrimitive() const;
+	void SetPrimitive(PrimitiveType type);
+
+	void SetPath(const char* path);
+
 public:
 	ResourceMesh* mesh;
+
+	scriptType uuid_mesh = 0;
 
 	bool print = true;
 
 	bool printVertexNormals = false;
 	bool printFacesNormals = false;
+
+	const char* path = nullptr;
+
+	PrimitiveType is_primitive = PRIMITIVE_NONE;
 };
