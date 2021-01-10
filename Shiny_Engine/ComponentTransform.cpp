@@ -24,7 +24,7 @@ void ComponentTransform::Inspector()
 		{
 			UpdateBoundingBox();
 		}
-		float3 degRotation = rotation.ToEulerXYZ();
+		float3 degRotation = rotation_quat.ToEulerXYZ();
 		degRotation = RadToDeg(degRotation);
 		if (ImGui::DragFloat3("Rotation", &degRotation[0], 0.1f, 0.0f, 0.0f, "%.2f"))
 		{
@@ -34,7 +34,7 @@ void ComponentTransform::Inspector()
 		if (ImGui::Button("Reset"))
 		{
 			position = float3::zero;
-			rotation = Quat::identity;
+			rotation_quat = Quat::identity;
 			scale = float3::one;
 			UpdateBoundingBox();
 		}
@@ -66,6 +66,12 @@ void ComponentTransform::Move(float3 distance)
 	UpdateBoundingBox();
 }
 
+void ComponentTransform::SumRotation(float3 rot)
+{
+	rotation_quat = rotation_quat * Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD);
+	rotation = rotation_quat.ToEulerXYZ() * RADTODEG;
+}
+
 float3 ComponentTransform::GetPos() const
 {
 	return position;
@@ -77,6 +83,74 @@ float3 ComponentTransform::GetGlobalPos() const
 	GetMatrix().Decompose(pos, Quat(), float3());
 
 	return pos;
+}
+
+float3 ComponentTransform::GetGlobalRot() const
+{
+	float3 ret = float3::zero;
+	Quat glob_q = rotation_quat;
+
+	GameObject* aux = gameObject->GetParent();
+
+	while (aux != nullptr) {
+
+		if (aux->transform != nullptr) {
+			float3 p_rot = aux->transform->GetRotation();
+			glob_q = glob_q * Quat::FromEulerXYZ(p_rot.x * DEGTORAD, p_rot.y * DEGTORAD, p_rot.z * DEGTORAD);
+			ret = glob_q.ToEulerXYZ() * RADTODEG;
+		}
+
+		aux = aux->GetParent();
+	}
+
+	return ret;
+}
+
+void ComponentTransform::SumPositionGlobal(float3 pos)
+{
+	position += pos;
+}
+
+void ComponentTransform::SumPositionLocal(float3& dir, float vel)
+{
+	if (rotation.x == -180.0f)
+		rotation.x = 0.0f;
+	if (rotation.y == -180.0f)
+		rotation.y = 0.0f;
+	if (rotation.z == -180.0f)
+		rotation.z = 0.0f;
+
+	float3 rot = rotation * DEGTORAD;
+	float4x4 vec; //Matrix to store the values needed when calculation the rotation
+
+	float3 aux_dir = { 0.0f,0.0f,0.0f };
+
+	if (rot.z > 0.01f || rot.z < -0.01f) {
+		vec.SetRotatePartZ(rot.z);
+		aux_dir.x += dir.x * vec[0][0] + dir.y * vec[0][1];
+		aux_dir.y += dir.x * vec[1][0] + dir.y * vec[1][1];
+	}
+
+	if (rot.y > 0.01f || rot.y < -0.01f) {
+		vec.SetRotatePartY(rot.y);
+		aux_dir.x += dir.x * vec[0][0] + dir.z * vec[0][2];
+		aux_dir.z += dir.x * vec[2][0] + dir.z * vec[2][2];
+	}
+
+	if (rot.x > 0.01f || rot.x < -0.01f) {
+		vec.SetRotatePartX(rot.x);
+		aux_dir.y += dir.y * vec[1][1] + dir.z * vec[1][2];
+		aux_dir.z += dir.y * vec[2][1] + dir.z * vec[2][2];
+	}
+	if (aux_dir.IsZero())
+		aux_dir = dir;
+
+	aux_dir.Normalize();
+	dir = aux_dir;
+
+	float3 pos = dir * vel;
+
+	position += pos;
 }
 
 void ComponentTransform::SetScale(float x, float y, float z)
@@ -113,24 +187,29 @@ float3 ComponentTransform::GetGlobalScale()
 
 void ComponentTransform::SetRotation(Quat rotation)
 {
-	this->rotation = rotation;
+	this->rotation_quat = rotation;
 	UpdateBoundingBox();
 }
 
 void ComponentTransform::SetRotation(float3 rotation)
 {
-	this->rotation = Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z);
+	this->rotation_quat = Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z);
 	UpdateBoundingBox();
 }
 
 void ComponentTransform::Rotate(Quat rotation)
 {
-	this->rotation = rotation.Mul(this->rotation).Normalized();
+	this->rotation_quat = rotation.Mul(this->rotation_quat).Normalized();
 	UpdateBoundingBox();
 }
 
-Quat ComponentTransform::GetRotation() const
+Quat ComponentTransform::GetRotationQuat() const
 {
+	return rotation_quat;
+}
+
+float3 ComponentTransform::GetRotation() const {
+
 	return rotation;
 }
 
@@ -138,21 +217,21 @@ Quat ComponentTransform::GetGlobalRotation() const
 {
 	if (gameObject->parent)
 	{
-		return rotation.Mul(gameObject->parent->transform->GetGlobalRotation());
+		return rotation_quat.Mul(gameObject->parent->transform->GetGlobalRotation());
 	}
-	return rotation;
+	return rotation_quat;
 }
 
 void ComponentTransform::SetTransform(float4x4 trans)
 {
-	trans.Decompose(position, rotation, scale);
+	trans.Decompose(position, rotation_quat, scale);
 	UpdateBoundingBox();
 }
 
 void ComponentTransform::SetIdentity()
 {
 	position = float3::zero;
-	rotation = Quat::identity;
+	rotation_quat = Quat::identity;
 	scale = float3::one;
 	UpdateBoundingBox();
 }
@@ -174,7 +253,7 @@ float4x4 ComponentTransform::GetMatrix() const
 
 float4x4 ComponentTransform::GetLocalMatrix() const
 {
-	return float4x4::FromTRS(position, rotation, scale);
+	return float4x4::FromTRS(position, rotation_quat, scale);
 }
 
 void ComponentTransform::UpdateBoundingBox()
@@ -215,10 +294,10 @@ void ComponentTransform::Save(JSON_Object* parent)
 
 	json_object_set_value(parent, "Rotation", rot);
 
-	json_object_set_number(rotationObj, "X", rotation.x);
-	json_object_set_number(rotationObj, "Y", rotation.y);
-	json_object_set_number(rotationObj, "Z", rotation.z);
-	json_object_set_number(rotationObj, "W", rotation.w);
+	json_object_set_number(rotationObj, "X", rotation_quat.x);
+	json_object_set_number(rotationObj, "Y", rotation_quat.y);
+	json_object_set_number(rotationObj, "Z", rotation_quat.z);
+	json_object_set_number(rotationObj, "W", rotation_quat.w);
 	//------------------------------------------------------------------------
 
 	// Scale
@@ -257,10 +336,10 @@ void ComponentTransform::Load(JSON_Object* parent)
 	// Rotation
 	//------------------------------------------------------------------------
 	JSON_Object* rot = json_object_get_object(parent, "Rotation");
-	rotation.x = json_object_get_number(rot, "X");
-	rotation.y = json_object_get_number(rot, "Y");
-	rotation.z = json_object_get_number(rot, "Z");
-	rotation.w = json_object_get_number(rot, "W");
+	rotation_quat.x = json_object_get_number(rot, "X");
+	rotation_quat.y = json_object_get_number(rot, "Y");
+	rotation_quat.z = json_object_get_number(rot, "Z");
+	rotation_quat.w = json_object_get_number(rot, "W");
 	//------------------------------------------------------------------------
 }
 

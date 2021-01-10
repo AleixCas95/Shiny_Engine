@@ -15,8 +15,11 @@ public:
 	void SetPos(float3 position);
 	void Move(float3 distance);
 
+	void SumRotation(float3 rot);
+
 	float3 GetPos() const;
 	float3 GetGlobalPos() const;
+	float3 GetGlobalRot() const;
 
 	void SetScale(float x, float y, float z);
 	void SetScale(float3 scale);
@@ -31,8 +34,13 @@ public:
 
 	void Rotate(Quat rotation);
 
-	Quat GetRotation() const;
+	float3 GetRotation() const;
+
+	Quat GetRotationQuat() const;
 	Quat GetGlobalRotation() const;
+
+	void SumPositionGlobal(float3 pos);
+	void SumPositionLocal(float3& dir, float vel);
 
 	void SetTransform(float4x4 trans);
 	void SetIdentity();
@@ -50,9 +58,12 @@ public:
 
 	void GuizmoOptions();
 
-private:
+
 	float3 position = float3::zero;
-	Quat rotation = Quat::identity;
+	Quat rotation_quat = Quat::identity;
 	float3 scale = float3::one;
+	float3 rotation = float3::zero;
 };
+
+
 
