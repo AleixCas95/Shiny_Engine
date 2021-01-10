@@ -2,7 +2,7 @@
 #include "pcg/pcg_basic.h"
 #include "Application.h"
 
-
+#include <list>
 
 using namespace std;
 
@@ -33,6 +33,10 @@ GameObject::~GameObject()
 {
 	delete transform;
 	transform = nullptr;
+}
+
+GameObject* GameObject::GetParent() const {
+	return parent;
 }
 
 void GameObject::RealDelete()
@@ -71,6 +75,10 @@ Component* GameObject::GetComponent(Object_Type type)
 	{
 		return transform;
 	}
+	if (type == CompGraphScript && script)
+	{
+		return script;
+	}
 	for (list<Component*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		if ((*it)->type == type)
@@ -80,6 +88,20 @@ Component* GameObject::GetComponent(Object_Type type)
 	}
 	return nullptr;
 }
+
+ComponentGraphScript* GameObject::GetCompScript(uint num) const
+{
+	for (int i = 0; i < components.size(); ++i) {
+		if (components_vec[i]->GetType() == Object_Type::CompGraphScript) {
+			ComponentGraphScript* gs = (ComponentGraphScript*)components_vec[i];
+			if (gs->GetCompSriptNum() == num)
+				return gs;
+		}
+	}
+
+	return nullptr;
+}
+
 
 
 void GameObject::Save(JSON_Object* parent)
@@ -206,10 +228,68 @@ bool GameObject::SetParent(GameObject* parent)
 	return ret;
 }
 
+void GameObject::SetName(const char* new_name) {
+
+	strcpy_s(charname, 100, new_name);
+	LOG("name = %s", charname);
+}
+
+uint GameObject::GetNumComp() const
+{
+	return components_vec.size();
+}
+
+Component* GameObject::GetComponentByIndex(uint i) const
+{
+	return components_vec[i];
+}
+
+
+Component* GameObject::CreateComponent(Object_Type type)
+{
+	Component* component = nullptr;
+
+	switch (type) {
+	case Object_Type::CompTransform:
+		if (transform == nullptr) {
+			transform = new ComponentTransform(App, this);
+			component = transform;
+		}
+		break;
+	case Object_Type::CompMesh:
+		if (GetComponent(Object_Type::CompMesh) == nullptr)
+			component = new ComponentMesh(App, this);
+		else
+			return nullptr;
+		break;
+	case Object_Type::CompCamera:
+		if (GetComponent(CompCamera) == nullptr)
+			component = new ComponentCamera(App, this);
+		else
+			return nullptr;
+		break;
+	case Object_Type::CompGraphScript:
+	{
+		uint script_num = 1;
+		for (int i = 0; i < components_vec.size(); ++i) {
+			if (components_vec[i]->GetType() == Object_Type::CompGraphScript)
+				script_num++;
+		}
+		component = new ComponentGraphScript(App, this, script_num);
+	}
+	break;
+	}
+
+	if (component)
+		components.push_back(component);
+
+	return component;
+}
+
 const char* GameObject::GetName() const
 {
-	return namechar
-		;
+	return charname;
+	;
 }
 
 void GameObject::SetActive(bool active)
@@ -220,4 +300,30 @@ void GameObject::SetActive(bool active)
 bool GameObject::IsActive() const
 {
 	return active;
+}
+
+void GameObject::UpdateBoundingBox() {
+
+	boundingBox.SetNegativeInfinity();
+
+	ComponentMesh* mesh = (ComponentMesh*)GetComponent(CompMesh);
+	if (mesh && mesh->uuid_mesh != 0) {
+		ResourceMesh* res_mesh = (ResourceMesh*)App->resources->Get(mesh->uuid_mesh);
+		boundingBox.Enclose((const math::float3*)res_mesh->vertex.data, res_mesh->num_vertex);
+	}
+
+	if (transform) {
+
+		obb.SetFrom(boundingBox);
+		obb.Transform(transform->GetMatrix());
+		if (obb.IsFinite()) {
+			boundingBox = obb.MinimalEnclosingAABB();
+		}
+	}
+
+	//for (uint i = 0; i < childs.size(); ++i) {
+
+	//	childs[i]->UpdateBoundingBox();
+	//}
+
 }
