@@ -1,15 +1,21 @@
-#pragma once
+#ifndef __ResourceTexture_H__
+#define __ResourceTexture_H__
+
 #include "Resources.h"
 
-class ResourceTexture :
-	public Resource
+class ResourceTexture : public Resource
 {
 public:
-	ResourceTexture(const char* path);
+	ResourceTexture(scriptType uuid);
 	~ResourceTexture();
 
-	void Unload();
+	bool LoadInMemory();
+	bool UnloadInMemory();
 
 public:
+	uint tex_id = 0;
+	int tex_width, tex_height;
 	uint id = 0u;
 };
+
+#endif
