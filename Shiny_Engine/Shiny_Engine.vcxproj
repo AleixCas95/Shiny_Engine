@@ -212,7 +212,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="ComponentGraphScript.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />

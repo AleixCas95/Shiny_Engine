@@ -39,8 +39,15 @@ public:
 
 	virtual void Inspector() {}
 
-	bool IsActive() const;
-	void SetActive(bool active);
+	bool IsActive() const
+	{
+		return active;
+	}
+
+	void SetActive(bool active)
+	{
+		this->active = active;
+	}
 
 public:
 	bool active = true;
@@ -50,7 +57,15 @@ public:
 	unsigned int uuid = 0u;
 	const char* uuid_script = 0u;
 
-	Object_Type GetType() const;
-	GameObject* GetGameObject() const;
+	Object_Type GetType() const
+	{
+		return type;
+	}
+
+	GameObject* GetGameObject() const
+	{
+		return gameObject;
+	}
 
 };
+
