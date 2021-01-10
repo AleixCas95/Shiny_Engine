@@ -21,7 +21,9 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
-	
+	GameObject* CreateGameObject(GameObject* parent);
+	GameObject* GetRootGameObject() const;
+
 
 public:
 	uint my_id = 0;
@@ -29,7 +31,14 @@ public:
 	uint* indices = nullptr;
 	float* vertex = nullptr;
 
+	GameObject* GO_to_delete = nullptr;
+	bool want_to_delete_go = false;
+	bool want_to_load = false;
+
+
+
 	GameObject* current_object = nullptr;
+	GameObject* root_object = nullptr;
 
 	ImGuizmo::OPERATION guiz_operation = ImGuizmo::BOUNDS;
 

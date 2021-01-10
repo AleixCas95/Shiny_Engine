@@ -2,8 +2,9 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "Primitive.h"
+#include "GameObject.h"
 #include "imGUI\imgui.h"
-#include "imGUI\imgui_impl_sdl_gl3.h"
+#include "imGUI\imgui_impl_sdl.h"
 #include "Glew\include\glew.h"
 #include "ImGuizmo/ImGuizmo.h"
 
@@ -33,7 +34,8 @@ bool ModuleScene::Start()
 update_status ModuleScene::PreUpdate(float dt)
 {
 
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	//ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGuizmo::BeginFrame();
 	return(UPDATE_CONTINUE);
 }
@@ -108,6 +110,18 @@ update_status ModuleScene::Update(float dt)
 	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-	
+
 	return UPDATE_CONTINUE;
+}
+
+GameObject* ModuleScene::CreateGameObject(GameObject* parent)
+{
+	GameObject* game_object = new GameObject(App, parent);
+
+	return game_object;
+}
+
+GameObject* ModuleScene::GetRootGameObject() const
+{
+	return root_object;
 }
