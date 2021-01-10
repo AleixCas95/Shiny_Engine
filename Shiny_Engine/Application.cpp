@@ -19,10 +19,12 @@ Application::Application()
 	inspector = new ModuleInspector(this);
 	hierarchy = new ModuleHierarchy(this);
 	fileB = new ModuleFileBrowser(this);
-	files = new ModuleFiles(this);
+	files = new ModuleFileSystem(this);
 	mouse = new ModuleMousePicking(this);
 	module_time = new Time(this);
 	resources = new ModuleResources(this);
+	assets = new ModuleAssets(this);
+	scene_serialization = new SceneSerialization();
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -33,12 +35,12 @@ Application::Application()
 	AddModule(input);
 
 	//UI
-	
-	
+
+
 	AddModule(fileB);
 	AddModule(module_time);
 	AddModule(mouse);
-	
+
 	// Scenes
 	AddModule(files);
 	AddModule(scene);
@@ -51,7 +53,7 @@ Application::Application()
 
 
 
-	
+
 
 }
 
@@ -167,4 +169,10 @@ float Application::GetMS()
 float Application::GetFPS()
 {
 	return last_FPS;
+}
+
+u32 Application::GenerateUUID() {
+
+	//random between 0 and max_int
+	return lcg.Int();
 }

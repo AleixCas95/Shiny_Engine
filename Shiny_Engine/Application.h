@@ -28,7 +28,10 @@
 #include "ModuleFileBrowser.h"
 #include "ModuleTime.h"
 #include "ModuleResources.h"
+#include "ModuleAssets.h"
+#include "SceneSerialization.h"
 
+#include <string>
 #include <list>
 
 class Application
@@ -51,14 +54,18 @@ public:
 	ModuleFBX* fbx;
 	ModuleGameObject* gobject;
 	ModuleScene* scene;
-	ModuleFiles* files;
+	ModuleFileSystem* files;
 	ModuleMousePicking* mouse;
 	ModuleResources* resources;
+	ModuleAssets* assets;
+	SceneSerialization* scene_serialization;
 
 	Time* module_time;
 
 
 
+	string organization_name;
+	string app_name;
 
 
 private:
@@ -68,7 +75,7 @@ private:
 	float last_FPS = 0.0f;
 	float last_ms = 0.0f;
 	std::list<Module*> list_modules;
-
+	LCG lcg;
 
 public:
 
@@ -82,6 +89,8 @@ public:
 	float GetMS();
 	float GetFPS();
 
+	u32 GenerateUUID();
+
 	JSON_Value* JSONconfig = nullptr;
 	JSON_Object* JSONconfig_obj = nullptr;
 
@@ -92,3 +101,6 @@ private:
 	void FinishUpdate();
 };
 extern Application* App;
+
+
+#endif
