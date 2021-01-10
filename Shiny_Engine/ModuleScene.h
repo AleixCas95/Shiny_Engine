@@ -23,6 +23,16 @@ public:
 
 	GameObject* CreateGameObject(GameObject* parent);
 	GameObject* GetRootGameObject() const;
+	void CreateRootObject();
+
+	GameObject* GetGameObjectFromUUID(uint UUID, GameObject* root) const;
+
+	void AssignMeshToGameObject(scriptType mesh_uuid);
+	void AssignTexToGameObject(scriptType tex_uuid);
+	GameObject* CreateGameObjectByMesh(scriptType mesh_uuid);
+	GameObject* GetFocusedGameObject() const;
+	void DestroyGOs();
+
 
 
 public:
