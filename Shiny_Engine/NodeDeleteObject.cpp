@@ -32,7 +32,7 @@ bool NodeDeleteObject::Update(float dt, std::vector<GameObject*> BB_objects, uin
 		node_state = Node_State_Updating;
 	}
 	else
-		App->console->AddLog("ERROR: You are trying to delete a GameObject that is already deleted");
+		//App->gui->AddLogToConsole("ERROR: You are trying to delete a GameObject that is already deleted");
 
 		return true;
 }

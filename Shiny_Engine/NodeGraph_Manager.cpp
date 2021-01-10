@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "Node.h"
 #include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_sdl_gl3.h"
+#include "ImGui/imgui_impl_sdl.h"
 
 #include <string>
 #include <vector>
@@ -11,6 +11,7 @@ NodeGraph_Manager::NodeGraph_Manager()
 {
 
 }
+
 
 NodeGraph_Manager::~NodeGraph_Manager() {
 
@@ -31,7 +32,16 @@ void NodeGraph_Manager::Draw(std::vector<GameObject*> BB_objects, bool go_active
 
 	static int node_hovered_in_scene = -1;
 
+	//DELETE THIS AFTER ***************
+	/*
+	if (!inited)
+	{
+		AddNode(Func_KeyInput, ImVec2(40, 50));
+		AddNode(Func_MoveObject, ImVec2(500, 50));
 
+		AddLink(0, 0, 1, 0);
+		inited = true;
+	}*/
 
 	ImGui::Begin("Graph", &show_graph);
 
@@ -321,6 +331,18 @@ void NodeGraph_Manager::Update(float dt, std::vector<GameObject*> BB_objects, ui
 		for (int j = 0; j < fst_ev_nodes[i]->outputs.size(); ++j)
 			UpdateOutputNodes(dt, BB_objects, fst_ev_nodes[i]->outputs[j], fst_ev_nodes[i]->node_state, num_comp_graph);
 	}
+}
+
+void NodeGraph_Manager::UpdateOutputNodes(float dt, std::vector<GameObject*> BB_objects, Node* output, NodeState input_state, uint num_comp_graph)
+{
+	if (input_state == Node_State_Updating)
+		output->Update(dt, BB_objects, num_comp_graph); //Update of the node
+	else
+		output->node_state = Node_State_Idle;
+
+	for (int i = 0; i < output->outputs.size(); ++i)
+		UpdateOutputNodes(dt, BB_objects, output->outputs[i], output->node_state, num_comp_graph);
+
 }
 
 Node* NodeGraph_Manager::AddNode(NodeFunction node_function, const ImVec2& pos) {

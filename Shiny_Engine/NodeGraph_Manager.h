@@ -67,7 +67,7 @@ private:
 	int output_id_clicked = -1;
 	int output_slot_clicked = -1;
 
-	
+
 	bool inited = false;
 
 };
