@@ -1,7 +1,7 @@
 #include "Resources.h"
 #include "Application.h"
 
-Resource::Resource(ResourceType type, const char* path) : type(type), name(path)
+Resource::Resource(scriptType uuid, ResourceType type) : uuid(uuid), type(type)
 {
 }
 
@@ -9,15 +9,7 @@ Resource::~Resource()
 {
 }
 
-bool Resource::operator==(Resource other)
-{
-	if (this->type == other.type)
-	{
-		if (strcmp(this->name.data(), other.name.data()) == 0)
-			return true;
-	}
-	return false;
-}
+
 
 bool Resource::IsLoadedToMemory() const
 {
@@ -30,8 +22,6 @@ bool Resource::IsLoadedToMemory() const
 bool Resource::LoadToMemory() //TODO change maybe
 {
 	bool ret = true;
-	/*if (!IsLoadedToMemory())
-		ret = LoadInMemory();*/
 
 	loaded++;
 
@@ -43,3 +33,19 @@ const char* Resource::GetFile() const
 	return file.c_str();
 }
 
+bool Resource::UnloadToMemory()
+{
+	bool ret = true;
+	if (loaded > 0)
+		loaded--;
+
+	if (loaded == 0)
+		ret = UnloadInMemory();
+
+	return ret;
+}
+
+scriptType Resource::GetUID() const
+{
+	return uuid;
+}

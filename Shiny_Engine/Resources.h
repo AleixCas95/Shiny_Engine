@@ -14,14 +14,16 @@ enum class ResourceType
 class Resource
 {
 public:
-	Resource(ResourceType type, const char* path);
+	Resource(scriptType uuid, ResourceType type);
 	virtual ~Resource();
 
 	virtual void Unload() {};
 	bool IsLoadedToMemory() const;
 	bool LoadToMemory();
+	bool UnloadToMemory();
+	scriptType GetUID() const;
 	const char* GetFile() const;
-	bool operator==(Resource other);
+	//bool operator==(Resource other);
 
 public:
 	std::string name;
@@ -31,4 +33,7 @@ public:
 	ResourceType type = ResourceType::None;
 	int usage = 0;
 	int loaded = 0;
+
+	virtual bool UnloadInMemory() = 0;
+	virtual bool LoadInMemory() = 0;
 };
