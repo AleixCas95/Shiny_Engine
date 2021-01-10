@@ -7,6 +7,7 @@
 #include "ComponentMesh.h"
 #include "ModuleScene.h"
 #include "ModuleFBX.h"
+#include "ResourcesMesh.h"
 
 
 
@@ -44,13 +45,13 @@ void ComponentMesh::Inspector()
 
 		if (ImGui::Button("Delete Object"))
 		{
-			App->renderer3D->mesh_list.remove(this);
+			/*App->renderer3D->mesh_list.remove(this);
 			if (App->scene->current_object->parent)
 			{
-				App->scene->current_object->parent->childs.remove(App->scene->current_object);
+				App->scene->current_object->parent->childs(App->scene->current_object);
 
 			}
-			App->inspector->NewObjectsToDelete(App->scene->current_object);
+			App->inspector->NewObjectsToDelete(App->scene->current_object);*/
 
 		}
 	}
@@ -127,19 +128,44 @@ void ComponentMesh::Save(JSON_Object* parent)
 
 void ComponentMesh::Load(JSON_Object* parent)
 {
-	uuid = json_object_get_number(parent, "UUID");
+	int aux = json_object_get_number(parent, "is primitive");
+	is_primitive = (PrimitiveType)aux;
+	uuid_mesh = json_object_get_number(parent, "UUID Mesh");
+	active = json_object_get_boolean(parent, "Active");
+	const char* p = json_object_get_string(parent, "path");
+	char* ap = (char*)p;
+	std::string fullpath;
+	std::string file;
+	App->files->SplitFilePath(p, &fullpath, &file);
+	switch (is_primitive) {
+	case PRIMITIVE_NONE:
+		if (HasMesh()) {
+			ResourceMesh* res = (ResourceMesh*)App->resources->Get(uuid_mesh);
+			if (res)
+				res->LoadToMemory();
+#ifndef GAME_MODE
+			else {
+				string log = "GameObject " + (string)gameObject->GetName() + ": Charging a mesh component with no mesh";
+				//	App->gui->AddLogToConsole(log.c_str());
+			}
+#endif
+		}
 
-	std::string name = json_object_get_string(parent, "Name");
+		break;
 
-	mesh = new ResourceMesh(name.c_str());
+	case PRIMITIVE_CUBE:
+	case PRIMITIVE_SPHERE:
+	case PRIMITIVE_PLANE:
+	{
+		ResourceMesh* res = App->resources->GetPrimitive(is_primitive);
+		if (res)
+			res->LoadToMemory();
+		uuid_mesh = res->GetUID();
+	}
+	break;
+	}
 
-	App->fbx->LoadMeshImporter(mesh, uuid, App->resources->LoadFile(nullptr, ResourceType::Mesh, uuid));
-
-	App->renderer3D->mesh_list.push_back(this);
-
-	App->resources->AddResource(mesh);
-
-	//App->scene->quadtree.QT_Insert(gameObject);
+	gameObject->UpdateBoundingBox();
 }
 
 bool ComponentMesh::IsPrimitive() const
@@ -160,3 +186,7 @@ void ComponentMesh::SetPath(const char* path)
 	this->path = path;
 }
 
+bool ComponentMesh::HasMesh() const
+{
+	return uuid_mesh != 0;
+}

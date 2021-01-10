@@ -22,6 +22,7 @@ public:
 	void SetPrimitive(PrimitiveType type);
 
 	void SetPath(const char* path);
+	bool HasMesh() const;
 
 public:
 	ResourceMesh* mesh;
