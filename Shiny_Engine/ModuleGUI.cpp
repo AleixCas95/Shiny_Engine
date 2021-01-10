@@ -5,9 +5,12 @@
 #include "ComponentCamera.h"
 #include "imGUI\imgui.h"
 #include "imGUI\imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+#include "ImGuizmo/ImGuizmo.h"
 #include "Glew\include\glew.h"
 #include "ModuleGUI.h"
 #include "ParShapes/par_shapes.h"
+#include "NodeGraph_Manager.h"
 
 #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
@@ -24,17 +27,25 @@ bool ModuleGUI::Start()
 {
 	App->console->AddLog("Loading ImGui");
 	glewInit();
-	//ImGui_ImplSdlGL3_Init(App->window->window);
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
+	ImGui_ImplOpenGL3_Init();
+
+
 	App->config->active = false;
 
 	return true;
 }
 
-update_status ModuleGUI::Update(float dt)
+update_status ModuleGUI::PreUpdate(float dt)
 {
-	//ImGui_ImplSdlGL3_NewFrame(App->window->window);
-	//ImGuizmo::BeginFrame();
+
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleGUI::Update(float dt) {
+
+
 
 	static bool show_test_window = false;
 
@@ -203,7 +214,6 @@ update_status ModuleGUI::Update(float dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	ImGui::Render();
 
 	if (App->config->wireframeMode == true)
 	{
@@ -225,5 +235,9 @@ bool ModuleGUI::CleanUp()
 	App->console->AddLog("Unloading ImGui");
 	//ImGui_ImplSdlGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
+	//ImGui::End();
+	//ImGui::DestroyContext();
 	return true;
 }
