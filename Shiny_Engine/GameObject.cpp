@@ -209,14 +209,14 @@ bool GameObject::SetParent(GameObject* parent)
 	{
 		if (this->parent)
 		{
-			this->parent->childs.remove(this);
+			this->parent->childs.clear();
 		}
 
 		for (auto child : childs)
 		{
 			if (parent == child)
 			{
-				this->childs.remove(child);
+				this->childs.clear();
 				parent->SetParent(this->parent);
 			}
 		}
@@ -325,5 +325,67 @@ void GameObject::UpdateBoundingBox() {
 
 	//	childs[i]->UpdateBoundingBox();
 	//}
+
+}
+
+void GameObject::DrawComponentsInspector()
+{
+
+	//Draw all component scripts
+	for (int i = 0; i < components_vec.size(); ++i) {
+		if (components_vec[i]->GetType() == Object_Type::CompGraphScript)
+			components_vec[i]->App->inspector->Draw();
+	}
+
+	if (ImGui::MenuItem("Graph Script")) //There can be multiple graph scripts in one GameObject
+		CreateComponent(Object_Type::CompGraphScript);
+
+
+
+}
+
+uint GameObject::GetNumChilds() const
+{
+	return childs.size();
+}
+
+void GameObject::SaveArr(JSON_Array* go_array) const {
+
+	LOG("Saving GameObject: %s", name);
+	std::string uuid_s = std::to_string(uuid);
+
+
+	JSON_Value* val = json_value_init_object();
+	JSON_Object* obj = json_value_get_object(val);
+
+
+	//Save GO info
+	json_object_set_string(obj, "Name", charname);
+	json_object_set_number(obj, "UUID", uuid);
+	json_object_set_boolean(obj, "Active", active);
+	json_object_set_boolean(obj, "Static", isStatic);
+	if (parent)
+		json_object_set_number(obj, "Parent UUID", parent->uuid);
+	else
+		json_object_set_number(obj, "Parent UUID", 0);
+
+
+
+	//Save Components
+	JSON_Value* value_comps = json_value_init_array();
+	JSON_Array* array_comps = json_value_get_array(value_comps);
+
+	for (int i = 0; i < components_vec.size(); ++i) {
+		if (components_vec[i]->GetType() == Object_Type::CompGraphScript) {
+			ComponentGraphScript* script = (ComponentGraphScript*)GetComponentByIndex(i);
+			script->Save(array_comps);
+		}
+
+	}
+
+	json_object_set_value(obj, "Components", value_comps);
+
+	json_array_append_value(go_array, val);
+
 
 }

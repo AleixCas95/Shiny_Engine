@@ -30,16 +30,20 @@ public:
 	GameObject* GetParent() const;
 
 	void Save(JSON_Object* parent);
+	void SaveArr(JSON_Array* go_array) const;
 
 	void Load(JSON_Object* info);
 
 	bool SetParent(GameObject* parent);
 	void SetName(const char* new_name);
 	uint GetNumComp()const;
+	uint GetNumChilds() const;
 	const char* GetName()const;
 	void SetActive(bool active);
 	bool IsActive() const;
 	void UpdateBoundingBox();
+
+	void DrawComponentsInspector();
 
 public:
 
@@ -52,7 +56,7 @@ public:
 	ComponentTransform* transform = nullptr;
 	ComponentGraphScript* script = nullptr;
 	GameObject* parent = nullptr;
-	std::list<GameObject*> childs;
+	std::vector<GameObject*> childs;
 
 	AABB originalBoundingBox;
 	AABB boundingBox;
@@ -60,6 +64,7 @@ public:
 
 	bool active = true;
 	bool isStatic = false;
+	bool focused = false;
 
 	unsigned int uuid = 0u;
 
