@@ -32,8 +32,8 @@ public:
 private:
 	bool get_ref_trans = false;
 
-	math::float3 pos_to_inst = math::float3::zero;
-	math::float3 rot_to_inst = math::float3::zero;
+	float3 pos_to_inst = float3::zero;
+	float3 rot_to_inst = float3::zero;
 
 	int inst_indx = 0;
 

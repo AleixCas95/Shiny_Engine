@@ -11,7 +11,7 @@
 #include "ResourcesTexture.h"
 #include "ResourceGraphManager.h"
 
-
+class Application* App;
 
 NodeInstantiateObject::NodeInstantiateObject(int id, const ImVec2& pos) : Node(id, "Event: InstantiateObject", pos, 1, 1, Node_Type_Action, Func_InstObject)
 {
@@ -87,23 +87,20 @@ void NodeInstantiateObject::InstanceObject(GameObject* to_instance)
 	new_inst->SetName(to_instance->GetName());
 
 	//Transform
-	new_inst->transform->SetPosition(pos_to_inst);
+	new_inst->transform->SetPos(pos_to_inst);
 	new_inst->transform->SetRotation(rot_to_inst);
 	new_inst->transform->SetScale(to_instance->transform->GetScale());
 
 	//Components
 	for (int i = 0; i < to_instance->GetNumComp(); ++i) {
 		switch (to_instance->GetComponentByIndex(i)->GetType()) {
-		case Comp_Mesh:
+		case Object_Type::CompMesh:
 			CopyMesh(new_inst, (ComponentMesh*)to_instance->GetComponentByIndex(i));
 			break;
-		case Comp_Material:
-			CopyMaterial(new_inst, (ComponentMaterial*)to_instance->GetComponentByIndex(i));
-			break;
-		case Comp_Camera:
+		case Object_Type::CompCamera:
 			CopyCamera(new_inst, (ComponentCamera*)to_instance->GetComponentByIndex(i));
 			break;
-		case Comp_Graph_Script:
+		case Object_Type::CompGraphScript:
 			CopyCompGraph(new_inst, (ComponentGraphScript*)to_instance->GetComponentByIndex(i));
 			break;
 		}
@@ -115,7 +112,7 @@ void NodeInstantiateObject::InstanceObject(GameObject* to_instance)
 
 void NodeInstantiateObject::CopyMesh(GameObject* new_inst, ComponentMesh* to_instance)
 {
-	ComponentMesh* mesh = (ComponentMesh*)new_inst->CreateComponent(Comp_Mesh);
+	ComponentMesh* mesh = (ComponentMesh*)new_inst->CreateComponent(Object_Type::CompMesh);
 
 	if (!mesh->IsPrimitive()) {
 		//Load new mesh resource
@@ -148,19 +145,20 @@ void NodeInstantiateObject::CopyMesh(GameObject* new_inst, ComponentMesh* to_ins
 
 void NodeInstantiateObject::CopyCamera(GameObject* new_inst, ComponentCamera* to_instance)
 {
-	ComponentCamera* cam = (ComponentCamera*)new_inst->CreateComponent(Comp_Camera);
+	ComponentCamera* cam = (ComponentCamera*)new_inst->CreateComponent(Object_Type::CompCamera);
 	cam->SetFOV(to_instance->GetFOV());
 	cam->SetNearPlane(to_instance->GetNearPlane());
 	cam->SetFarPlane(to_instance->GetFarPlane());
+
 
 }
 
 void NodeInstantiateObject::CopyCompGraph(GameObject* new_inst, ComponentGraphScript* to_instance)
 {
-	ComponentGraphScript* gs = (ComponentGraphScript*)new_inst->CreateComponent(Comp_Graph_Script);
+	ComponentGraphScript* gs = (ComponentGraphScript*)new_inst->CreateComponent(Object_Type::CompGraphScript);
 
-	ResourceGraphScript* res_gs = nullptr;
-	res_gs = (ResourceGraphScript*)App->resources->Get(to_instance->uuid_script);
+	ResourceGraphManager* res_gs = nullptr;
+	res_gs = (ResourceGraphManager*)App->resources->Get(to_instance->uuid_script);
 	if (res_gs) {
 		res_gs->LoadToMemory();
 		gs->uuid_script = to_instance->uuid_script;
@@ -188,7 +186,7 @@ void NodeInstantiateObject::ObjectToInstanceDropDown(std::vector<GameObject*> BB
 			if (ImGui::Selectable(BB_objects[i]->GetName())) {
 				inst_indx = i;
 				//Set the transform of the object to instance
-				pos_to_inst = BB_objects[i]->transform->GetPosition();
+				pos_to_inst = BB_objects[i]->transform->GetPos();
 				rot_to_inst = BB_objects[i]->transform->GetRotation();
 			}
 		}
