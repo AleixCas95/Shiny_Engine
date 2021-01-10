@@ -1,24 +1,138 @@
+#include "Application.h"
 #include "ResourcesMesh.h"
+#include "ModuleFBX.h"
 #include "Glew/include/glew.h"
+#include <gl/GL.h>
 
-ResourceMesh::ResourceMesh(const char* path) : Resource(ResourceType::Mesh, path)
+ResourceMesh::ResourceMesh(scriptType uuid) : Resource(uuid, ResourceType::Mesh)
 {
 }
 
 ResourceMesh::~ResourceMesh()
 {
-	glDeleteBuffers(1, (GLuint*) & (index.id));
-	glDeleteBuffers(1, (GLuint*) & (vertex.id));
-	glDeleteBuffers(1, (GLuint*) & (normals.id));
-	glDeleteBuffers(1, (GLuint*) & (uvs.id));
+	if (loaded > 0)
+		UnloadInMemory(); //TODO!!!
 
-	delete index.data;
-	delete vertex.data;
-	delete normals.data;
-	delete uvs.data;
 }
 
-void ResourceMesh::Unload()
+bool ResourceMesh::LoadInMemory()
 {
-	/// TODO
+	if (!IsPrimitive()) {
+		string path = std::to_string(uuid) + "." + "stdtmesh";
+		App->fbx->LoadMesh(path.c_str(), this);
+
+		//Bind buffers
+		BindBuffers();
+	}
+	else {
+		switch (is_primitive) {
+		case PRIMITIVE_CUBE: {
+			par_shapes_mesh* cube = par_shapes_create_cube();
+			LoadMeshPrimitive(cube);
+			par_shapes_free_mesh(cube);
+		}
+						   break;
+		case PRIMITIVE_SPHERE: {
+			par_shapes_mesh* sphere = par_shapes_create_subdivided_sphere(3);
+			LoadMeshPrimitive(sphere);
+			par_shapes_free_mesh(sphere);
+		}
+							 break;
+		case PRIMITIVE_PLANE: {
+			par_shapes_mesh* plane = par_shapes_create_plane(5, 5);
+			LoadMeshPrimitive(plane);
+			par_shapes_free_mesh(plane);
+		}
+							break;
+		}
+
+		BindBuffersPrimitive();
+	}
+
+	return true;
+}
+
+bool ResourceMesh::UnloadInMemory()
+{
+	glDeleteBuffers(1, (GLuint*) & (id_index));
+	glDeleteBuffers(1, (GLuint*) & (id_vertex));
+	if (normal)
+		glDeleteBuffers(1, (GLuint*) & (id_normal));
+	if (uv)
+		glDeleteBuffers(1, (GLuint*) & (id_uv));
+
+	RELEASE_ARRAY(index_);
+	RELEASE_ARRAY(vertex_);
+	RELEASE_ARRAY(normal);
+	RELEASE_ARRAY(uv);
+
+	return true;
+}
+
+void ResourceMesh::LoadMeshPrimitive(par_shapes_mesh* shape)
+{
+	num_vertex = (uint)shape->npoints;
+	vertex_ = new float[num_vertex * 3];
+	memcpy(vertex_, shape->points, sizeof(float) * num_vertex * 3);
+
+	num_index = (uint)shape->ntriangles;
+	index_ = new uint[num_index * 3];
+	memcpy(index_, shape->triangles, sizeof(PAR_SHAPES_T) * num_index * 3);
+
+}
+
+void ResourceMesh::BindBuffers()
+{
+	if (index_ != nullptr && vertex_ != nullptr) {
+		//Vertex
+		glGenBuffers(1, (GLuint*) & (id_vertex));
+		glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * num_vertex, vertex_, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//Index
+		glGenBuffers(1, (GLuint*) & (id_index));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_index, index_, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		//Normal
+		if (normal != nullptr) {
+			glGenBuffers(1, (GLuint*) & (id_normal));
+			glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * num_normal, normal, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		//Texture coordinates
+		if (uv != nullptr) {
+			glGenBuffers(1, (GLuint*) & (id_uv));
+			glBindBuffer(GL_ARRAY_BUFFER, id_uv);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * num_uv, uv, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+	}
+}
+
+void ResourceMesh::BindBuffersPrimitive()
+{
+	//Vertex
+	glGenBuffers(1, (GLuint*) & (id_vertex));
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * num_vertex, vertex_, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//Index
+	glGenBuffers(1, (GLuint*) & (id_index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T) * 3 * num_index, index_, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+bool ResourceMesh::IsPrimitive() const
+{
+	if (is_primitive == PRIMITIVE_NONE)
+		return false;
+
+	return true;
 }

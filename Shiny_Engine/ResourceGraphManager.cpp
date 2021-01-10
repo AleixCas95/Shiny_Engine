@@ -6,7 +6,7 @@
 
 
 
-ResourceGraphManager::ResourceGraphManager(const char* path) : Resource(ResourceType::Mesh, path)
+ResourceGraphManager::ResourceGraphManager(scriptType uuid) : Resource(uuid, ResourceType::Script)
 {
 
 

@@ -8,7 +8,7 @@ class NodeGraph_Manager;
 class ResourceGraphManager : public Resource
 {
 public:
-	ResourceGraphManager(const char* path);
+	ResourceGraphManager(scriptType uuid);
 	~ResourceGraphManager();
 
 	bool LoadInMemory();
