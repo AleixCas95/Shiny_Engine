@@ -54,7 +54,14 @@ void Node::DrawObjectsInstance(std::vector<GameObject*> BB_objects)
 		else
 			object_name = "null";
 
-		
+		/*if (ImGui::BeginCombo("GameObject reference", object_name)) {
+			for (int i = 1; i < BB_objects.size(); ++i) {
+				if (ImGui::Selectable(BB_objects[i]->GetName()))
+					obj_indx = i;
+			}
+
+			ImGui::EndCombo();
+		}*/
 	}
 }
 
