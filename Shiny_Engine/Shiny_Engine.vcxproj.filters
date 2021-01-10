@@ -459,6 +459,9 @@
     <ClInclude Include="SceneSerialization.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAssets.h">
+      <Filter>Sources\Engine\Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -757,6 +760,9 @@
     </ClCompile>
     <ClCompile Include="SceneSerialization.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAssets.cpp">
+      <Filter>Sources\Engine\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

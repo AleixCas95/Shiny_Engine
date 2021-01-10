@@ -166,6 +166,7 @@
     <ClInclude Include="mmgr\mmgr.h" />
     <ClInclude Include="mmgr\nommgr.h" />
     <ClInclude Include="ModuleAbout.h" />
+    <ClInclude Include="ModuleAssets.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFBX.h" />
     <ClInclude Include="ModuleFileBrowser.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp" />
     <ClCompile Include="ModuleAbout.cpp" />
+    <ClCompile Include="ModuleAssets.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleFBX.cpp" />
     <ClCompile Include="ModuleFileBrowser.cpp" />
