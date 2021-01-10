@@ -23,6 +23,7 @@ public:
 	void SetFullScreen(bool fullscreen);
 	void SetWindowed(bool borderless);
 	void SetWindowFullDesktop();
+	void GetWinSize(int& x, int& y) const;
 
 
 
@@ -45,7 +46,7 @@ public:
 	int scale = 0;
 
 	float brightness = 0;
-	
+
 };
 
 #endif // __ModuleWindow_H__
