@@ -126,7 +126,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 
 			else if (!extension.compare("png") || !extension.compare("dds") || !extension.compare("jpg") || !extension.compare("jpeg") || !extension.compare("tga"))
-				App->fbx->ImportTexture(dropped_filedir);
+				App->fbx->ImportTexture(dropped_filedir, uuid);
 
 			else if (!extension.compare("json"))
 				App->gobject->LoadScene(dropped_filedir);

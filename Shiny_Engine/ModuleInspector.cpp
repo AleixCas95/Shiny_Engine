@@ -1,7 +1,11 @@
 #include "ModuleInspector.h"
 #include "Application.h"
 #include "ModuleScene.h"
+#include "GameObject.h"
+#include "Component.h"
 #include "ImGui/imgui.h"
+
+class GameObject;
 
 ModuleInspector::ModuleInspector(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
@@ -38,11 +42,14 @@ void ModuleInspector::Draw()
 			ImGui::Checkbox("Active", &App->scene->current_object->active);
 
 			App->scene->current_object->transform->Inspector();
+			GameObject* support = App->scene->current_object;
 
 			for (std::list<Component*>::iterator it = App->scene->current_object->components.begin(); it != App->scene->current_object->components.end(); ++it)
 			{
 				(*it)->Inspector();
 			}
+
+
 			if (ImGui::BeginMenu("New Component"))
 			{
 				if (ImGui::MenuItem("Camera"))
@@ -50,11 +57,12 @@ void ModuleInspector::Draw()
 					ComponentCamera* camera = new ComponentCamera(App, App->scene->current_object);
 					App->renderer3D->play_cam = camera;
 				}
+
+				support->DrawComponentsInspector();
 				ImGui::MenuItem("Cancel");
 				ImGui::EndMenu();
 			}
 
-		
 		}
 	}
 	ImGui::End();
@@ -65,7 +73,7 @@ void ModuleInspector::NewObjectsToDelete(GameObject* object)
 	App->gobject->gameObjectsToDelete.push_back(object);
 	for (Component* comp : object->components)
 	{
-		App->gobject->componentsToDelete.push_back(comp);	
+		App->gobject->componentsToDelete.push_back(comp);
 	}
 	for (auto child : object->childs)
 	{
