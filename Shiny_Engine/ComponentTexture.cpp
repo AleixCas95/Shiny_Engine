@@ -1,6 +1,7 @@
 #include "ComponentTexture.h"
 #include "Application.h"
 #include "ModuleFBX.h"
+#include "ResourcesTexture.h"
 
 ComponentTexture::ComponentTexture(Application* app_parent, GameObject* parent) : Component(app_parent, parent, CompTexture)
 {
@@ -48,13 +49,12 @@ void ComponentTexture::Save(JSON_Object* parent)
 
 void ComponentTexture::Load(JSON_Object* parent)
 {
-	uuid = json_object_get_number(parent, "UUID");
+	
+	uuid = json_object_get_number(parent, "UUID Material");
+	active = json_object_get_boolean(parent, "Active");
 
-	path = json_object_get_string(parent, "Path");
-
-	RTexture = new ResourceTexture(path.c_str());
-
-	App->fbx->RealLoadTexture(path.c_str(), RTexture->id);
-
-	App->resources->AddResource(RTexture);
+	if (uuid != 0) {
+		ResourceTexture* r_tex = (ResourceTexture*)App->resources->Get(uuid);
+		r_tex->LoadToMemory();
+	}
 }
